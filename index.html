@@ -1,723 +1,1182 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WaterTools.es — Engineering Tools for Water Treatment</title>
-    <meta name="description" content="Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>💧</text></svg>">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WaterTools.es — Engineering Tools for Water Treatment</title>
+<meta name="description" content="Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>💧</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-        :root, [data-theme="dark"] {
-            --bg-deep: #060b14;
-            --bg-primary: #0a1020;
-            --bg-card: #0d1526;
-            --bg-card-hover: #111d33;
-            --text-primary: #d4dce8;
-            --text-secondary: #7a8ba0;
-            --text-muted: #4a5a70;
-            --text-heading: #e8f0fa;
-            --cyan: #06d6a0;
-            --cyan-dim: rgba(6,214,160,0.12);
-            --cyan-border: rgba(6,214,160,0.2);
-            --blue: #0ea5e9;
-            --accent: #06d6a0;
-            --accent-soft: rgba(6,214,160,0.08);
-            --accent-border: rgba(6,214,160,0.18);
-            --border: rgba(6,214,160,0.08);
-            --border-card: rgba(6,214,160,0.12);
-            --border-hover: rgba(6,214,160,0.35);
-            --grid-line: rgba(6,214,160,0.04);
-            --glow: rgba(6,214,160,0.06);
-            --shadow-hover: 0 12px 50px rgba(6,214,160,0.08);
-            --toggle-bg: rgba(10,16,32,0.9);
-            --toggle-border: rgba(6,214,160,0.15);
-            --stat-bg: rgba(13,21,38,0.8);
-            --gradient-text: linear-gradient(135deg,#06d6a0,#0ea5e9);
-            --gradient-btn: linear-gradient(135deg,#06d6a0,#0ea5e9);
-            --online-dot: #06d6a0;
-        }
+:root, [data-theme="dark"] {
+  --bg-deep: #060b14;
+  --bg-primary: #0a1020;
+  --bg-card: #0d1526;
+  --bg-card-hover: #111d33;
+  --bg-nav: rgba(6,11,20,0.92);
+  --text-primary: #d4dce8;
+  --text-secondary: #7a8ba0;
+  --text-muted: #4a5a70;
+  --text-heading: #e8f0fa;
+  --cyan: #06d6a0;
+  --cyan-dim: rgba(6,214,160,0.12);
+  --cyan-border: rgba(6,214,160,0.2);
+  --blue: #0ea5e9;
+  --accent: #06d6a0;
+  --accent-soft: rgba(6,214,160,0.08);
+  --accent-border: rgba(6,214,160,0.18);
+  --border: rgba(6,214,160,0.08);
+  --border-card: rgba(6,214,160,0.12);
+  --border-hover: rgba(6,214,160,0.35);
+  --grid-line: rgba(6,214,160,0.04);
+  --glow: rgba(6,214,160,0.06);
+  --shadow-hover: 0 12px 50px rgba(6,214,160,0.08);
+  --toggle-bg: rgba(10,16,32,0.9);
+  --toggle-border: rgba(6,214,160,0.15);
+  --stat-bg: rgba(13,21,38,0.8);
+  --gradient-text: linear-gradient(135deg,#06d6a0,#0ea5e9);
+  --gradient-btn: linear-gradient(135deg,#06d6a0,#0ea5e9);
+  --online-dot: #06d6a0;
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.1);
+  --amber-border: rgba(245,158,11,0.2);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.1);
+  --purple-border: rgba(167,139,250,0.2);
+}
+[data-theme="light"] {
+  --bg-deep: #edf2f7;
+  --bg-primary: #f5f7fa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f7f4;
+  --bg-nav: rgba(245,247,250,0.92);
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-heading: #0f172a;
+  --cyan: #059669;
+  --cyan-dim: rgba(5,150,105,0.08);
+  --cyan-border: rgba(5,150,105,0.2);
+  --blue: #0284c7;
+  --accent: #059669;
+  --accent-soft: rgba(5,150,105,0.05);
+  --accent-border: rgba(5,150,105,0.15);
+  --border: rgba(0,0,0,0.06);
+  --border-card: rgba(0,0,0,0.08);
+  --border-hover: rgba(5,150,105,0.3);
+  --grid-line: rgba(0,0,0,0.03);
+  --glow: rgba(5,150,105,0.04);
+  --shadow-hover: 0 8px 30px rgba(5,150,105,0.08);
+  --toggle-bg: rgba(255,255,255,0.95);
+  --toggle-border: rgba(0,0,0,0.1);
+  --stat-bg: #ffffff;
+  --gradient-text: linear-gradient(135deg,#059669,#0284c7);
+  --gradient-btn: linear-gradient(135deg,#059669,#0284c7);
+  --online-dot: #059669;
+  --amber: #d97706;
+  --amber-dim: rgba(217,119,6,0.08);
+  --amber-border: rgba(217,119,6,0.15);
+  --purple: #7c3aed;
+  --purple-dim: rgba(124,58,237,0.08);
+  --purple-border: rgba(124,58,237,0.15);
+}
 
-        [data-theme="light"] {
-            --bg-deep: #edf2f7;
-            --bg-primary: #f5f7fa;
-            --bg-card: #ffffff;
-            --bg-card-hover: #f0f7f4;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --text-heading: #0f172a;
-            --cyan: #059669;
-            --cyan-dim: rgba(5,150,105,0.08);
-            --cyan-border: rgba(5,150,105,0.2);
-            --blue: #0284c7;
-            --accent: #059669;
-            --accent-soft: rgba(5,150,105,0.05);
-            --accent-border: rgba(5,150,105,0.15);
-            --border: rgba(0,0,0,0.06);
-            --border-card: rgba(0,0,0,0.08);
-            --border-hover: rgba(5,150,105,0.3);
-            --grid-line: rgba(0,0,0,0.03);
-            --glow: rgba(5,150,105,0.04);
-            --shadow-hover: 0 8px 30px rgba(5,150,105,0.08);
-            --toggle-bg: rgba(255,255,255,0.95);
-            --toggle-border: rgba(0,0,0,0.1);
-            --stat-bg: #ffffff;
-            --gradient-text: linear-gradient(135deg,#059669,#0284c7);
-            --gradient-btn: linear-gradient(135deg,#059669,#0284c7);
-            --online-dot: #059669;
-        }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg-deep);
+  color:var(--text-primary);
+  line-height:1.6;
+  overflow-x:hidden;
+  transition:background .4s,color .4s;
+}
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none; z-index:0;
+}
+body>* { position:relative; z-index:1; }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior:smooth; }
+/* ─── NAVBAR ─── */
+.navbar {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 28px; height:56px;
+  background:var(--bg-nav);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:all .3s;
+}
+.nav-brand {
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none;
+}
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem; font-weight:700;
+  color:var(--text-heading);
+  transition:color .3s;
+}
+.nav-logo em {
+  font-style:normal;
+  background:var(--gradient-text);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.nav-links {
+  display:flex; align-items:center; gap:6px;
+}
+.nav-link {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem; font-weight:400;
+  letter-spacing:.04em; text-transform:uppercase;
+  color:var(--text-muted);
+  text-decoration:none;
+  padding:6px 12px; border-radius:4px;
+  transition:all .25s;
+}
+.nav-link:hover { color:var(--text-primary); background:var(--accent-soft); }
+.nav-sep { width:1px; height:18px; background:var(--border); margin:0 4px; }
+.nav-controls {
+  display:flex; align-items:center; gap:8px;
+}
 
-        body {
-            font-family:'DM Sans',sans-serif;
-            background:var(--bg-deep);
-            color:var(--text-primary);
-            line-height:1.6;
-            overflow-x:hidden;
-            transition:background .4s,color .4s;
-        }
+/* Language toggle - larger & more visible */
+.lang-toggle {
+  display:flex; align-items:center;
+  background:var(--cyan-dim);
+  border:1.5px solid var(--cyan-border);
+  border-radius:8px; overflow:hidden;
+  transition:all .3s;
+}
+.lang-btn {
+  padding:8px 16px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem; font-weight:600;
+  letter-spacing:.08em; color:var(--text-muted);
+  background:transparent; border:none;
+  cursor:pointer; transition:all .25s;
+  text-transform:uppercase;
+}
+.lang-btn:hover { color:var(--text-secondary); }
+.lang-btn.active {
+  color:#fff;
+  background:var(--gradient-btn);
+  box-shadow:0 2px 8px rgba(6,214,160,.25);
+}
+.lang-sep { width:1px; height:20px; background:var(--border); flex-shrink:0; }
 
-        body::before {
-            content:'';
-            position:fixed; inset:0;
-            background-image:
-                linear-gradient(var(--grid-line) 1px,transparent 1px),
-                linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
-            background-size:60px 60px;
-            pointer-events:none; z-index:0;
-        }
+.theme-btn {
+  display:flex; align-items:center; justify-content:center;
+  width:38px; height:38px;
+  background:var(--toggle-bg);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--toggle-border);
+  border-radius:8px; cursor:pointer;
+  transition:all .3s; color:var(--text-muted); font-size:1.05rem;
+}
+.theme-btn:hover { color:var(--cyan); border-color:var(--border-hover); }
+[data-theme="dark"] .ico-light { display:none; }
+[data-theme="light"] .ico-dark { display:none; }
 
-        body>* { position:relative; z-index:1; }
+/* Mobile menu */
+.nav-hamburger {
+  display:none;
+  flex-direction:column; gap:4px;
+  background:none; border:none; cursor:pointer;
+  padding:8px;
+}
+.nav-hamburger span {
+  display:block; width:20px; height:2px;
+  background:var(--text-secondary);
+  border-radius:2px; transition:all .3s;
+}
 
-        .top-bar {
-            position:fixed; top:0; left:0; right:0; z-index:1000;
-            display:flex; justify-content:flex-end; align-items:center; gap:10px;
-            padding:16px 28px;
-            background:linear-gradient(180deg,var(--bg-deep) 60%,transparent);
-            pointer-events:none;
-        }
-        .top-bar>* { pointer-events:auto; }
+/* ─── HERO ─── */
+.hero {
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  text-align:center; padding:100px 24px 80px;
+  position:relative;
+}
+.hero::before {
+  content:''; position:absolute;
+  width:600px; height:600px; border-radius:50%;
+  background:radial-gradient(circle,var(--glow) 0%,transparent 70%);
+  top:10%; left:50%; transform:translateX(-50%);
+  pointer-events:none;
+}
+.status-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--cyan);
+  border:1px solid var(--cyan-border);
+  padding:8px 18px; border-radius:4px;
+  background:var(--cyan-dim); margin-bottom:32px;
+  transition:all .3s;
+}
+.status-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--online-dot);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.hero h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,6vw,4.8rem);
+  font-weight:700; line-height:1.08;
+  margin-bottom:24px; max-width:750px;
+  color:var(--text-heading); transition:color .3s;
+}
+.hero h1 em {
+  font-style:italic;
+  background:var(--gradient-text);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-desc {
+  font-size:1rem; color:var(--text-secondary);
+  max-width:520px; margin-bottom:40px;
+  line-height:1.7; transition:color .3s;
+}
+.hero-cta {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.82rem; font-weight:500; color:#fff;
+  background:var(--gradient-btn);
+  padding:14px 30px; border-radius:6px;
+  text-decoration:none; transition:all .3s;
+}
+.hero-cta:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(6,214,160,.2);
+  filter:brightness(1.1);
+}
+.scroll-line {
+  position:absolute; bottom:36px;
+  display:flex; flex-direction:column;
+  align-items:center; gap:8px;
+}
+.scroll-text {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem; color:var(--text-muted);
+  letter-spacing:.2em; text-transform:uppercase;
+}
+.scroll-bar {
+  width:1px; height:30px;
+  background:var(--cyan); opacity:.3;
+  animation:scrollP 2s ease-in-out infinite;
+}
+@keyframes scrollP {
+  0%{transform:scaleY(.4);opacity:.2}
+  50%{transform:scaleY(1);opacity:.6}
+  100%{transform:scaleY(.4);opacity:.2}
+}
 
-        .pill {
-            display:flex; align-items:center;
-            background:var(--toggle-bg);
-            backdrop-filter:blur(16px);
-            border:1px solid var(--toggle-border);
-            border-radius:6px; overflow:hidden;
-            transition:all .3s;
-        }
+/* ─── SECTION SHARED ─── */
+.sec-label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--cyan);
+  margin-bottom:14px; transition:color .3s;
+}
+.sec-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,3.5vw,2.5rem);
+  font-weight:700; line-height:1.2;
+  margin-bottom:12px; color:var(--text-heading);
+  transition:color .3s;
+}
+.sec-title em {
+  font-style:italic;
+  background:var(--gradient-text);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.sec-desc {
+  color:var(--text-secondary); font-size:.92rem;
+  margin-bottom:48px; transition:color .3s;
+}
 
-        .lang-btn {
-            padding:7px 13px;
-            font-family:'JetBrains Mono',monospace;
-            font-size:.68rem; font-weight:500;
-            letter-spacing:.08em; color:var(--text-muted);
-            background:transparent; border:none;
-            cursor:pointer; transition:all .25s;
-            text-transform:uppercase;
-        }
-        .lang-btn:hover { color:var(--text-secondary); }
-        .lang-btn.active { color:var(--cyan); background:var(--cyan-dim); }
+/* ─── TOOLS ─── */
+.tools-section { padding:80px 24px 60px; max-width:1080px; margin:0 auto; }
+.tools-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.tool-card {
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  border-radius:10px; padding:28px 26px 24px;
+  display:flex; flex-direction:column;
+  transition:all .35s; position:relative; overflow:hidden;
+}
+.tool-card::after {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:var(--gradient-btn);
+  opacity:0; transition:opacity .35s;
+}
+.tool-card:hover {
+  border-color:var(--border-hover);
+  background:var(--bg-card-hover);
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-hover);
+}
+.tool-card:hover::after { opacity:1; }
+.tool-num {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem; color:var(--text-muted);
+  letter-spacing:.12em; text-transform:uppercase;
+  margin-bottom:14px;
+}
+.tool-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem; font-weight:700;
+  margin-bottom:12px; color:var(--text-heading);
+  transition:color .3s;
+}
+.tool-card p {
+  font-size:.85rem; color:var(--text-secondary);
+  line-height:1.65; margin-bottom:18px; flex-grow:1;
+  transition:color .3s;
+}
+.tool-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+.tool-tag {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem; color:var(--text-secondary);
+  border:1px solid var(--border);
+  padding:3px 9px; border-radius:3px;
+  transition:all .3s;
+}
+.tool-actions {
+  display:flex; align-items:center;
+  justify-content:space-between;
+  padding-top:14px; border-top:1px solid var(--border);
+}
+.tool-open {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem; color:var(--cyan);
+  text-decoration:none; transition:all .25s;
+}
+.tool-card:hover .tool-open { filter:brightness(1.2); }
+.tool-dl {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem; color:var(--text-muted);
+  background:var(--accent-soft);
+  border:1px solid var(--accent-border);
+  padding:5px 12px; border-radius:4px;
+  cursor:pointer; text-decoration:none;
+  transition:all .25s;
+}
+.tool-dl:hover {
+  color:var(--cyan);
+  border-color:var(--border-hover);
+  background:var(--cyan-dim);
+}
 
-        .pill-sep { width:1px; height:18px; background:var(--border); flex-shrink:0; }
+/* ─── STATS BAR ─── */
+.stats-bar { max-width:1080px; margin:0 auto 40px; padding:0 24px; }
+.stats-inner {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--border);
+  border:1px solid var(--border-card);
+  border-radius:8px; overflow:hidden;
+}
+.stat {
+  background:var(--stat-bg);
+  padding:28px 16px; text-align:center;
+  transition:background .3s;
+}
+.stat-val {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem; font-weight:700;
+  color:var(--text-heading); margin-bottom:2px;
+}
+.stat-lbl {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem; color:var(--text-muted);
+  letter-spacing:.06em; text-transform:uppercase;
+}
 
-        .theme-btn {
-            display:flex; align-items:center; justify-content:center;
-            width:36px; height:36px;
-            background:var(--toggle-bg);
-            backdrop-filter:blur(16px);
-            border:1px solid var(--toggle-border);
-            border-radius:6px; cursor:pointer;
-            transition:all .3s; color:var(--text-muted); font-size:1rem;
-        }
-        .theme-btn:hover { color:var(--cyan); border-color:var(--border-hover); }
-        [data-theme="dark"] .ico-light { display:none; }
-        [data-theme="light"] .ico-dark { display:none; }
+/* ─── COURSES SECTION ─── */
+.courses-section { max-width:1080px; margin:0 auto; padding:40px 24px 60px; }
+.courses-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.course-card {
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  border-radius:10px; padding:28px 26px;
+  display:flex; flex-direction:column;
+  transition:all .35s; position:relative; overflow:hidden;
+}
+.course-card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(135deg,var(--amber),#f97316);
+  opacity:0; transition:opacity .35s;
+}
+.course-card:hover {
+  border-color:var(--amber-border);
+  background:var(--bg-card-hover);
+  transform:translateY(-3px);
+  box-shadow:0 8px 30px rgba(245,158,11,0.06);
+}
+.course-card:hover::before { opacity:1; }
+.course-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--amber);
+  background:var(--amber-dim);
+  border:1px solid var(--amber-border);
+  padding:4px 10px; border-radius:3px;
+  margin-bottom:14px; width:fit-content;
+}
+.course-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem; font-weight:700;
+  margin-bottom:10px; color:var(--text-heading);
+  transition:color .3s;
+}
+.course-card p {
+  font-size:.84rem; color:var(--text-secondary);
+  line-height:1.65; margin-bottom:16px; flex-grow:1;
+}
+.course-meta {
+  display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px;
+}
+.course-meta-item {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem; color:var(--text-muted);
+  display:flex; align-items:center; gap:4px;
+}
+.course-actions {
+  display:flex; align-items:center; gap:12px;
+  padding-top:14px; border-top:1px solid var(--border);
+}
+.course-link {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem; color:var(--amber);
+  text-decoration:none; transition:all .25s;
+}
+.course-link:hover { filter:brightness(1.2); }
 
-        .hero {
-            min-height:100vh;
-            display:flex; flex-direction:column;
-            justify-content:center; align-items:center;
-            text-align:center; padding:100px 24px 80px;
-            position:relative;
-        }
-        .hero::before {
-            content:''; position:absolute;
-            width:500px; height:500px; border-radius:50%;
-            background:radial-gradient(circle,var(--glow) 0%,transparent 70%);
-            top:15%; left:50%; transform:translateX(-50%);
-            pointer-events:none;
-        }
+/* ─── RESOURCES SECTION ─── */
+.resources-section { max-width:1080px; margin:0 auto; padding:40px 24px 60px; }
+.resources-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.resource-card {
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  border-radius:10px; padding:24px 22px;
+  display:flex; flex-direction:column;
+  transition:all .35s; position:relative; overflow:hidden;
+}
+.resource-card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(135deg,var(--purple),#818cf8);
+  opacity:0; transition:opacity .35s;
+}
+.resource-card:hover {
+  border-color:var(--purple-border);
+  background:var(--bg-card-hover);
+  transform:translateY(-3px);
+  box-shadow:0 8px 30px rgba(167,139,250,0.06);
+}
+.resource-card:hover::before { opacity:1; }
+.resource-icon {
+  width:44px; height:44px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem; margin-bottom:16px;
+  background:var(--purple-dim);
+  border:1px solid var(--purple-border);
+  transition:all .3s;
+}
+.resource-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem; font-weight:700;
+  margin-bottom:8px; color:var(--text-heading);
+}
+.resource-card p {
+  font-size:.82rem; color:var(--text-secondary);
+  line-height:1.6; margin-bottom:16px; flex-grow:1;
+}
+.resource-link {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem; color:var(--purple);
+  text-decoration:none; transition:all .25s;
+  display:flex; align-items:center; gap:4px;
+}
+.resource-link:hover { filter:brightness(1.2); }
 
-        .status-badge {
-            display:inline-flex; align-items:center; gap:8px;
-            font-family:'JetBrains Mono',monospace;
-            font-size:.65rem; letter-spacing:.12em;
-            text-transform:uppercase; color:var(--cyan);
-            border:1px solid var(--cyan-border);
-            padding:8px 18px; border-radius:4px;
-            background:var(--cyan-dim); margin-bottom:32px;
-            transition:all .3s;
-        }
-        .status-dot {
-            width:6px; height:6px; border-radius:50%;
-            background:var(--online-dot);
-            animation:blink 2s ease-in-out infinite;
-        }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+/* ─── DIVIDER LINE ─── */
+.section-divider {
+  max-width:1080px; margin:0 auto; padding:0 24px;
+}
+.section-divider .divider-line {
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan-border),transparent);
+}
 
-        .hero h1 {
-            font-family:'Cormorant Garamond',serif;
-            font-size:clamp(2.8rem,6vw,4.8rem);
-            font-weight:700; line-height:1.08;
-            margin-bottom:24px; max-width:750px;
-            color:var(--text-heading); transition:color .3s;
-        }
-        .hero h1 em {
-            font-style:italic;
-            background:var(--gradient-text);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;
-        }
+/* ─── CTA SECTION ─── */
+.cta-section { max-width:1080px; margin:40px auto 0; padding:0 24px 80px; }
+.cta-card {
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  border-radius:10px; padding:48px 40px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.cta-card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:var(--gradient-btn);
+}
+.cta-card h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem; font-weight:700;
+  color:var(--text-heading); margin-bottom:10px;
+}
+.cta-card>p {
+  color:var(--text-secondary); font-size:.92rem;
+  margin-bottom:28px; max-width:480px;
+  margin-left:auto; margin-right:auto;
+}
+.cta-btns { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+.cta-btn-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem; font-weight:500; color:#fff;
+  background:var(--gradient-btn);
+  padding:13px 28px; border-radius:6px;
+  text-decoration:none; border:none;
+  cursor:pointer; transition:all .3s;
+}
+.cta-btn-primary:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(6,214,160,.2);
+  filter:brightness(1.1);
+}
+.cta-btn-secondary {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem; color:var(--cyan);
+  background:transparent;
+  padding:13px 28px; border-radius:6px;
+  text-decoration:none;
+  border:1px solid var(--accent-border);
+  cursor:pointer; transition:all .3s;
+}
+.cta-btn-secondary:hover {
+  background:var(--cyan-dim);
+  border-color:var(--border-hover);
+}
 
-        .hero-desc {
-            font-size:1rem; color:var(--text-secondary);
-            max-width:520px; margin-bottom:40px;
-            line-height:1.7; transition:color .3s;
-        }
+/* ─── ABOUT ─── */
+.about-section { max-width:1080px; margin:0 auto; padding:0 24px 80px; }
+.about-card {
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  border-radius:10px; padding:36px 40px;
+  display:flex; gap:32px; align-items:flex-start;
+  transition:all .3s;
+}
+.about-avatar {
+  width:72px; height:72px; border-radius:50%;
+  background:var(--gradient-btn);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem; font-weight:700; color:white;
+  flex-shrink:0;
+  box-shadow:0 0 0 3px var(--bg-card),0 0 0 5px var(--cyan-border);
+}
+.about-body { flex:1; }
+.about-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem; font-weight:700;
+  color:var(--text-heading); margin-bottom:2px;
+}
+.about-role { font-size:.82rem; color:var(--cyan); margin-bottom:16px; }
+.about-text {
+  font-size:.88rem; color:var(--text-secondary);
+  line-height:1.7; margin-bottom:10px;
+}
+.about-links { display:flex; flex-wrap:wrap; gap:18px; margin-top:18px; }
+.about-links a {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem; color:var(--text-muted);
+  text-decoration:none; transition:color .25s;
+}
+.about-links a:hover { color:var(--cyan); }
 
-        .hero-cta {
-            display:inline-flex; align-items:center; gap:8px;
-            font-family:'JetBrains Mono',monospace;
-            font-size:.82rem; font-weight:500; color:#fff;
-            background:var(--gradient-btn);
-            padding:14px 30px; border-radius:6px;
-            text-decoration:none; transition:all .3s;
-        }
-        .hero-cta:hover {
-            transform:translateY(-2px);
-            box-shadow:0 8px 30px rgba(6,214,160,.2);
-            filter:brightness(1.1);
-        }
+/* ─── FOOTER ─── */
+footer {
+  text-align:center; padding:32px 24px;
+  border-top:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem; color:var(--text-muted);
+}
+footer a { color:var(--text-secondary); text-decoration:none; }
+footer a:hover { color:var(--cyan); }
 
-        .scroll-line {
-            position:absolute; bottom:36px;
-            display:flex; flex-direction:column;
-            align-items:center; gap:8px;
-        }
-        .scroll-text {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.58rem; color:var(--text-muted);
-            letter-spacing:.2em; text-transform:uppercase;
-        }
-        .scroll-bar {
-            width:1px; height:30px;
-            background:var(--cyan); opacity:.3;
-            animation:scrollP 2s ease-in-out infinite;
-        }
-        @keyframes scrollP {
-            0%{transform:scaleY(.4);opacity:.2}
-            50%{transform:scaleY(1);opacity:.6}
-            100%{transform:scaleY(.4);opacity:.2}
-        }
+/* ─── ANIMATIONS ─── */
+.fade-in {
+  opacity:0; transform:translateY(16px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.fade-in.visible {
+  opacity:1; transform:translateY(0);
+}
+.tool-card { opacity:0; transform:translateY(16px); }
+.tool-card.visible { opacity:1; transform:translateY(0); transition:opacity .5s ease, transform .5s ease; }
 
-        .sec-label {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.65rem; letter-spacing:.18em;
-            text-transform:uppercase; color:var(--cyan);
-            margin-bottom:14px; transition:color .3s;
-        }
-        .sec-title {
-            font-family:'Cormorant Garamond',serif;
-            font-size:clamp(1.8rem,3.5vw,2.5rem);
-            font-weight:700; line-height:1.2;
-            margin-bottom:12px; color:var(--text-heading);
-            transition:color .3s;
-        }
-        .sec-title em {
-            font-style:italic;
-            background:var(--gradient-text);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;
-        }
-        .sec-desc {
-            color:var(--text-secondary); font-size:.92rem;
-            margin-bottom:48px; transition:color .3s;
-        }
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px) {
+  .tools-grid { grid-template-columns:repeat(2,1fr); }
+  .courses-grid { grid-template-columns:1fr; }
+  .resources-grid { grid-template-columns:repeat(2,1fr); }
+  .nav-links { display:none; }
+  .nav-hamburger { display:flex; }
+}
+@media(max-width:600px) {
+  .tools-grid { grid-template-columns:1fr; }
+  .resources-grid { grid-template-columns:1fr; }
+  .stats-inner { grid-template-columns:repeat(2,1fr); }
+  .about-card { flex-direction:column; align-items:center; text-align:center; padding:28px; }
+  .about-links { justify-content:center; }
+  .navbar { padding:0 16px; }
+  .cta-card { padding:32px 24px; }
+  .lang-btn { padding:7px 12px; font-size:.7rem; }
+}
 
-        .tools-section { padding:80px 24px 60px; max-width:1080px; margin:0 auto; }
-
-        .tools-grid {
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:18px;
-        }
-
-        .tool-card {
-            background:var(--bg-card);
-            border:1px solid var(--border-card);
-            border-radius:10px; padding:28px 26px 24px;
-            display:flex; flex-direction:column;
-            transition:all .35s; position:relative; overflow:hidden;
-        }
-        .tool-card::after {
-            content:''; position:absolute;
-            top:0; left:0; right:0; height:2px;
-            background:var(--gradient-btn);
-            opacity:0; transition:opacity .35s;
-        }
-        .tool-card:hover {
-            border-color:var(--border-hover);
-            background:var(--bg-card-hover);
-            transform:translateY(-4px);
-            box-shadow:var(--shadow-hover);
-        }
-        .tool-card:hover::after { opacity:1; }
-
-        .tool-num {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.6rem; color:var(--text-muted);
-            letter-spacing:.12em; text-transform:uppercase;
-            margin-bottom:14px;
-        }
-        .tool-card h3 {
-            font-family:'Cormorant Garamond',serif;
-            font-size:1.35rem; font-weight:700;
-            margin-bottom:12px; color:var(--text-heading);
-            transition:color .3s;
-        }
-        .tool-card p {
-            font-size:.85rem; color:var(--text-secondary);
-            line-height:1.65; margin-bottom:18px; flex-grow:1;
-            transition:color .3s;
-        }
-        .tool-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
-        .tool-tag {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.58rem; color:var(--text-secondary);
-            border:1px solid var(--border);
-            padding:3px 9px; border-radius:3px;
-            transition:all .3s;
-        }
-        .tool-actions {
-            display:flex; align-items:center;
-            justify-content:space-between;
-            padding-top:14px; border-top:1px solid var(--border);
-        }
-        .tool-open {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.75rem; color:var(--cyan);
-            text-decoration:none; transition:all .25s;
-        }
-        .tool-card:hover .tool-open { filter:brightness(1.2); }
-
-        .tool-dl {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.65rem; color:var(--text-muted);
-            background:var(--accent-soft);
-            border:1px solid var(--accent-border);
-            padding:5px 12px; border-radius:4px;
-            cursor:pointer; text-decoration:none;
-            transition:all .25s;
-        }
-        .tool-dl:hover {
-            color:var(--cyan);
-            border-color:var(--border-hover);
-            background:var(--cyan-dim);
-        }
-
-        .stats-bar { max-width:1080px; margin:0 auto 40px; padding:0 24px; }
-        .stats-inner {
-            display:grid; grid-template-columns:repeat(4,1fr);
-            gap:1px; background:var(--border);
-            border:1px solid var(--border-card);
-            border-radius:8px; overflow:hidden;
-        }
-        .stat {
-            background:var(--stat-bg);
-            padding:28px 16px; text-align:center;
-            transition:background .3s;
-        }
-        .stat-val {
-            font-family:'Cormorant Garamond',serif;
-            font-size:2rem; font-weight:700;
-            color:var(--text-heading); margin-bottom:2px;
-        }
-        .stat-lbl {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.62rem; color:var(--text-muted);
-            letter-spacing:.06em; text-transform:uppercase;
-        }
-
-        .cta-section { max-width:1080px; margin:40px auto 0; padding:0 24px 80px; }
-        .cta-card {
-            background:var(--bg-card);
-            border:1px solid var(--border-card);
-            border-radius:10px; padding:48px 40px;
-            text-align:center; position:relative; overflow:hidden;
-        }
-        .cta-card::before {
-            content:''; position:absolute;
-            top:0; left:0; right:0; height:2px;
-            background:var(--gradient-btn);
-        }
-        .cta-card h2 {
-            font-family:'Cormorant Garamond',serif;
-            font-size:1.8rem; font-weight:700;
-            color:var(--text-heading); margin-bottom:10px;
-        }
-        .cta-card>p {
-            color:var(--text-secondary); font-size:.92rem;
-            margin-bottom:28px; max-width:480px;
-            margin-left:auto; margin-right:auto;
-        }
-        .cta-btns { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
-
-        .cta-btn-primary {
-            display:inline-flex; align-items:center; gap:8px;
-            font-family:'JetBrains Mono',monospace;
-            font-size:.8rem; font-weight:500; color:#fff;
-            background:var(--gradient-btn);
-            padding:13px 28px; border-radius:6px;
-            text-decoration:none; border:none;
-            cursor:pointer; transition:all .3s;
-        }
-        .cta-btn-primary:hover {
-            transform:translateY(-2px);
-            box-shadow:0 8px 25px rgba(6,214,160,.2);
-            filter:brightness(1.1);
-        }
-
-        .cta-btn-secondary {
-            display:inline-flex; align-items:center; gap:8px;
-            font-family:'JetBrains Mono',monospace;
-            font-size:.8rem; color:var(--cyan);
-            background:transparent;
-            padding:13px 28px; border-radius:6px;
-            text-decoration:none;
-            border:1px solid var(--accent-border);
-            cursor:pointer; transition:all .3s;
-        }
-        .cta-btn-secondary:hover {
-            background:var(--cyan-dim);
-            border-color:var(--border-hover);
-        }
-
-        .about-section { max-width:1080px; margin:0 auto; padding:0 24px 80px; }
-        .about-card {
-            background:var(--bg-card);
-            border:1px solid var(--border-card);
-            border-radius:10px; padding:36px 40px;
-            display:flex; gap:32px; align-items:flex-start;
-            transition:all .3s;
-        }
-        .about-avatar {
-            width:72px; height:72px; border-radius:50%;
-            background:var(--gradient-btn);
-            display:flex; align-items:center; justify-content:center;
-            font-family:'Cormorant Garamond',serif;
-            font-size:1.5rem; font-weight:700; color:white;
-            flex-shrink:0;
-            box-shadow:0 0 0 3px var(--bg-card),0 0 0 5px var(--cyan-border);
-        }
-        .about-body { flex:1; }
-        .about-name {
-            font-family:'Cormorant Garamond',serif;
-            font-size:1.3rem; font-weight:700;
-            color:var(--text-heading); margin-bottom:2px;
-        }
-        .about-role { font-size:.82rem; color:var(--cyan); margin-bottom:16px; }
-        .about-text {
-            font-size:.88rem; color:var(--text-secondary);
-            line-height:1.7; margin-bottom:10px;
-        }
-        .about-links { display:flex; flex-wrap:wrap; gap:18px; margin-top:18px; }
-        .about-links a {
-            font-family:'JetBrains Mono',monospace;
-            font-size:.72rem; color:var(--text-muted);
-            text-decoration:none; transition:color .25s;
-        }
-        .about-links a:hover { color:var(--cyan); }
-
-        footer {
-            text-align:center; padding:32px 24px;
-            border-top:1px solid var(--border);
-            font-family:'JetBrains Mono',monospace;
-            font-size:.65rem; color:var(--text-muted);
-        }
-        footer a { color:var(--text-secondary); text-decoration:none; }
-        footer a:hover { color:var(--cyan); }
-
-        @media(max-width:900px) { .tools-grid{grid-template-columns:repeat(2,1fr)} }
-        @media(max-width:600px) {
-            .tools-grid{grid-template-columns:1fr}
-            .stats-inner{grid-template-columns:repeat(2,1fr)}
-            .about-card{flex-direction:column;align-items:center;text-align:center;padding:28px}
-            .about-links{justify-content:center}
-            .top-bar{padding:12px 16px}
-            .cta-card{padding:32px 24px}
-        }
-
-        .tool-card {
-            opacity:0; transform:translateY(16px);
-            animation:fadeIn .5s ease forwards;
-        }
-        @keyframes fadeIn { to{opacity:1;transform:translateY(0)} }
-        .tool-card:nth-child(1){animation-delay:.05s}
-        .tool-card:nth-child(2){animation-delay:.1s}
-        .tool-card:nth-child(3){animation-delay:.15s}
-        .tool-card:nth-child(4){animation-delay:.2s}
-        .tool-card:nth-child(5){animation-delay:.25s}
-    </style>
+/* Mobile menu open */
+.nav-links.open {
+  display:flex !important;
+  flex-direction:column;
+  position:absolute;
+  top:56px; left:0; right:0;
+  background:var(--bg-nav);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:12px 24px 16px;
+  gap:4px;
+}
+.nav-links.open .nav-sep { display:none; }
+.nav-links.open .nav-link {
+  width:100%; padding:10px 12px;
+}
+</style>
 </head>
 <body>
 
-<div class="top-bar">
-    <div class="pill">
-        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-        <div class="pill-sep"></div>
-        <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar">
+  <a href="#" class="nav-brand">
+    <span class="nav-logo">Water<em>Tools</em>.es</span>
+  </a>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#tools" class="nav-link" data-en="Tools" data-es="Herramientas">Tools</a>
+    <span class="nav-sep"></span>
+    <a href="#courses" class="nav-link" data-en="Courses" data-es="Cursos">Courses</a>
+    <span class="nav-sep"></span>
+    <a href="#resources" class="nav-link" data-en="Resources" data-es="Recursos">Resources</a>
+    <span class="nav-sep"></span>
+    <a href="#about" class="nav-link" data-en="About" data-es="Sobre mí">About</a>
+  </div>
+
+  <div class="nav-controls">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <div class="lang-sep"></div>
+      <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
     </div>
     <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
-        <span class="ico-dark">☀️</span>
-        <span class="ico-light">🌙</span>
+      <span class="ico-dark">☀️</span>
+      <span class="ico-light">🌙</span>
     </button>
-</div>
+    <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
+<!-- ─── HERO ─── -->
 <section class="hero">
-    <div class="status-badge">
-        <span class="status-dot"></span>
-        <span data-en="Open source · Free forever" data-es="Código abierto · Gratis para siempre">Open source · Free forever</span>
-    </div>
-    <h1>
-        <span data-en="Water treatment" data-es="Herramientas de ingeniería para">Water treatment</span><br>
-        <em data-en="engineering tools" data-es="tratamiento de agua">engineering tools</em>
-    </h1>
-    <p class="hero-desc"
-       data-en="Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation."
-       data-es="Calculadoras y herramientas de diagnóstico de nivel profesional para EDAR, ETAP, sistemas de OI e instrumentación industrial del agua.">
-        Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation.
-    </p>
-    <a href="#tools" class="hero-cta" data-en="Explore tools ↓" data-es="Explorar herramientas ↓">Explore tools ↓</a>
-    <div class="scroll-line">
-        <span class="scroll-text" data-en="Scroll" data-es="Desplazar">Scroll</span>
-        <span class="scroll-bar"></span>
-    </div>
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    <span data-en="Open source · Free forever" data-es="Código abierto · Gratis para siempre">Open source · Free forever</span>
+  </div>
+
+  <h1>
+    <span data-en="Water treatment" data-es="Herramientas de ingeniería para">Water treatment</span><br>
+    <em data-en="engineering tools" data-es="tratamiento de agua">engineering tools</em>
+  </h1>
+
+  <p class="hero-desc"
+     data-en="Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation."
+     data-es="Calculadoras y herramientas de diagnóstico de nivel profesional para EDAR, ETAP, sistemas de OI e instrumentación industrial del agua.">
+    Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation.
+  </p>
+
+  <a href="#tools" class="hero-cta" data-en="Explore tools ↓" data-es="Explorar herramientas ↓">Explore tools ↓</a>
+
+  <div class="scroll-line">
+    <span class="scroll-text" data-en="Scroll" data-es="Desplazar">Scroll</span>
+    <span class="scroll-bar"></span>
+  </div>
 </section>
 
+<!-- ─── TOOLS ─── -->
 <section class="tools-section" id="tools">
-    <div class="sec-label" data-en="Tools &amp; Calculators" data-es="Herramientas y Calculadoras">Tools &amp; Calculators</div>
-    <div class="sec-title">
-        <span data-en="Built for" data-es="Creadas para">Built for</span> <em data-en="field engineers" data-es="ingenieros de campo">field engineers</em>
+  <div class="sec-label" data-en="Tools &amp; Calculators" data-es="Herramientas y Calculadoras">Tools &amp; Calculators</div>
+  <div class="sec-title">
+    <span data-en="Built for" data-es="Creadas para">Built for</span> <em data-en="field engineers" data-es="ingenieros de campo">field engineers</em>
+  </div>
+  <p class="sec-desc"
+     data-en="Each tool is designed from real-world experience in water treatment plants across Spain, Latin America, and the Middle East."
+     data-es="Cada herramienta está diseñada a partir de experiencia real en plantas de tratamiento de agua en España, Latinoamérica y Oriente Medio.">
+    Each tool is designed from real-world experience in water treatment plants across Spain, Latin America, and the Middle East.
+  </p>
+
+  <div class="tools-grid">
+    <!-- AQUA-INST PRO -->
+    <div class="tool-card">
+      <div class="tool-num">Tool 01</div>
+      <h3>AQUA-INST PRO</h3>
+      <p data-en="Complete instrumentation toolkit for water treatment technicians. Signal calculators, troubleshooting trees, calibration registers, and instrument quick-reference for E+H, Siemens, KROHNE, and Yokogawa."
+         data-es="Kit completo de instrumentación para técnicos de tratamiento de agua. Calculadoras de señal, árboles de diagnóstico, registros de calibración y referencia rápida para E+H, Siemens, KROHNE y Yokogawa.">
+        Complete instrumentation toolkit for water treatment technicians. Signal calculators, troubleshooting trees, calibration registers, and instrument quick-reference for E+H, Siemens, KROHNE, and Yokogawa.
+      </p>
+      <div class="tool-tags">
+        <span class="tool-tag">4–20 mA</span>
+        <span class="tool-tag">EDAR</span>
+        <span class="tool-tag">ETAP</span>
+        <span class="tool-tag" data-en="Calibration" data-es="Calibración">Calibration</span>
+      </div>
+      <div class="tool-actions">
+        <a href="https://watertools.es/aqua-inst-pro" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
+        <a href="https://github.com/gjosebwes-sketch/aqua-inst-pro/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
+      </div>
     </div>
-    <p class="sec-desc"
-       data-en="Each tool is designed from real-world experience in water treatment plants across Spain, Latin America, and the Middle East."
-       data-es="Cada herramienta está diseñada a partir de experiencia real en plantas de tratamiento de agua en España, Latinoamérica y Oriente Medio.">
-        Each tool is designed from real-world experience in water treatment plants across Spain, Latin America, and the Middle East.
-    </p>
 
-    <div class="tools-grid">
-
-        <!-- AQUA-INST PRO -->
-        <div class="tool-card">
-            <div class="tool-num">Tool 01</div>
-            <h3>AQUA-INST PRO</h3>
-            <p data-en="Complete instrumentation toolkit for water treatment technicians. Signal calculators, troubleshooting trees, calibration registers, and instrument quick-reference for E+H, Siemens, KROHNE, and Yokogawa."
-               data-es="Kit completo de instrumentación para técnicos de tratamiento de agua. Calculadoras de señal, árboles de diagnóstico, registros de calibración y referencia rápida para E+H, Siemens, KROHNE y Yokogawa.">
-                Complete instrumentation toolkit for water treatment technicians. Signal calculators, troubleshooting trees, calibration registers, and instrument quick-reference for E+H, Siemens, KROHNE, and Yokogawa.
-            </p>
-            <div class="tool-tags">
-                <span class="tool-tag">4–20 mA</span>
-                <span class="tool-tag">EDAR</span>
-                <span class="tool-tag">ETAP</span>
-                <span class="tool-tag" data-en="Calibration" data-es="Calibración">Calibration</span>
-            </div>
-            <div class="tool-actions">
-                <a href="https://gjosebwes-sketch.github.io/aqua-inst-pro/" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
-                <a href="https://github.com/gjosebwes-sketch/aqua-inst-pro/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
-            </div>
-        </div>
-
-        <!-- RO Plant Advisor -->
-        <div class="tool-card">
-            <div class="tool-num">Tool 02</div>
-            <h3>RO Plant Advisor</h3>
-            <p data-en="Interactive reverse osmosis process calculator with animated SVG flow diagrams. Design and optimize RO systems including chemical dosing, salt rejection, and recovery calculations."
-               data-es="Calculadora interactiva de ósmosis inversa con diagramas de flujo SVG animados. Diseñe y optimice sistemas de OI incluyendo dosificación química, rechazo de sales y recuperación.">
-                Interactive reverse osmosis process calculator with animated SVG flow diagrams. Design and optimize RO systems including chemical dosing, salt rejection, and recovery calculations.
-            </p>
-            <div class="tool-tags">
-                <span class="tool-tag" data-en="Reverse Osmosis" data-es="Ósmosis Inversa">Reverse Osmosis</span>
-                <span class="tool-tag" data-en="Chemical Dosing" data-es="Dosificación Química">Chemical Dosing</span>
-                <span class="tool-tag" data-en="SVG Diagram" data-es="Diagrama SVG">SVG Diagram</span>
-            </div>
-            <div class="tool-actions">
-                <a href="https://gjosebwes-sketch.github.io/ro-plant-advisor/" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
-                <a href="https://github.com/gjosebwes-sketch/ro-plant-advisor/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
-            </div>
-        </div>
-
-        <!-- EDAR mA Calculator -->
-        <div class="tool-card">
-            <div class="tool-num">Tool 03</div>
-            <h3 data-en="EDAR mA Calculator" data-es="Calculador mA EDAR">EDAR mA Calculator</h3>
-            <p data-en="Precision mA-to-process and process-to-mA signal converter for wastewater treatment plants. Includes verified normative data from MSAN 2019 for conductivity, turbidity, and pH."
-               data-es="Conversor mA-a-proceso y proceso-a-mA de precisión para EDAR. Datos normativos verificados del MSAN 2019 para conductividad, turbidez y pH.">
-                Precision mA-to-process and process-to-mA signal converter for wastewater treatment plants. Includes verified normative data from MSAN 2019 for conductivity, turbidity, and pH.
-            </p>
-            <div class="tool-tags">
-                <span class="tool-tag">4–20 mA</span>
-                <span class="tool-tag" data-en="Signal Conversion" data-es="Conversión Señal">Signal Conversion</span>
-                <span class="tool-tag">MSAN 2019</span>
-            </div>
-            <div class="tool-actions">
-                <a href="https://gjosebwes-sketch.github.io/edar-ma-calculator/" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
-                <a href="https://github.com/gjosebwes-sketch/edar-ma-calculator/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
-            </div>
-        </div>
-
-        <!-- Tratamiento de Agua PRO -->
-        <div class="tool-card">
-            <div class="tool-num">Tool 04</div>
-            <h3>Tratamiento de Agua PRO</h3>
-            <p data-en="Comprehensive water treatment reference tool covering process chemistry, unit operations, and treatment train design for potable and industrial water applications."
-               data-es="Referencia integral de tratamiento de agua: química de procesos, operaciones unitarias y diseño de trenes de tratamiento para agua potable e industrial.">
-                Comprehensive water treatment reference tool covering process chemistry, unit operations, and treatment train design for potable and industrial water applications.
-            </p>
-            <div class="tool-tags">
-                <span class="tool-tag">ETAP</span>
-                <span class="tool-tag" data-en="Process Chemistry" data-es="Química Procesos">Process Chemistry</span>
-                <span class="tool-tag" data-en="Treatment Design" data-es="Diseño Tratamiento">Treatment Design</span>
-            </div>
-            <div class="tool-actions">
-                <a href="https://gjosebwes-sketch.github.io/tratamiento-de-agua-pro/" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
-                <a href="https://github.com/gjosebwes-sketch/tratamiento-de-agua-pro/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
-            </div>
-        </div>
-
-        <!-- WT Smart Calculator -->
-        <div class="tool-card">
-            <div class="tool-num">Tool 05</div>
-            <h3>WT Smart Calculator</h3>
-            <p data-en="Multi-purpose engineering calculator for water treatment professionals. Unit conversions, flow calculations, chemical dosing, and process parameter estimation in a single interface."
-               data-es="Calculadora multipropósito. Conversiones de unidades, cálculos de caudal, dosificación química y estimación de parámetros de proceso en una sola interfaz.">
-                Multi-purpose engineering calculator for water treatment professionals. Unit conversions, flow calculations, chemical dosing, and process parameter estimation in a single interface.
-            </p>
-            <div class="tool-tags">
-                <span class="tool-tag" data-en="Unit Conversion" data-es="Conversión Unidades">Unit Conversion</span>
-                <span class="tool-tag" data-en="Flow Calc" data-es="Cálc. Caudal">Flow Calc</span>
-                <span class="tool-tag" data-en="Chemical Dosing" data-es="Dosificación">Chemical Dosing</span>
-            </div>
-            <div class="tool-actions">
-                <a href="https://gjosebwes-sketch.github.io/wt-smart-calculator/" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
-                <a href="https://github.com/gjosebwes-sketch/wt-smart-calculator/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
-            </div>
-        </div>
-
+    <!-- RO Plant Advisor -->
+    <div class="tool-card">
+      <div class="tool-num">Tool 02</div>
+      <h3>RO Plant Advisor</h3>
+      <p data-en="Interactive reverse osmosis process calculator with animated SVG flow diagrams. Design and optimize RO systems including chemical dosing, salt rejection, and recovery calculations."
+         data-es="Calculadora interactiva de ósmosis inversa con diagramas de flujo SVG animados. Diseñe y optimice sistemas de OI incluyendo dosificación química, rechazo de sales y recuperación.">
+        Interactive reverse osmosis process calculator with animated SVG flow diagrams. Design and optimize RO systems including chemical dosing, salt rejection, and recovery calculations.
+      </p>
+      <div class="tool-tags">
+        <span class="tool-tag" data-en="Reverse Osmosis" data-es="Ósmosis Inversa">Reverse Osmosis</span>
+        <span class="tool-tag" data-en="Chemical Dosing" data-es="Dosificación Química">Chemical Dosing</span>
+        <span class="tool-tag" data-en="SVG Diagram" data-es="Diagrama SVG">SVG Diagram</span>
+      </div>
+      <div class="tool-actions">
+        <a href="https://watertools.es/ro-plant-advisor" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
+        <a href="https://github.com/gjosebwes-sketch/ro-plant-advisor/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
+      </div>
     </div>
+
+    <!-- EDAR mA Calculator -->
+    <div class="tool-card">
+      <div class="tool-num">Tool 03</div>
+      <h3 data-en="EDAR mA Calculator" data-es="Calculador mA EDAR">EDAR mA Calculator</h3>
+      <p data-en="Precision mA-to-process and process-to-mA signal converter for wastewater treatment plants. Includes verified normative data from MSAN 2019 for conductivity, turbidity, and pH."
+         data-es="Conversor mA-a-proceso y proceso-a-mA de precisión para EDAR. Datos normativos verificados del MSAN 2019 para conductividad, turbidez y pH.">
+        Precision mA-to-process and process-to-mA signal converter for wastewater treatment plants. Includes verified normative data from MSAN 2019 for conductivity, turbidity, and pH.
+      </p>
+      <div class="tool-tags">
+        <span class="tool-tag">4–20 mA</span>
+        <span class="tool-tag" data-en="Signal Conversion" data-es="Conversión Señal">Signal Conversion</span>
+        <span class="tool-tag">MSAN 2019</span>
+      </div>
+      <div class="tool-actions">
+        <a href="https://watertools.es/edar-ma-calculator" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
+        <a href="https://github.com/gjosebwes-sketch/edar-ma-calculator/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
+      </div>
+    </div>
+
+    <!-- Tratamiento de Agua PRO -->
+    <div class="tool-card">
+      <div class="tool-num">Tool 04</div>
+      <h3>Tratamiento de Agua PRO</h3>
+      <p data-en="Comprehensive water treatment reference tool covering process chemistry, unit operations, and treatment train design for potable and industrial water applications."
+         data-es="Referencia integral de tratamiento de agua: química de procesos, operaciones unitarias y diseño de trenes de tratamiento para agua potable e industrial.">
+        Comprehensive water treatment reference tool covering process chemistry, unit operations, and treatment train design for potable and industrial water applications.
+      </p>
+      <div class="tool-tags">
+        <span class="tool-tag">ETAP</span>
+        <span class="tool-tag" data-en="Process Chemistry" data-es="Química Procesos">Process Chemistry</span>
+        <span class="tool-tag" data-en="Treatment Design" data-es="Diseño Tratamiento">Treatment Design</span>
+      </div>
+      <div class="tool-actions">
+        <a href="https://watertools.es/tratamiento-de-agua-pro" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
+        <a href="https://github.com/gjosebwes-sketch/tratamiento-de-agua-pro/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
+      </div>
+    </div>
+
+    <!-- WT Smart Calculator -->
+    <div class="tool-card">
+      <div class="tool-num">Tool 05</div>
+      <h3>WT Smart Calculator</h3>
+      <p data-en="Multi-purpose engineering calculator for water treatment professionals. Unit conversions, flow calculations, chemical dosing, and process parameter estimation in a single interface."
+         data-es="Calculadora multipropósito. Conversiones de unidades, cálculos de caudal, dosificación química y estimación de parámetros de proceso en una sola interfaz.">
+        Multi-purpose engineering calculator for water treatment professionals. Unit conversions, flow calculations, chemical dosing, and process parameter estimation in a single interface.
+      </p>
+      <div class="tool-tags">
+        <span class="tool-tag" data-en="Unit Conversion" data-es="Conversión Unidades">Unit Conversion</span>
+        <span class="tool-tag" data-en="Flow Calc" data-es="Cálc. Caudal">Flow Calc</span>
+        <span class="tool-tag" data-en="Chemical Dosing" data-es="Dosificación">Chemical Dosing</span>
+      </div>
+      <div class="tool-actions">
+        <a href="https://watertools.es/wt-smart-calculator" class="tool-open" data-en="Open tool →" data-es="Abrir →">Open tool →</a>
+        <a href="https://github.com/gjosebwes-sketch/wt-smart-calculator/archive/refs/heads/main.zip" class="tool-dl" data-en="⬇ Download" data-es="⬇ Descargar">⬇ Download</a>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- ─── STATS ─── -->
 <div class="stats-bar">
-    <div class="stats-inner">
-        <div class="stat">
-            <div class="stat-val">5</div>
-            <div class="stat-lbl" data-en="Engineering tools" data-es="Herramientas">Engineering tools</div>
-        </div>
-        <div class="stat">
-            <div class="stat-val">30+</div>
-            <div class="stat-lbl" data-en="Years experience" data-es="Años experiencia">Years experience</div>
-        </div>
-        <div class="stat">
-            <div class="stat-val">100%</div>
-            <div class="stat-lbl" data-en="Free &amp; open source" data-es="Gratis y open source">Free &amp; open source</div>
-        </div>
-        <div class="stat">
-            <div class="stat-val">0</div>
-            <div class="stat-lbl" data-en="Ads or tracking" data-es="Anuncios o rastreo">Ads or tracking</div>
-        </div>
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-val">5</div>
+      <div class="stat-lbl" data-en="Engineering tools" data-es="Herramientas">Engineering tools</div>
     </div>
+    <div class="stat">
+      <div class="stat-val">30+</div>
+      <div class="stat-lbl" data-en="Years experience" data-es="Años experiencia">Years experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">100%</div>
+      <div class="stat-lbl" data-en="Free &amp; open source" data-es="Gratis y open source">Free &amp; open source</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">0</div>
+      <div class="stat-lbl" data-en="Ads or tracking" data-es="Anuncios o rastreo">Ads or tracking</div>
+    </div>
+  </div>
 </div>
 
-<section class="cta-section">
-    <div class="cta-card">
-        <h2 data-en="Download all tools" data-es="Descarga todas las herramientas">Download all tools</h2>
-        <p data-en="Every tool runs offline as a single HTML file. No installation needed — just open in any browser."
-           data-es="Cada herramienta funciona offline como un único archivo HTML. Sin instalación — solo abre en cualquier navegador.">
-            Every tool runs offline as a single HTML file. No installation needed — just open in any browser.
-        </p>
-        <div class="cta-btns">
-            <a href="https://github.com/gjosebwes-sketch?tab=repositories" class="cta-btn-primary" data-en="⬇ Download from GitHub" data-es="⬇ Descargar desde GitHub">⬇ Download from GitHub</a>
-            <a href="https://github.com/gjosebwes-sketch" class="cta-btn-secondary" data-en="★ Star on GitHub" data-es="★ Estrella en GitHub">★ Star on GitHub</a>
-        </div>
+<!-- ─── DIVIDER ─── -->
+<div class="section-divider"><div class="divider-line"></div></div>
+
+<!-- ─── COURSES ─── -->
+<section class="courses-section" id="courses">
+  <div class="sec-label" style="color:var(--amber);" data-en="Courses &amp; Training" data-es="Cursos y Formación">Courses &amp; Training</div>
+  <div class="sec-title">
+    <span data-en="Learn" data-es="Aprende">Learn</span> <em data-en="water engineering" data-es="ingeniería del agua">water engineering</em>
+  </div>
+  <p class="sec-desc"
+     data-en="Curated courses and training resources for water treatment professionals — from fundamentals to advanced process design."
+     data-es="Cursos y recursos formativos seleccionados para profesionales del tratamiento de agua — desde fundamentos hasta diseño avanzado de procesos.">
+    Curated courses and training resources for water treatment professionals — from fundamentals to advanced process design.
+  </p>
+
+  <div class="courses-grid">
+    <!-- Course 1 -->
+    <div class="course-card fade-in">
+      <div class="course-badge" data-en="📐 Instrumentation" data-es="📐 Instrumentación">📐 Instrumentation</div>
+      <h3 data-en="Industrial Instrumentation for Water Treatment" data-es="Instrumentación Industrial para Tratamiento de Agua">Industrial Instrumentation for Water Treatment</h3>
+      <p data-en="4–20 mA signal fundamentals, HART protocol, sensor calibration procedures, and field troubleshooting for EDAR/ETAP instrumentation systems."
+         data-es="Fundamentos de señal 4–20 mA, protocolo HART, procedimientos de calibración de sensores y resolución de problemas en campo para sistemas de instrumentación EDAR/ETAP.">
+        4–20 mA signal fundamentals, HART protocol, sensor calibration procedures, and field troubleshooting for EDAR/ETAP instrumentation systems.
+      </p>
+      <div class="course-meta">
+        <span class="course-meta-item" data-en="📄 PDF Guide" data-es="📄 Guía PDF">📄 PDF Guide</span>
+        <span class="course-meta-item" data-en="🕐 Self-paced" data-es="🕐 A tu ritmo">🕐 Self-paced</span>
+        <span class="course-meta-item" data-en="🆓 Free" data-es="🆓 Gratis">🆓 Free</span>
+      </div>
+      <div class="course-actions">
+        <a href="#" class="course-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+      </div>
     </div>
+
+    <!-- Course 2 -->
+    <div class="course-card fade-in">
+      <div class="course-badge" data-en="💧 Reverse Osmosis" data-es="💧 Ósmosis Inversa">💧 Reverse Osmosis</div>
+      <h3 data-en="RO System Design &amp; Optimization" data-es="Diseño y Optimización de Sistemas OI">RO System Design &amp; Optimization</h3>
+      <p data-en="Complete guide to reverse osmosis system design: pretreatment selection, membrane calculations, chemical dosing, recovery optimization, and real-world case studies."
+         data-es="Guía completa de diseño de sistemas de ósmosis inversa: selección de pretratamiento, cálculos de membrana, dosificación química, optimización de recuperación y casos prácticos reales.">
+        Complete guide to reverse osmosis system design: pretreatment selection, membrane calculations, chemical dosing, recovery optimization, and real-world case studies.
+      </p>
+      <div class="course-meta">
+        <span class="course-meta-item" data-en="📄 PDF Guide" data-es="📄 Guía PDF">📄 PDF Guide</span>
+        <span class="course-meta-item" data-en="🕐 Self-paced" data-es="🕐 A tu ritmo">🕐 Self-paced</span>
+        <span class="course-meta-item" data-en="🆓 Free" data-es="🆓 Gratis">🆓 Free</span>
+      </div>
+      <div class="course-actions">
+        <a href="#" class="course-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+      </div>
+    </div>
+
+    <!-- Course 3 -->
+    <div class="course-card fade-in">
+      <div class="course-badge" data-en="🏭 EDAR/ETAP" data-es="🏭 EDAR/ETAP">🏭 EDAR/ETAP</div>
+      <h3 data-en="Wastewater Treatment Plant Operations" data-es="Operación de Estaciones Depuradoras">Wastewater Treatment Plant Operations</h3>
+      <p data-en="Operational fundamentals for EDAR facilities: biological treatment, sludge management, process control, regulatory compliance, and performance monitoring."
+         data-es="Fundamentos operativos de EDAR: tratamiento biológico, gestión de fangos, control de procesos, cumplimiento normativo y monitorización de rendimiento.">
+        Operational fundamentals for EDAR facilities: biological treatment, sludge management, process control, regulatory compliance, and performance monitoring.
+      </p>
+      <div class="course-meta">
+        <span class="course-meta-item" data-en="📄 PDF Guide" data-es="📄 Guía PDF">📄 PDF Guide</span>
+        <span class="course-meta-item" data-en="🕐 Self-paced" data-es="🕐 A tu ritmo">🕐 Self-paced</span>
+        <span class="course-meta-item" data-en="🆓 Free" data-es="🆓 Gratis">🆓 Free</span>
+      </div>
+      <div class="course-actions">
+        <a href="#" class="course-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+      </div>
+    </div>
+
+    <!-- Course 4 -->
+    <div class="course-card fade-in">
+      <div class="course-badge" data-en="⚗️ Process Chemistry" data-es="⚗️ Química de Procesos">⚗️ Process Chemistry</div>
+      <h3 data-en="Water Chemistry for Engineers" data-es="Química del Agua para Ingenieros">Water Chemistry for Engineers</h3>
+      <p data-en="Essential water chemistry for field engineers: pH control, alkalinity, coagulation-flocculation, disinfection, corrosion indices (LSI, RSI), and chemical dosing calculations."
+         data-es="Química del agua esencial para ingenieros de campo: control de pH, alcalinidad, coagulación-floculación, desinfección, índices de corrosión (LSI, RSI) y cálculos de dosificación química.">
+        Essential water chemistry for field engineers: pH control, alkalinity, coagulation-flocculation, disinfection, corrosion indices (LSI, RSI), and chemical dosing calculations.
+      </p>
+      <div class="course-meta">
+        <span class="course-meta-item" data-en="📄 PDF Guide" data-es="📄 Guía PDF">📄 PDF Guide</span>
+        <span class="course-meta-item" data-en="🕐 Self-paced" data-es="🕐 A tu ritmo">🕐 Self-paced</span>
+        <span class="course-meta-item" data-en="🆓 Free" data-es="🆓 Gratis">🆓 Free</span>
+      </div>
+      <div class="course-actions">
+        <a href="#" class="course-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="about-section">
-    <div class="sec-label" data-en="About the creator" data-es="Sobre el creador">About the creator</div>
-    <div class="sec-title" style="margin-bottom:32px">
-        <span data-en="Built by an" data-es="Creado por un">Built by an</span> <em data-en="engineer" data-es="ingeniero">engineer</em><span data-en=", for engineers" data-es=", para ingenieros">, for engineers</span>
+<!-- ─── DIVIDER ─── -->
+<div class="section-divider"><div class="divider-line"></div></div>
+
+<!-- ─── RESOURCES ─── -->
+<section class="resources-section" id="resources">
+  <div class="sec-label" style="color:var(--purple);" data-en="Technical Resources" data-es="Recursos Técnicos">Technical Resources</div>
+  <div class="sec-title">
+    <span data-en="Reference" data-es="Documentación">Reference</span> <em data-en="library" data-es="técnica">library</em>
+  </div>
+  <p class="sec-desc"
+     data-en="Technical documents, manufacturer references, and engineering resources for water treatment professionals."
+     data-es="Documentos técnicos, referencias de fabricantes y recursos de ingeniería para profesionales del tratamiento de agua.">
+    Technical documents, manufacturer references, and engineering resources for water treatment professionals.
+  </p>
+
+  <div class="resources-grid">
+    <!-- Resource 1 -->
+    <div class="resource-card fade-in">
+      <div class="resource-icon">📊</div>
+      <h3 data-en="Instrument Datasheets" data-es="Fichas de Instrumentos">Instrument Datasheets</h3>
+      <p data-en="Quick-reference datasheets for E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa, and more — wiring, ranges, and configuration."
+         data-es="Fichas técnicas de referencia rápida para E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa y más — cableado, rangos y configuración.">
+        Quick-reference datasheets for E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa, and more — wiring, ranges, and configuration.
+      </p>
+      <a href="#" class="resource-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
     </div>
-    <div class="about-card">
-        <div class="about-avatar">GB</div>
-        <div class="about-body">
-            <div class="about-name">Ing. Gustavo Blanco Walter</div>
-            <div class="about-role">Senior Water &amp; Process Engineer · Valencia, Spain</div>
-            <p class="about-text" data-en="30+ years of experience in industrial water treatment, instrumentation, Oil &amp; Gas, EDAR/ETAP, and petrochemical systems. Specialized in RO/UF/MBR/DAF systems, field instrumentation (E+H, Siemens, KROHNE, Yokogawa), and process optimization across Venezuela, Peru, and Spain."
-               data-es="Más de 30 años de experiencia en tratamiento industrial de agua, instrumentación, Oil &amp; Gas, EDAR/ETAP y sistemas petroquímicos. Especializado en OI/UF/MBR/DAF, instrumentación de campo (E+H, Siemens, KROHNE, Yokogawa) y optimización de procesos en Venezuela, Perú y España.">
-                30+ years of experience in industrial water treatment, instrumentation, Oil &amp; Gas, EDAR/ETAP, and petrochemical systems. Specialized in RO/UF/MBR/DAF systems, field instrumentation (E+H, Siemens, KROHNE, Yokogawa), and process optimization across Venezuela, Peru, and Spain.
-            </p>
-            <p class="about-text" data-en="Previously at GE Power &amp; Water, Nalco/Ecolab, SUEZ, and Veolia Water Solutions. PDVSA advisory experience at Refinería El Palito and Refinería Amuay."
-               data-es="Anteriormente en GE Power &amp; Water, Nalco/Ecolab, SUEZ y Veolia Water Solutions. Asesoría PDVSA en Refinería El Palito y Refinería Amuay.">
-                Previously at GE Power &amp; Water, Nalco/Ecolab, SUEZ, and Veolia Water Solutions. PDVSA advisory experience at Refinería El Palito and Refinería Amuay.
-            </p>
-            <div class="about-links">
-                <a href="https://linkedin.com/in/gustavo-blanco-walter">🔗 LinkedIn</a>
-                <a href="https://github.com/gjosebwes-sketch">🔗 GitHub</a>
-                <a href="mailto:gjosebw.es@gmail.com">✉ Contact</a>
-            </div>
-        </div>
+
+    <!-- Resource 2 -->
+    <div class="resource-card fade-in">
+      <div class="resource-icon">📐</div>
+      <h3 data-en="Engineering Tables" data-es="Tablas de Ingeniería">Engineering Tables</h3>
+      <p data-en="Pipe sizing, flow velocity, conversion factors, chemical properties, and regulatory limits for EDAR/ETAP in a single reference."
+         data-es="Dimensionado de tuberías, velocidad de flujo, factores de conversión, propiedades químicas y límites normativos EDAR/ETAP en una sola referencia.">
+        Pipe sizing, flow velocity, conversion factors, chemical properties, and regulatory limits for EDAR/ETAP in a single reference.
+      </p>
+      <a href="#" class="resource-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
     </div>
+
+    <!-- Resource 3 -->
+    <div class="resource-card fade-in">
+      <div class="resource-icon">📘</div>
+      <h3 data-en="Technical Guides" data-es="Guías Técnicas">Technical Guides</h3>
+      <p data-en="Step-by-step field procedures: sensor calibration, signal verification, commissioning checklists, and maintenance protocols."
+         data-es="Procedimientos de campo paso a paso: calibración de sensores, verificación de señal, listas de comprobación de puesta en marcha y protocolos de mantenimiento.">
+        Step-by-step field procedures: sensor calibration, signal verification, commissioning checklists, and maintenance protocols.
+      </p>
+      <a href="#" class="resource-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+    </div>
+
+    <!-- Resource 4 -->
+    <div class="resource-card fade-in">
+      <div class="resource-icon">⚗️</div>
+      <h3 data-en="Chemical Dosing Charts" data-es="Tablas de Dosificación">Chemical Dosing Charts</h3>
+      <p data-en="Dosing reference charts for coagulants, flocculants, pH adjusters, antiscalants, biocides, and reducing agents used in water treatment."
+         data-es="Tablas de referencia de dosificación para coagulantes, floculantes, ajustadores de pH, antiincrustantes, biocidas y agentes reductores en tratamiento de agua.">
+        Dosing reference charts for coagulants, flocculants, pH adjusters, antiscalants, biocides, and reducing agents used in water treatment.
+      </p>
+      <a href="#" class="resource-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+    </div>
+
+    <!-- Resource 5 -->
+    <div class="resource-card fade-in">
+      <div class="resource-icon">📋</div>
+      <h3 data-en="Normative References" data-es="Referencias Normativas">Normative References</h3>
+      <p data-en="Spanish and EU water quality standards: RD 140/2003, MSAN 2019 parameters, discharge limits (RDPH), and relevant ISO/EN norms."
+         data-es="Normativa española y europea de calidad del agua: RD 140/2003, parámetros MSAN 2019, límites de vertido (RDPH) y normas ISO/EN relevantes.">
+        Spanish and EU water quality standards: RD 140/2003, MSAN 2019 parameters, discharge limits (RDPH), and relevant ISO/EN norms.
+      </p>
+      <a href="#" class="resource-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+    </div>
+
+    <!-- Resource 6 -->
+    <div class="resource-card fade-in">
+      <div class="resource-icon">🔧</div>
+      <h3 data-en="Field Troubleshooting" data-es="Diagnóstico de Campo">Field Troubleshooting</h3>
+      <p data-en="Decision trees and checklists for diagnosing common field issues: sensor drift, signal noise, communication failures, and process alarms."
+         data-es="Árboles de decisión y listas de comprobación para diagnosticar problemas comunes en campo: deriva de sensores, ruido de señal, fallos de comunicación y alarmas de proceso.">
+        Decision trees and checklists for diagnosing common field issues: sensor drift, signal noise, communication failures, and process alarms.
+      </p>
+      <a href="#" class="resource-link" data-en="Coming soon →" data-es="Próximamente →">Coming soon →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DIVIDER ─── -->
+<div class="section-divider"><div class="divider-line"></div></div>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section">
+  <div class="cta-card">
+    <h2 data-en="Download all tools" data-es="Descarga todas las herramientas">Download all tools</h2>
+    <p data-en="Every tool runs offline as a single HTML file. No installation needed — just open in any browser."
+       data-es="Cada herramienta funciona offline como un único archivo HTML. Sin instalación — solo abre en cualquier navegador.">
+      Every tool runs offline as a single HTML file. No installation needed — just open in any browser.
+    </p>
+    <div class="cta-btns">
+      <a href="https://github.com/gjosebwes-sketch?tab=repositories" class="cta-btn-primary" data-en="⬇ Download from GitHub" data-es="⬇ Descargar desde GitHub">⬇ Download from GitHub</a>
+      <a href="https://github.com/gjosebwes-sketch" class="cta-btn-secondary" data-en="★ Star on GitHub" data-es="★ Estrella en GitHub">★ Star on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section class="about-section" id="about">
+  <div class="sec-label" data-en="About the creator" data-es="Sobre el creador">About the creator</div>
+  <div class="sec-title" style="margin-bottom:32px">
+    <span data-en="Built by an" data-es="Creado por un">Built by an</span> <em data-en="engineer" data-es="ingeniero">engineer</em><span data-en=", for engineers" data-es=", para ingenieros">, for engineers</span>
+  </div>
+
+  <div class="about-card">
+    <div class="about-avatar">GB</div>
+    <div class="about-body">
+      <div class="about-name">Ing. Gustavo Blanco Walter</div>
+      <div class="about-role">Senior Water &amp; Process Engineer · Valencia, Spain</div>
+      <p class="about-text" data-en="30+ years of experience in industrial water treatment, instrumentation, Oil &amp; Gas, EDAR/ETAP, and petrochemical systems. Specialized in RO/UF/MBR/DAF systems, field instrumentation (E+H, Siemens, KROHNE, Yokogawa), and process optimization across Venezuela, Peru, and Spain."
+         data-es="Más de 30 años de experiencia en tratamiento industrial de agua, instrumentación, Oil &amp; Gas, EDAR/ETAP y sistemas petroquímicos. Especializado en OI/UF/MBR/DAF, instrumentación de campo (E+H, Siemens, KROHNE, Yokogawa) y optimización de procesos en Venezuela, Perú y España.">
+        30+ years of experience in industrial water treatment, instrumentation, Oil &amp; Gas, EDAR/ETAP, and petrochemical systems. Specialized in RO/UF/MBR/DAF systems, field instrumentation (E+H, Siemens, KROHNE, Yokogawa), and process optimization across Venezuela, Peru, and Spain.
+      </p>
+      <p class="about-text" data-en="Previously at GE Power &amp; Water, Nalco/Ecolab, SUEZ, and Veolia Water Solutions. PDVSA advisory experience at Refinería El Palito and Refinería Amuay."
+         data-es="Anteriormente en GE Power &amp; Water, Nalco/Ecolab, SUEZ y Veolia Water Solutions. Asesoría PDVSA en Refinería El Palito y Refinería Amuay.">
+        Previously at GE Power &amp; Water, Nalco/Ecolab, SUEZ, and Veolia Water Solutions. PDVSA advisory experience at Refinería El Palito and Refinería Amuay.
+      </p>
+      <div class="about-links">
+        <a href="https://linkedin.com/in/gustavo-blanco-walter">🔗 LinkedIn</a>
+        <a href="https://github.com/gjosebwes-sketch">🔗 GitHub</a>
+        <a href="mailto:gjosebw.es@gmail.com">✉ Contact</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-    <p>© 2026 watertools.es — <span data-en="Developed by" data-es="Desarrollado por">Developed by</span>
-        <a href="https://linkedin.com/in/gustavo-blanco-walter">Ing. Gustavo Blanco Walter</a> · Senior Water &amp; Process Engineer
-    </p>
+  <p>© 2026 watertools.es — <span data-en="Developed by" data-es="Desarrollado por">Developed by</span>
+    <a href="https://linkedin.com/in/gustavo-blanco-walter">Ing. Gustavo Blanco Walter</a> · Senior Water &amp; Process Engineer
+  </p>
 </footer>
 
 <script>
 let currentLang='en';
+
 function setLang(l){
-    currentLang=l;
-    document.getElementById('btn-en').classList.toggle('active',l==='en');
-    document.getElementById('btn-es').classList.toggle('active',l==='es');
-    document.documentElement.lang=l;
-    document.querySelectorAll('[data-'+l+']').forEach(e=>{
-        const t=e.getAttribute('data-'+l);
-        if(t!==null)e.innerHTML=t;
-    });
-    document.title=l==='es'
-        ?'WaterTools.es — Herramientas de Ingeniería para Tratamiento de Agua'
-        :'WaterTools.es — Engineering Tools for Water Treatment';
-    const m=document.querySelector('meta[name="description"]');
-    if(m)m.content=l==='es'
-        ?'Calculadoras y herramientas de diagnóstico de nivel profesional para EDAR, ETAP, sistemas de OI e instrumentación industrial del agua.'
-        :'Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation.';
-    localStorage.setItem('wt-lang',l);
+  currentLang=l;
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-'+l+']').forEach(e=>{
+    const t=e.getAttribute('data-'+l);
+    if(t!==null) e.innerHTML=t;
+  });
+  document.title=l==='es'
+    ?'WaterTools.es — Herramientas de Ingeniería para Tratamiento de Agua'
+    :'WaterTools.es — Engineering Tools for Water Treatment';
+  const m=document.querySelector('meta[name="description"]');
+  if(m) m.content=l==='es'
+    ?'Calculadoras y herramientas de diagnóstico de nivel profesional para EDAR, ETAP, sistemas de OI e instrumentación industrial del agua.'
+    :'Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation.';
+  localStorage.setItem('wt-lang',l);
 }
-function setTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('wt-theme',t)}
-function toggleTheme(){const c=document.documentElement.getAttribute('data-theme')||'dark';setTheme(c==='dark'?'light':'dark')}
+
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('wt-theme',t);
+}
+function toggleTheme(){
+  const c=document.documentElement.getAttribute('data-theme')||'dark';
+  setTheme(c==='dark'?'light':'dark');
+}
+
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// Close mobile menu on link click
+document.querySelectorAll('.nav-link').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// Scroll animations
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.fade-in, .tool-card').forEach(el=>{
+  observer.observe(el);
+});
+
+// Navbar background on scroll
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('.navbar');
+  if(window.scrollY>20){
+    nav.style.borderBottomColor='var(--border-card)';
+  } else {
+    nav.style.borderBottomColor='var(--border)';
+  }
+});
+
+// Init
 (function(){
-    const sl=localStorage.getItem('wt-lang');
-    if(sl){setLang(sl)}else{const bl=navigator.language||'en';setLang(bl.startsWith('es')?'es':'en')}
-    const st=localStorage.getItem('wt-theme');
-    if(st)setTheme(st);
+  const sl=localStorage.getItem('wt-lang');
+  if(sl){setLang(sl)}else{const bl=navigator.language||'en';setLang(bl.startsWith('es')?'es':'en')}
+  const st=localStorage.getItem('wt-theme');
+  if(st) setTheme(st);
 })();
 </script>
 </body>

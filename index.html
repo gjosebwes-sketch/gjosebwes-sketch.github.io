@@ -1178,6 +1178,439 @@ window.addEventListener('scroll',()=>{
   const st=localStorage.getItem('wt-theme');
   if(st) setTheme(st);
 })();
+
+// ─── FAQ CHATBOT ───
+(function(){
+const FAQ = {
+  en: {
+    welcome: "👋 Hi! I'm the WaterTools assistant. How can I help you?",
+    placeholder: "Type your question...",
+    title: "WaterTools Assistant",
+    subtitle: "Technical FAQ",
+    noMatch: "I don't have an exact answer for that. Try asking about: tools, calibration, 4-20mA, RO, EDAR, downloads, or contact.",
+    suggestions: ["What tools are available?","How to calibrate a sensor?","Download resources","Contact"],
+    qa: [
+      {
+        keywords:["hello","hi","hey","help","start"],
+        answer:"Hello! I can help you with:\n• **Tools** — info about our 5 engineering tools\n• **Instrumentation** — 4-20mA, calibration, sensors\n• **RO / Osmosis** — reverse osmosis design\n• **EDAR/ETAP** — wastewater & potable water\n• **Downloads** — PDFs, guides, datasheets\n• **Contact** — how to reach us\n\nWhat would you like to know?"
+      },
+      {
+        keywords:["tools","which tools","what tools","available","list"],
+        answer:"We have **5 free engineering tools**:\n\n🔧 **AQUA-INST PRO** — Complete instrumentation toolkit (4-20mA, calibration, E+H, Siemens, KROHNE)\n\n💧 **RO Plant Advisor** — Interactive RO system calculator with animated SVG diagrams\n\n📊 **EDAR mA Calculator** — Precision mA-to-process converter with MSAN 2019 data\n\n🏭 **Tratamiento de Agua PRO** — Water treatment reference (chemistry, unit ops, design)\n\n🧮 **WT Smart Calculator** — Multi-purpose unit converter & dosing calculator\n\nAll tools are free, offline-capable, and work in any browser. [Explore tools ↓](#tools)"
+      },
+      {
+        keywords:["aqua-inst","aqua inst","instrumentation toolkit","aquainst"],
+        answer:"**AQUA-INST PRO** is our complete instrumentation toolkit for water treatment technicians. It includes:\n• Signal calculators (4-20mA ↔ process)\n• Troubleshooting decision trees\n• Calibration registers\n• Quick-reference for E+H, Siemens, KROHNE, Yokogawa\n\n[Open AQUA-INST PRO →](https://watertools.es/aqua-inst-pro)"
+      },
+      {
+        keywords:["ro plant","reverse osmosis","osmosis","ro advisor","ro system","ro design","membrane"],
+        answer:"**RO Plant Advisor** is an interactive reverse osmosis process calculator featuring:\n• Animated SVG flow diagrams\n• Chemical dosing calculations (antiscalant, bisulfite, biocide)\n• Salt rejection & recovery optimization\n• System design parameters\n\n[Open RO Plant Advisor →](https://watertools.es/ro-plant-advisor)"
+      },
+      {
+        keywords:["edar","ma calculator","4-20","4 20","signal","milliamp","process value","wastewater"],
+        answer:"**EDAR mA Calculator** converts between 4-20mA signals and process values with precision. Features:\n• mA → Process and Process → mA conversion\n• Verified normative data from MSAN 2019\n• Conductivity, turbidity, and pH parameters\n• Configurable ranges\n\n[Open EDAR mA Calculator →](https://watertools.es/edar-ma-calculator)"
+      },
+      {
+        keywords:["tratamiento","water treatment pro","treatment reference","etap","potable"],
+        answer:"**Tratamiento de Agua PRO** is a comprehensive reference tool covering:\n• Process chemistry fundamentals\n• Unit operations (coagulation, flocculation, filtration, disinfection)\n• Treatment train design for potable and industrial water\n• ETAP system parameters\n\n[Open Tratamiento de Agua PRO →](https://watertools.es/tratamiento-de-agua-pro)"
+      },
+      {
+        keywords:["smart calc","wt smart","calculator","conversion","unit","flow","dosing calc"],
+        answer:"**WT Smart Calculator** is a multi-purpose engineering calculator:\n• Unit conversions (flow, pressure, concentration)\n• Flow calculations\n• Chemical dosing estimation\n• Process parameter calculations\n\n[Open WT Smart Calculator →](https://watertools.es/wt-smart-calculator)"
+      },
+      {
+        keywords:["calibrat","sensor","promag","sitrans","krohne","yokogawa","e+h","endress"],
+        answer:"For sensor calibration and instrumentation:\n\n📐 **AQUA-INST PRO** has calibration registers and quick-reference for:\n• E+H Promag 50/53/55\n• Siemens SITRANS\n• KROHNE IFC\n• Yokogawa instruments\n\nWe're also preparing detailed calibration guides in our [Resources section](#resources). [Open AQUA-INST PRO →](https://watertools.es/aqua-inst-pro)"
+      },
+      {
+        keywords:["download","pdf","resource","datasheet","guide","book","manual","document"],
+        answer:"📥 **Downloads available:**\n\n• [Química del Agua (PDF)](https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/download/v1.0/1.Quimica.del.Agua.pdf)\n\nMore resources coming soon in our [Resources section](#resources):\n• Instrument datasheets\n• Engineering tables\n• Technical guides\n• Normative references\n\nAll tools can also be downloaded for offline use from [GitHub](https://github.com/gjosebwes-sketch?tab=repositories)."
+      },
+      {
+        keywords:["course","training","learn","formación","curso"],
+        answer:"📚 **Courses & Training** (coming soon):\n\n• Industrial Instrumentation for Water Treatment\n• RO System Design & Optimization\n• Wastewater Treatment Plant Operations\n• Water Chemistry for Engineers — [Download PDF ↓](https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/download/v1.0/1.Quimica.del.Agua.pdf)\n\nCheck our [Courses section](#courses) for updates."
+      },
+      {
+        keywords:["contact","email","linkedin","reach","hire","consult"],
+        answer:"📬 **Contact Ing. Gustavo Blanco Walter:**\n\n• ✉ Email: [gjosebw.es@gmail.com](mailto:gjosebw.es@gmail.com)\n• 🔗 LinkedIn: [linkedin.com/in/gustavo-blanco-walter](https://linkedin.com/in/gustavo-blanco-walter)\n• 💻 GitHub: [github.com/gjosebwes-sketch](https://github.com/gjosebwes-sketch)\n\nSenior Water & Process Engineer based in Valencia, Spain."
+      },
+      {
+        keywords:["free","cost","price","pay","open source","license"],
+        answer:"✅ **Everything is 100% free and open source!**\n\n• All 5 tools are free to use\n• No ads, no tracking, no registration\n• Works offline as single HTML files\n• Source code available on GitHub\n• No installation needed — just open in any browser"
+      },
+      {
+        keywords:["offline","install","browser","no internet"],
+        answer:"All tools work **100% offline**! Each tool is a single HTML file:\n\n1. Download from [GitHub](https://github.com/gjosebwes-sketch?tab=repositories)\n2. Save the HTML file to your device\n3. Open it in any browser — no internet needed\n\nPerfect for field work in plants with limited connectivity."
+      },
+      {
+        keywords:["who","about","creator","gustavo","engineer","experience"],
+        answer:"**Ing. Gustavo Blanco Walter** — Senior Water & Process Engineer based in Valencia, Spain.\n\n• 30+ years in industrial water treatment\n• Specialized in RO/UF/MBR/DAF, field instrumentation, Oil & Gas\n• Previously at GE Power & Water, Nalco/Ecolab, SUEZ, Veolia\n• PDVSA advisory at Refinería El Palito and Refinería Amuay\n\n[More about the creator](#about)"
+      },
+      {
+        keywords:["hart","protocol","communication","digital"],
+        answer:"For HART protocol information:\n\n**AQUA-INST PRO** includes signal classification support for:\n• ANA (analog 4-20mA)\n• HART (analog + digital overlay)\n• HART-P (primary variable)\n• DIG (fully digital)\n\nUseful for EDAR instrumentation integration. [Open AQUA-INST PRO →](https://watertools.es/aqua-inst-pro)"
+      },
+      {
+        keywords:["msan","normative","regulation","standard","rd 140","quality"],
+        answer:"Our tools include verified normative data:\n\n📋 **MSAN 2019** parameters in the EDAR mA Calculator:\n• Conductivity: mean 491.57 µS/cm\n• Turbidity: mean 0.37 UNF\n• pH: mean 7.8\n\nMore normative references (RD 140/2003, RDPH discharge limits, ISO/EN norms) coming soon in our [Resources section](#resources)."
+      }
+    ]
+  },
+  es: {
+    welcome: "👋 ¡Hola! Soy el asistente de WaterTools. ¿En qué puedo ayudarte?",
+    placeholder: "Escribe tu pregunta...",
+    title: "Asistente WaterTools",
+    subtitle: "FAQ Técnico",
+    noMatch: "No tengo una respuesta exacta para eso. Prueba preguntando sobre: herramientas, calibración, 4-20mA, ósmosis inversa, EDAR, descargas o contacto.",
+    suggestions: ["¿Qué herramientas hay?","¿Cómo calibrar un sensor?","Descargar recursos","Contacto"],
+    qa: [
+      {
+        keywords:["hola","ayuda","empezar","buenos","buenas","inicio"],
+        answer:"¡Hola! Puedo ayudarte con:\n• **Herramientas** — info sobre nuestras 5 herramientas\n• **Instrumentación** — 4-20mA, calibración, sensores\n• **OI / Ósmosis** — diseño de ósmosis inversa\n• **EDAR/ETAP** — depuración y agua potable\n• **Descargas** — PDFs, guías, fichas técnicas\n• **Contacto** — cómo contactarnos\n\n¿Qué te gustaría saber?"
+      },
+      {
+        keywords:["herramientas","cuáles","qué hay","lista","disponibles","tools"],
+        answer:"Tenemos **5 herramientas gratuitas**:\n\n🔧 **AQUA-INST PRO** — Kit completo de instrumentación (4-20mA, calibración, E+H, Siemens, KROHNE)\n\n💧 **RO Plant Advisor** — Calculadora interactiva de OI con diagramas SVG animados\n\n📊 **Calculador mA EDAR** — Conversor mA↔proceso con datos MSAN 2019\n\n🏭 **Tratamiento de Agua PRO** — Referencia integral (química, operaciones unitarias, diseño)\n\n🧮 **WT Smart Calculator** — Calculadora multipropósito de conversiones y dosificación\n\nTodas son gratis, funcionan offline y en cualquier navegador. [Ver herramientas ↓](#tools)"
+      },
+      {
+        keywords:["aqua-inst","aqua inst","instrumentación","toolkit","aquainst"],
+        answer:"**AQUA-INST PRO** es nuestro kit completo de instrumentación para técnicos de tratamiento de agua:\n• Calculadoras de señal (4-20mA ↔ proceso)\n• Árboles de diagnóstico\n• Registros de calibración\n• Referencia rápida para E+H, Siemens, KROHNE, Yokogawa\n\n[Abrir AQUA-INST PRO →](https://watertools.es/aqua-inst-pro)"
+      },
+      {
+        keywords:["ro plant","ósmosis","osmosis inversa","ro advisor","diseño oi","membrana"],
+        answer:"**RO Plant Advisor** es una calculadora interactiva de ósmosis inversa con:\n• Diagramas de flujo SVG animados\n• Cálculos de dosificación química (antiincrustante, bisulfito, biocida)\n• Rechazo de sales y optimización de recuperación\n• Parámetros de diseño del sistema\n\n[Abrir RO Plant Advisor →](https://watertools.es/ro-plant-advisor)"
+      },
+      {
+        keywords:["edar","calculador ma","4-20","4 20","señal","miliamperio","depuradora","aguas residuales"],
+        answer:"**Calculador mA EDAR** convierte entre señales 4-20mA y valores de proceso con precisión:\n• Conversión mA → Proceso y Proceso → mA\n• Datos normativos verificados del MSAN 2019\n• Parámetros de conductividad, turbidez y pH\n• Rangos configurables\n\n[Abrir Calculador mA EDAR →](https://watertools.es/edar-ma-calculator)"
+      },
+      {
+        keywords:["tratamiento","agua pro","referencia","etap","potable"],
+        answer:"**Tratamiento de Agua PRO** es una referencia integral que cubre:\n• Química de procesos\n• Operaciones unitarias (coagulación, floculación, filtración, desinfección)\n• Diseño de trenes de tratamiento para agua potable e industrial\n• Parámetros de sistemas ETAP\n\n[Abrir Tratamiento de Agua PRO →](https://watertools.es/tratamiento-de-agua-pro)"
+      },
+      {
+        keywords:["smart calc","wt smart","calculadora","conversión","unidades","caudal","dosificación"],
+        answer:"**WT Smart Calculator** es una calculadora multipropósito:\n• Conversiones de unidades (caudal, presión, concentración)\n• Cálculos de caudal\n• Estimación de dosificación química\n• Cálculos de parámetros de proceso\n\n[Abrir WT Smart Calculator →](https://watertools.es/wt-smart-calculator)"
+      },
+      {
+        keywords:["calibra","sensor","promag","sitrans","krohne","yokogawa","e+h","endress"],
+        answer:"Para calibración de sensores e instrumentación:\n\n📐 **AQUA-INST PRO** tiene registros de calibración y referencia rápida para:\n• E+H Promag 50/53/55\n• Siemens SITRANS\n• KROHNE IFC\n• Yokogawa\n\nEstamos preparando guías detalladas de calibración en la [sección de Recursos](#resources). [Abrir AQUA-INST PRO →](https://watertools.es/aqua-inst-pro)"
+      },
+      {
+        keywords:["descargar","pdf","recurso","ficha","guía","libro","manual","documento","download"],
+        answer:"📥 **Descargas disponibles:**\n\n• [Química del Agua (PDF)](https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/download/v1.0/1.Quimica.del.Agua.pdf)\n\nMás recursos próximamente en la [sección de Recursos](#resources):\n• Fichas de instrumentos\n• Tablas de ingeniería\n• Guías técnicas\n• Referencias normativas\n\nTodas las herramientas también se pueden descargar para uso offline desde [GitHub](https://github.com/gjosebwes-sketch?tab=repositories)."
+      },
+      {
+        keywords:["curso","formación","aprender","training","estudiar"],
+        answer:"📚 **Cursos y Formación** (próximamente):\n\n• Instrumentación Industrial para Tratamiento de Agua\n• Diseño y Optimización de Sistemas OI\n• Operación de Estaciones Depuradoras\n• Química del Agua para Ingenieros — [Descargar PDF ↓](https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/download/v1.0/1.Quimica.del.Agua.pdf)\n\nConsulta la [sección de Cursos](#courses) para novedades."
+      },
+      {
+        keywords:["contacto","email","linkedin","contratar","consultor","contactar"],
+        answer:"📬 **Contactar con Ing. Gustavo Blanco Walter:**\n\n• ✉ Email: [gjosebw.es@gmail.com](mailto:gjosebw.es@gmail.com)\n• 🔗 LinkedIn: [linkedin.com/in/gustavo-blanco-walter](https://linkedin.com/in/gustavo-blanco-walter)\n• 💻 GitHub: [github.com/gjosebwes-sketch](https://github.com/gjosebwes-sketch)\n\nIngeniero Senior de Agua y Procesos en Valencia, España."
+      },
+      {
+        keywords:["gratis","coste","precio","pagar","open source","licencia"],
+        answer:"✅ **¡Todo es 100% gratis y open source!**\n\n• Las 5 herramientas son gratuitas\n• Sin anuncios, sin rastreo, sin registro\n• Funcionan offline como archivos HTML\n• Código fuente disponible en GitHub\n• Sin instalación — solo abrir en cualquier navegador"
+      },
+      {
+        keywords:["offline","instalar","navegador","sin internet","campo"],
+        answer:"¡Todas las herramientas funcionan **100% offline**! Cada herramienta es un único archivo HTML:\n\n1. Descargar desde [GitHub](https://github.com/gjosebwes-sketch?tab=repositories)\n2. Guardar el archivo HTML en tu dispositivo\n3. Abrirlo en cualquier navegador — sin internet\n\nPerfecto para trabajo de campo en plantas con conectividad limitada."
+      },
+      {
+        keywords:["quién","sobre","creador","gustavo","ingeniero","experiencia"],
+        answer:"**Ing. Gustavo Blanco Walter** — Ingeniero Senior de Agua y Procesos en Valencia, España.\n\n• +30 años en tratamiento industrial de agua\n• Especializado en OI/UF/MBR/DAF, instrumentación de campo, Oil & Gas\n• Anteriormente en GE Power & Water, Nalco/Ecolab, SUEZ, Veolia\n• Asesoría PDVSA en Refinería El Palito y Refinería Amuay\n\n[Más sobre el creador](#about)"
+      },
+      {
+        keywords:["hart","protocolo","comunicación","digital"],
+        answer:"Para información sobre protocolo HART:\n\n**AQUA-INST PRO** incluye soporte para clasificación de señales:\n• ANA (analógica 4-20mA)\n• HART (analógica + capa digital)\n• HART-P (variable primaria)\n• DIG (completamente digital)\n\nÚtil para integración de instrumentación en EDAR. [Abrir AQUA-INST PRO →](https://watertools.es/aqua-inst-pro)"
+      },
+      {
+        keywords:["msan","normativ","regulación","norma","rd 140","calidad"],
+        answer:"Nuestras herramientas incluyen datos normativos verificados:\n\n📋 Parámetros **MSAN 2019** en el Calculador mA EDAR:\n• Conductividad: media 491.57 µS/cm\n• Turbidez: media 0.37 UNF\n• pH: media 7.8\n\nMás referencias normativas (RD 140/2003, límites RDPH, normas ISO/EN) próximamente en la [sección de Recursos](#resources)."
+      }
+    ]
+  }
+};
+
+// Inject chatbot CSS
+const chatStyle=document.createElement('style');
+chatStyle.textContent=`
+.chat-fab {
+  position:fixed; bottom:24px; right:24px; z-index:9999;
+  width:56px; height:56px; border-radius:50%;
+  background:var(--gradient-btn);
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(6,214,160,0.3);
+  transition:all .3s; font-size:1.5rem;
+}
+.chat-fab:hover { transform:scale(1.08); box-shadow:0 6px 28px rgba(6,214,160,0.4); }
+.chat-fab.open { transform:rotate(90deg) scale(1.08); }
+
+.chat-window {
+  position:fixed; bottom:92px; right:24px; z-index:9998;
+  width:380px; max-height:520px;
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  border-radius:14px;
+  display:none; flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 12px 50px rgba(0,0,0,0.25);
+  animation:chatSlideUp .3s ease;
+}
+.chat-window.open { display:flex; }
+@keyframes chatSlideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+.chat-header {
+  padding:16px 18px;
+  background:var(--bg-card);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:12px;
+}
+.chat-header-icon {
+  width:36px; height:36px; border-radius:50%;
+  background:var(--gradient-btn);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem; color:white; flex-shrink:0;
+}
+.chat-header-text { flex:1; }
+.chat-header-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem; font-weight:700;
+  color:var(--text-heading);
+}
+.chat-header-sub {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem; color:var(--cyan);
+  letter-spacing:.06em; text-transform:uppercase;
+}
+.chat-close {
+  background:none; border:none; cursor:pointer;
+  color:var(--text-muted); font-size:1.2rem;
+  padding:4px; transition:color .2s;
+}
+.chat-close:hover { color:var(--text-primary); }
+
+.chat-messages {
+  flex:1; overflow-y:auto; padding:16px;
+  display:flex; flex-direction:column; gap:12px;
+  min-height:280px; max-height:340px;
+}
+.chat-messages::-webkit-scrollbar { width:4px; }
+.chat-messages::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+
+.chat-msg {
+  max-width:88%; padding:10px 14px;
+  font-size:.84rem; line-height:1.6;
+  border-radius:12px;
+  animation:msgFade .3s ease;
+}
+@keyframes msgFade { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.chat-msg.bot {
+  align-self:flex-start;
+  background:var(--accent-soft);
+  border:1px solid var(--accent-border);
+  color:var(--text-primary);
+  border-bottom-left-radius:4px;
+}
+.chat-msg.user {
+  align-self:flex-end;
+  background:var(--gradient-btn);
+  color:#fff;
+  border-bottom-right-radius:4px;
+}
+.chat-msg a {
+  color:var(--cyan); text-decoration:underline;
+  text-underline-offset:2px;
+}
+.chat-msg.user a { color:#fff; }
+.chat-msg strong { font-weight:600; }
+
+.chat-suggestions {
+  display:flex; flex-wrap:wrap; gap:6px;
+  padding:0 16px 10px;
+}
+.chat-sug-btn {
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem; color:var(--cyan);
+  background:var(--cyan-dim);
+  border:1px solid var(--cyan-border);
+  padding:5px 10px; border-radius:4px;
+  cursor:pointer; transition:all .25s;
+}
+.chat-sug-btn:hover {
+  background:var(--accent-soft);
+  border-color:var(--border-hover);
+}
+
+.chat-input-bar {
+  display:flex; gap:8px;
+  padding:12px 16px;
+  border-top:1px solid var(--border);
+  background:var(--bg-card);
+}
+.chat-input {
+  flex:1; padding:10px 14px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.84rem;
+  background:var(--bg-deep);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text-primary);
+  outline:none; transition:border-color .2s;
+}
+.chat-input:focus { border-color:var(--cyan-border); }
+.chat-input::placeholder { color:var(--text-muted); }
+.chat-send {
+  width:38px; height:38px; border-radius:8px;
+  background:var(--gradient-btn);
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:1rem;
+  transition:all .2s;
+}
+.chat-send:hover { filter:brightness(1.1); transform:scale(1.05); }
+
+@media(max-width:480px){
+  .chat-window { right:8px; left:8px; width:auto; bottom:84px; }
+  .chat-fab { bottom:16px; right:16px; }
+}
+`;
+document.head.appendChild(chatStyle);
+
+// Inject chatbot HTML
+const chatHTML=`
+<button class="chat-fab" id="chatFab" title="Chat">💬</button>
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-header-icon">💧</div>
+    <div class="chat-header-text">
+      <div class="chat-header-title" id="chatTitle">WaterTools Assistant</div>
+      <div class="chat-header-sub" id="chatSub">Technical FAQ</div>
+    </div>
+    <button class="chat-close" id="chatClose">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-suggestions" id="chatSuggestions"></div>
+  <div class="chat-input-bar">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Type your question..." autocomplete="off">
+    <button class="chat-send" id="chatSend">➤</button>
+  </div>
+</div>`;
+const chatContainer=document.createElement('div');
+chatContainer.innerHTML=chatHTML;
+document.body.appendChild(chatContainer);
+
+const fab=document.getElementById('chatFab');
+const win=document.getElementById('chatWindow');
+const closeBtn=document.getElementById('chatClose');
+const msgBox=document.getElementById('chatMessages');
+const sugBox=document.getElementById('chatSuggestions');
+const input=document.getElementById('chatInput');
+const sendBtn=document.getElementById('chatSend');
+let chatOpen=false, chatInited=false;
+
+function getChatLang(){ return currentLang||'en'; }
+
+function renderMd(text){
+  return text
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank">$1</a>')
+    .replace(/\n• /g,'<br>• ')
+    .replace(/\n(\d+)\. /g,'<br>$1. ')
+    .replace(/\n/g,'<br>');
+}
+
+function addMsg(text,type){
+  const d=document.createElement('div');
+  d.className='chat-msg '+type;
+  d.innerHTML=renderMd(text);
+  msgBox.appendChild(d);
+  msgBox.scrollTop=msgBox.scrollHeight;
+}
+
+function showSuggestions(){
+  const lang=getChatLang();
+  const f=FAQ[lang];
+  sugBox.innerHTML='';
+  f.suggestions.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='chat-sug-btn';
+    b.textContent=s;
+    b.onclick=()=>{ handleUserInput(s); };
+    sugBox.appendChild(b);
+  });
+}
+
+function updateChatLang(){
+  const lang=getChatLang();
+  const f=FAQ[lang];
+  document.getElementById('chatTitle').textContent=f.title;
+  document.getElementById('chatSub').textContent=f.subtitle;
+  input.placeholder=f.placeholder;
+}
+
+function initChat(){
+  if(chatInited) return;
+  chatInited=true;
+  const lang=getChatLang();
+  addMsg(FAQ[lang].welcome,'bot');
+  showSuggestions();
+  updateChatLang();
+}
+
+function findAnswer(q){
+  const lang=getChatLang();
+  const f=FAQ[lang];
+  const ql=q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  let best=null, bestScore=0;
+  f.qa.forEach(item=>{
+    let score=0;
+    item.keywords.forEach(kw=>{
+      const kwn=kw.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      if(ql.includes(kwn)) score+=2;
+      else if(kwn.split(' ').some(w=>ql.includes(w)&&w.length>2)) score+=1;
+    });
+    if(score>bestScore){ bestScore=score; best=item; }
+  });
+  return bestScore>=1 ? best.answer : f.noMatch;
+}
+
+function handleUserInput(text){
+  if(!text.trim()) return;
+  addMsg(text,'user');
+  sugBox.innerHTML='';
+  input.value='';
+  setTimeout(()=>{
+    const ans=findAnswer(text);
+    addMsg(ans,'bot');
+    showSuggestions();
+  },400);
+}
+
+fab.onclick=()=>{
+  chatOpen=!chatOpen;
+  win.classList.toggle('open',chatOpen);
+  fab.classList.toggle('open',chatOpen);
+  fab.innerHTML=chatOpen?'✕':'💬';
+  if(chatOpen){ initChat(); updateChatLang(); input.focus(); }
+};
+closeBtn.onclick=()=>{ fab.click(); };
+sendBtn.onclick=()=>{ handleUserInput(input.value); };
+input.addEventListener('keydown',e=>{ if(e.key==='Enter') handleUserInput(input.value); });
+
+// Update chat when language changes
+const origSetLang=setLang;
+setLang=function(l){
+  origSetLang(l);
+  if(chatInited){
+    updateChatLang();
+    msgBox.innerHTML='';
+    addMsg(FAQ[l].welcome,'bot');
+    showSuggestions();
+  }
+};
+})();
 </script>
 </body>
 </html>

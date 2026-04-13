@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WaterTools.es — Engineering Tools for Water Treatment</title>
-    <meta name="description" content="Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation.">
+    <title>WaterTools.es — Ingeniería para Agua, Instrumentación y Procesos</title>
+    <meta name="description" content="Herramientas, guías y recursos técnicos para tratamiento de agua, instrumentación industrial y procesos de refinería.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
@@ -240,6 +240,64 @@
         .section-desc {
             color: var(--text-secondary); font-size: 1.05rem;
             max-width: 600px; margin-bottom: 48px;
+        }
+
+        /* ── SPECIALTIES ── */
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .specialty-card {
+            display: block;
+            text-decoration: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: all var(--transition);
+            color: var(--text);
+            box-shadow: var(--shadow);
+        }
+
+        .specialty-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .specialty-icon {
+            font-size: 1.8rem;
+            margin-bottom: 14px;
+        }
+
+        .specialty-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .specialty-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+
+        .specialty-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .specialty-tags span {
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 600;
         }
 
         /* ── TOOL CARDS ── */
@@ -527,7 +585,7 @@
                 <li><a href="#tools" data-i18n="nav_tools">Herramientas</a></li>
                 <li><a href="#courses" data-i18n="nav_courses">Cursos</a></li>
                 <li><a href="#resources" data-i18n="nav_resources">Recursos</a></li>
-                <li><a href="#clients" data-i18n="nav_companies">Empresas</a></li>
+                <li><a href="#clients" data-i18n="nav_clients">Empresas</a></li>
                 <li><a href="#about" data-i18n="nav_about">Acerca de</a></li>
             </ul>
             <div class="nav-controls">
@@ -624,11 +682,49 @@
             </svg>
         </div>
 
-        <h1 data-i18n="hero_h1">Herramientas de <em>ingeniería</em> para tratamiento de agua</h1>
-        <p data-i18n="hero_p">Calculadoras y herramientas de diagnóstico de nivel profesional para EDAR, ETAP, sistemas de OI e instrumentación industrial de agua.</p>
+        <h1 data-i18n="hero_h1">Herramientas de <em>ingeniería</em> para agua, instrumentación y procesos</h1>
+        <p data-i18n="hero_p">Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial y operaciones de proceso en campo.</p>
         <a href="#tools" class="hero-cta" data-i18n="hero_cta">Explorar herramientas ↓</a>
         <div class="scroll-indicator">Scroll</div>
     </header>
+
+    <!-- SPECIALTIES -->
+    <section id="specialties">
+        <div class="section-inner">
+            <div class="section-label" data-i18n="specialties_label">Áreas Técnicas</div>
+            <h2 class="section-title" data-i18n="specialties_title">Explora por <em>especialidad</em></h2>
+            <p class="section-desc" data-i18n="specialties_desc">Accede más rápido a herramientas, guías y recursos según tu área de trabajo: tratamiento de agua, instrumentación o petróleo y procesos.</p>
+
+            <div class="specialties-grid">
+                <a href="#tools" class="specialty-card fade-up">
+                    <div class="specialty-icon">💧</div>
+                    <h3 data-i18n="spec1_title">Tratamiento de Agua</h3>
+                    <p data-i18n="spec1_desc">EDAR, ETAP, RO/OI, DAF, BWT, CWT, calidad de agua, dosificación química y operación de planta.</p>
+                    <div class="specialty-tags" data-i18n-tags="spec1_tags">
+                        <span>EDAR</span><span>ETAP</span><span>RO</span><span>DAF</span>
+                    </div>
+                </a>
+
+                <a href="#resources" class="specialty-card fade-up">
+                    <div class="specialty-icon">📟</div>
+                    <h3 data-i18n="spec2_title">Instrumentación</h3>
+                    <p data-i18n="spec2_desc">Caudal, nivel, presión, pH, ORP, conductividad, 4–20 mA, HART, calibración y diagnóstico de equipos.</p>
+                    <div class="specialty-tags" data-i18n-tags="spec2_tags">
+                        <span>4–20 mA</span><span>HART</span><span>Sensores</span><span>Equipos</span>
+                    </div>
+                </a>
+
+                <a href="#resources" class="specialty-card fade-up">
+                    <div class="specialty-icon">🛢️</div>
+                    <h3 data-i18n="spec3_title">Petróleo y Procesos</h3>
+                    <p data-i18n="spec3_desc">Desalter, CDU, overhead, corrosión, separación agua/aceite, troubleshooting y procesos de refinería.</p>
+                    <div class="specialty-tags" data-i18n-tags="spec3_tags">
+                        <span>Desalter</span><span>CDU</span><span>Overhead</span><span>Refinería</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- TOOLS -->
     <section id="tools">
@@ -739,7 +835,7 @@
                     <h3 data-i18n="course1_title">Instrumentación Industrial para Tratamiento de Agua</h3>
                     <p data-i18n="course1_desc">Fundamentos de señal 4–20 mA, protocolo HART, procedimientos de calibración de sensores y diagnóstico de campo para sistemas de instrumentación EDAR/ETAP.</p>
                     <div class="course-meta"><span data-i18n="course_meta_pdf">📄 Guía PDF</span><span data-i18n="course_meta_pace">🕐 A tu ritmo</span><span data-i18n="course_meta_free">🆓 Gratis</span></div>
-                    <a href="#" data-i18n="coming_soon">Próximamente →</a>
+                    <a href="downloads/guia-practica-sistema-desalter-refinerias.docx" data-i18n="download_guide">⬇ Descargar guía →</a>
                 </div>
                 <div class="course-card fade-up">
                     <div class="course-icon">💧</div>
@@ -771,7 +867,7 @@
         <div class="section-inner">
             <div class="section-label" data-i18n="resources_label">Recursos Técnicos</div>
             <h2 class="section-title" data-i18n="resources_title">Biblioteca de <em>referencia</em></h2>
-            <p class="section-desc" data-i18n="resources_desc">Documentos técnicos, referencias de fabricantes y recursos de ingeniería para profesionales del tratamiento de agua.</p>
+            <p class="section-desc" data-i18n="resources_desc">Documentos técnicos, referencias de fabricantes y recursos de ingeniería para agua, instrumentación y procesos industriales.</p>
 
             <div class="resources-grid">
                 <div class="resource-card fade-up">
@@ -789,7 +885,7 @@
                 <div class="resource-card fade-up">
                     <div class="resource-icon">📘</div>
                     <h3 data-i18n="res3_title">Guías Técnicas</h3>
-                    <p data-i18n="res3_desc">Procedimientos de campo paso a paso: calibración de sensores, verificación de señal, listas de verificación de puesta en marcha y protocolos de mantenimiento.</p>
+                    <p data-i18n="res3_desc">Guías prácticas de campo para instrumentación, operación de planta, troubleshooting y procesos industriales especializados, incluyendo petróleo y refinación.</p>
                     <a href="#" data-i18n="coming_soon">Próximamente →</a>
                 </div>
                 <div class="resource-card fade-up">
@@ -922,9 +1018,23 @@
 
             // — Hero —
             hero_badge:       { es: "Código abierto · Gratis para siempre", en: "Open source · Free forever" },
-            hero_h1:          { es: 'Herramientas de <em>ingeniería</em> para tratamiento de agua', en: 'Water treatment <em>engineering tools</em>' },
-            hero_p:           { es: "Calculadoras y herramientas de diagnóstico de nivel profesional para EDAR, ETAP, sistemas de OI e instrumentación industrial de agua.", en: "Professional-grade calculators and diagnostic tools for EDAR, ETAP, RO systems, and industrial water instrumentation." },
+            hero_h1:          { es: 'Herramientas de <em>ingeniería</em> para agua, instrumentación y procesos', en: '<em>Engineering tools</em> for water, instrumentation, and process operations' },
+            hero_p:           { es: "Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial y operaciones de proceso en campo.", en: "Calculators, guides, and technical resources for water treatment, industrial instrumentation, and field process operations." },
             hero_cta:         { es: "Explorar herramientas ↓", en: "Explore tools ↓" },
+
+            // — Specialties Section —
+            specialties_label:{ es: "Áreas Técnicas", en: "Technical Areas" },
+            specialties_title:{ es: 'Explora por <em>especialidad</em>', en: 'Explore by <em>specialty</em>' },
+            specialties_desc: { es: "Accede más rápido a herramientas, guías y recursos según tu área de trabajo: tratamiento de agua, instrumentación o petróleo y procesos.", en: "Access tools, guides, and technical resources faster by area: water treatment, instrumentation, or oil and process operations." },
+            spec1_title:      { es: "Tratamiento de Agua", en: "Water Treatment" },
+            spec1_desc:       { es: "EDAR, ETAP, RO/OI, DAF, BWT, CWT, calidad de agua, dosificación química y operación de planta.", en: "WWTP, DWTP, RO, DAF, boiler water, cooling water, water quality, chemical dosing, and plant operations." },
+            spec1_tags:       { es: "EDAR|ETAP|RO|DAF", en: "WWTP|DWTP|RO|DAF" },
+            spec2_title:      { es: "Instrumentación", en: "Instrumentation" },
+            spec2_desc:       { es: "Caudal, nivel, presión, pH, ORP, conductividad, 4–20 mA, HART, calibración y diagnóstico de equipos.", en: "Flow, level, pressure, pH, ORP, conductivity, 4–20 mA, HART, calibration, and equipment diagnostics." },
+            spec2_tags:       { es: "4–20 mA|HART|Sensores|Equipos", en: "4–20 mA|HART|Sensors|Equipment" },
+            spec3_title:      { es: "Petróleo y Procesos", en: "Oil & Process" },
+            spec3_desc:       { es: "Desalter, CDU, overhead, corrosión, separación agua/aceite, troubleshooting y procesos de refinería.", en: "Desalters, CDU, overhead systems, corrosion, oil-water separation, troubleshooting, and refinery processes." },
+            spec3_tags:       { es: "Desalter|CDU|Overhead|Refinería", en: "Desalter|CDU|Overhead|Refinery" },
 
             // — Tools Section —
             tools_label:      { es: "Herramientas y Calculadoras", en: "Tools & Calculators" },
@@ -978,18 +1088,19 @@
             course_meta_free: { es: "🆓 Gratis", en: "🆓 Free" },
             coming_soon:      { es: "Próximamente →", en: "Coming soon →" },
             download_pdf:     { es: "⬇ Descargar PDF →", en: "⬇ Download PDF →" },
+            download_guide:   { es: "⬇ Descargar guía →", en: "⬇ Download guide →" },
 
             // — Resources Section —
             resources_label:  { es: "Recursos Técnicos", en: "Technical Resources" },
             resources_title:  { es: 'Biblioteca de <em>referencia</em>', en: 'Reference <em>library</em>' },
-            resources_desc:   { es: "Documentos técnicos, referencias de fabricantes y recursos de ingeniería para profesionales del tratamiento de agua.", en: "Technical documents, manufacturer references, and engineering resources for water treatment professionals." },
+            resources_desc:   { es: "Documentos técnicos, referencias de fabricantes y recursos de ingeniería para agua, instrumentación y procesos industriales.", en: "Technical documents, manufacturer references, and engineering resources for water, instrumentation, and industrial process professionals." },
 
             res1_title:       { es: "Hojas de Datos de Instrumentos", en: "Instrument Datasheets" },
             res1_desc:        { es: "Hojas de referencia rápida para E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa y más — cableado, rangos y configuración.", en: "Quick-reference datasheets for E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa, and more — wiring, ranges, and configuration." },
             res2_title:       { es: "Tablas de Ingeniería", en: "Engineering Tables" },
             res2_desc:        { es: "Dimensionamiento de tuberías, velocidad de flujo, factores de conversión, propiedades químicas y límites normativos para EDAR/ETAP en una sola referencia.", en: "Pipe sizing, flow velocity, conversion factors, chemical properties, and regulatory limits for EDAR/ETAP in a single reference." },
             res3_title:       { es: "Guías Técnicas", en: "Technical Guides" },
-            res3_desc:        { es: "Procedimientos de campo paso a paso: calibración de sensores, verificación de señal, listas de verificación de puesta en marcha y protocolos de mantenimiento.", en: "Step-by-step field procedures: sensor calibration, signal verification, commissioning checklists, and maintenance protocols." },
+            res3_desc:        { es: "Guías prácticas de campo para instrumentación, operación de planta, troubleshooting y procesos industriales especializados, incluyendo petróleo y refinación.", en: "Practical field guides for instrumentation, plant operations, troubleshooting, and specialized industrial processes, including oil and refining." },
             res4_title:       { es: "Tablas de Dosificación Química", en: "Chemical Dosing Charts" },
             res4_desc:        { es: "Tablas de referencia de dosificación para coagulantes, floculantes, ajustadores de pH, antiincrustantes, biocidas y agentes reductores usados en tratamiento de agua.", en: "Dosing reference charts for coagulants, flocculants, pH adjusters, antiscalants, biocides, and reducing agents used in water treatment." },
             res5_title:       { es: "Referencias Normativas", en: "Normative References" },
@@ -1062,8 +1173,8 @@
 
             // Update page title
             document.title = lang === 'es'
-                ? 'WaterTools.es — Herramientas de Ingeniería para Tratamiento de Agua'
-                : 'WaterTools.es — Engineering Tools for Water Treatment';
+                ? 'WaterTools.es — Ingeniería para Agua, Instrumentación y Procesos'
+                : 'WaterTools.es — Engineering for Water, Instrumentation & Process Operations';
         }
 
         function setLang(lang) {

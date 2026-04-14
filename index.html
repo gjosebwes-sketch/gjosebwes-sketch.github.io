@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WaterTools.es | Herramientas técnicas para tratamiento de agua e instrumentación</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Gustavo Blanco Walter" />
   <meta name="keywords" content="tratamiento de agua, calculadoras de agua, instrumentación industrial, EDAR, ETAP, ósmosis inversa, 4-20 mA, dosificación química, WaterTools" />
+  <meta name="description" content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo." />
   <link rel="canonical" href="https://watertools.es/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_ES" />
@@ -35,25 +35,7 @@
       }
     }
   </script>
-  <meta
-    name="description"
-    content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo."
-  />
   <style>
-    html[data-theme="light"] {
-      --bg: #eef5fb;
-      --bg-soft: #ffffff;
-      --surface: rgba(8, 19, 31, 0.04);
-      --surface-2: rgba(8, 19, 31, 0.06);
-      --border: rgba(8, 19, 31, 0.12);
-      --text: #0b1b2b;
-      --muted: #47627f;
-      --primary: #14b8a6;
-      --primary-dark: #0f766e;
-      --accent: #0284c7;
-      --warning: #b45309;
-      --success: #059669;
-    }
     :root {
       --bg: #08131f;
       --bg-soft: #0f2135;
@@ -72,8 +54,22 @@
       --shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
     }
 
-    * { box-sizing: border-box; }
+    html[data-theme="light"] {
+      --bg: #eef5fb;
+      --bg-soft: #ffffff;
+      --surface: rgba(8, 19, 31, 0.04);
+      --surface-2: rgba(8, 19, 31, 0.06);
+      --border: rgba(8, 19, 31, 0.12);
+      --text: #0b1b2b;
+      --muted: #47627f;
+      --primary: #14b8a6;
+      --primary-dark: #0f766e;
+      --accent: #0284c7;
+      --warning: #b45309;
+      --success: #059669;
+    }
 
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
@@ -85,6 +81,13 @@
         linear-gradient(180deg, #08131f 0%, #0b1827 100%);
       color: var(--text);
       line-height: 1.6;
+    }
+
+    html[data-theme="light"] body {
+      background:
+        radial-gradient(circle at top right, rgba(20, 184, 166, 0.14), transparent 28%),
+        radial-gradient(circle at top left, rgba(2, 132, 199, 0.08), transparent 32%),
+        linear-gradient(180deg, #eef5fb 0%, #e7f0f7 100%);
     }
 
     a {
@@ -111,6 +114,11 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
+    html[data-theme="light"] .topbar {
+      background: rgba(255, 255, 255, 0.84);
+      border-bottom: 1px solid rgba(8, 19, 31, 0.08);
+    }
+
     .nav {
       display: flex;
       align-items: center;
@@ -122,82 +130,27 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 0.82rem;
       font-weight: 800;
       letter-spacing: -0.03em;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
+    }
+
+    .brand-name {
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: var(--text);
     }
 
     .brand-badge {
-      width: 54px;
-      height: 54px;
+      width: 52px;
+      height: 52px;
       border-radius: 18px;
-      background: radial-gradient(circle at 30% 30%, #8cf8ef 0%, #38d7ca 42%, #117a95 100%);
       display: grid;
       place-items: center;
-      color: #05202b;
-      font-weight: 900;
-      box-shadow: 0 14px 30px rgba(79, 209, 197, 0.32);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .brand-badge::before {
-      content: "";
-      position: absolute;
-      inset: 10px 12px auto 12px;
-      height: 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.42);
-      filter: blur(1px);
-    }
-
-    .brand-badge::after {
-      content: "";
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      right: -4px;
-      bottom: -4px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-    }
-
-    .nav-tools {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .lang-switch,
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.55rem 0.75rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .lang-switch button {
-      border: 0;
       background: transparent;
-      color: inherit;
-      font: inherit;
-      cursor: pointer;
-      padding: 0.2rem 0.35rem;
-      border-radius: 999px;
-      opacity: 0.7;
-    }
-
-    .lang-switch button.active {
-      opacity: 1;
-      background: rgba(79,209,197,0.15);
+      box-shadow: 0 10px 24px rgba(79, 209, 197, 0.2);
+      flex-shrink: 0;
     }
 
     .nav-links {
@@ -215,26 +168,64 @@
 
     .nav-links a:hover { color: var(--text); }
 
+    .nav-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .lang-switch,
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.035);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      padding: 0.28rem 0.45rem;
+      border-radius: 999px;
+      opacity: 0.7;
+    }
+
+    .lang-switch button.active {
+      opacity: 1;
+      background: rgba(79,209,197,0.15);
+    }
+
     .nav-cta {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.9rem 1.15rem;
+      padding: 0.82rem 1.18rem;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: #042126;
       font-weight: 800;
-      box-shadow: 0 14px 30px rgba(79, 209, 197, 0.25);
+      box-shadow: 0 12px 24px rgba(79, 209, 197, 0.2);
     }
 
     .hero {
-      padding: 5.5rem 0 3rem;
+      padding: 4.2rem 0 2.4rem;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 2rem;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 2.2rem;
       align-items: center;
     }
 
@@ -251,18 +242,23 @@
       font-size: 0.92rem;
     }
 
+    html[data-theme="light"] .eyebrow {
+      color: #0f5d67;
+    }
+
     h1 {
-      margin: 1.2rem 0 1rem;
-      font-size: clamp(2.4rem, 5vw, 4.6rem);
-      line-height: 1.06;
-      letter-spacing: -0.05em;
-      max-width: 12ch;
+      margin: 1rem 0 1rem;
+      font-size: clamp(2.6rem, 4.6vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+      max-width: 10.5ch;
+      text-wrap: balance;
     }
 
     .hero p {
       color: var(--muted);
-      font-size: 1.08rem;
-      max-width: 62ch;
+      font-size: 1.02rem;
+      max-width: 58ch;
       margin: 0;
     }
 
@@ -308,6 +304,10 @@
       font-size: 0.92rem;
     }
 
+    html[data-theme="light"] .microtrust {
+      color: #335a7b;
+    }
+
     .microtrust span {
       display: inline-flex;
       align-items: center;
@@ -319,33 +319,38 @@
     }
 
     .hero-panel {
-      padding: 1.25rem;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.035) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 26px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
     }
 
     .hero-card {
-      background: rgba(7, 21, 35, 0.7);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
+      background: rgba(7, 21, 35, 0.72);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 1.1rem 1.15rem;
+      margin-bottom: 0.85rem;
+    }
+
+    html[data-theme="light"] .hero-card {
+      background: rgba(255,255,255,0.75);
     }
 
     .hero-card:last-child { margin-bottom: 0; }
 
     .hero-card h3 {
-      margin: 0 0 0.55rem;
-      font-size: 1rem;
+      margin: 0 0 0.45rem;
+      font-size: 0.98rem;
       letter-spacing: -0.02em;
     }
 
     .hero-card p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
+      line-height: 1.55;
     }
 
     .section {
@@ -414,6 +419,10 @@
       font-weight: 700;
     }
 
+    html[data-theme="light"] .tag {
+      color: #0d5f78;
+    }
+
     .tool-card {
       display: flex;
       flex-direction: column;
@@ -437,6 +446,12 @@
       border: 1px solid rgba(255,255,255,0.08);
       color: #dbeafe;
       font-weight: 700;
+    }
+
+    html[data-theme="light"] .pill {
+      color: #335a7b;
+      background: rgba(8,19,31,0.04);
+      border-color: rgba(8,19,31,0.08);
     }
 
     .tool-list,
@@ -482,6 +497,10 @@
       color: #d4fff9;
     }
 
+    html[data-theme="light"] .stat-value {
+      color: #0f766e;
+    }
+
     .downloads-grid .card,
     .training-grid .card,
     .business-grid .card {
@@ -504,6 +523,10 @@
       margin-top: 1rem;
       font-size: 0.88rem;
       color: #d2e6f8;
+    }
+
+    html[data-theme="light"] .resource-meta {
+      color: #335a7b;
     }
 
     .callout {
@@ -533,6 +556,11 @@
       color: #d7fffb;
       font-weight: 900;
       margin-bottom: 0.9rem;
+    }
+
+    html[data-theme="light"] .business-grid .icon,
+    html[data-theme="light"] .route-card .icon {
+      color: #0f766e;
     }
 
     .about-grid {
@@ -600,6 +628,10 @@
       font-size: 0.92rem;
     }
 
+    html[data-theme="light"] .site-footer {
+      color: rgba(11,27,43,0.68);
+    }
+
     .site-footer-inner {
       display: flex;
       justify-content: space-between;
@@ -609,11 +641,13 @@
       padding-top: 1rem;
     }
 
+    html[data-theme="light"] .site-footer-inner {
+      border-top-color: rgba(8,19,31,0.08);
+    }
+
     .muted { color: var(--muted); }
-
     .accent { color: #d3fff8; }
-
-    .full-width { grid-column: 1 / -1; }
+    html[data-theme="light"] .accent { color: #0f766e; }
 
     @media (max-width: 1080px) {
       .hero-grid,
@@ -627,6 +661,22 @@
       .hero-grid,
       .about-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        padding: 3rem 0 2rem;
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 9vw, 3.8rem);
+        max-width: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 1.4rem;
       }
     }
 
@@ -650,7 +700,6 @@
       }
 
       h1 { max-width: none; }
-
       .hero { padding-top: 3rem; }
     }
   </style>
@@ -659,8 +708,21 @@
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="#inicio" aria-label="Ir al inicio de WaterTools.es">
-        <span class="brand-badge" aria-hidden="true">WT</span>
-        <span>WaterTools.es</span>
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="38" height="38" role="img" aria-hidden="true">
+            <defs>
+              <linearGradient id="brandWave" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#8cf8ef"/>
+                <stop offset="55%" stop-color="#38d7ca"/>
+                <stop offset="100%" stop-color="#117a95"/>
+              </linearGradient>
+            </defs>
+            <rect x="3" y="3" width="58" height="58" rx="18" fill="url(#brandWave)"/>
+            <path d="M16 23h7l4 16 6-11 6 11 4-16h7l-7 21h-7l-3-7-3 7h-7z" fill="#052531"/>
+            <path d="M44 47c4.5-1.2 8.1-4 10-8.1-0.8 5.8-4.1 10-10 12.2z" fill="rgba(255,255,255,0.22)"/>
+          </svg>
+        </span>
+        <span class="brand-name">WaterTools.es</span>
       </a>
 
       <nav class="nav-links" aria-label="Navegación principal">
@@ -690,37 +752,33 @@
         <div>
           <span class="eyebrow" data-i18n="heroEyebrow">Herramientas técnicas para profesionales del agua</span>
           <h1 data-i18n="heroTitle">Calculadoras, guías y recursos técnicos para tratamiento de agua e instrumentación industrial</h1>
-          <p data-i18n="heroText">
-            Usa herramientas prácticas para EDAR, ETAP, ósmosis inversa, dosificación química,
-            señal 4–20 mA y diagnóstico de campo. Diseñadas desde experiencia real en planta
-            para profesionales que necesitan resultados claros, rápidos y aplicables.
-          </p>
+          <p data-i18n="heroText">Usa herramientas prácticas para EDAR, ETAP, ósmosis inversa, dosificación química, señal 4–20 mA y diagnóstico de campo. Diseñadas desde experiencia real en planta para profesionales que necesitan resultados claros, rápidos y aplicables.</p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#herramientas">Usar herramientas ahora</a>
-            <a class="btn btn-secondary" href="#biblioteca">Descargar recursos técnicos</a>
+            <a class="btn btn-primary" href="#herramientas" data-i18n="heroPrimary">Usar herramientas ahora</a>
+            <a class="btn btn-secondary" href="#biblioteca" data-i18n="heroSecondary">Descargar recursos técnicos</a>
           </div>
 
           <div class="microtrust" aria-label="Indicadores de confianza">
-            <span>Gratis</span>
-            <span>Sin anuncios</span>
-            <span>Uso directo en navegador</span>
-            <span>HTML offline disponible</span>
+            <span data-i18n="trust1">Gratis</span>
+            <span data-i18n="trust2">Sin anuncios</span>
+            <span data-i18n="trust3">Uso directo en navegador</span>
+            <span data-i18n="trust4">HTML offline disponible</span>
           </div>
         </div>
 
         <aside class="hero-panel" aria-label="Resumen de valor de la plataforma">
           <div class="hero-card">
-            <h3>Para operación, diseño y diagnóstico</h3>
-            <p>Accede rápido a cálculos técnicos, referencias prácticas y herramientas listas para campo u oficina técnica.</p>
+            <h3 data-i18n="heroCard1Title">Para operación, diseño y diagnóstico</h3>
+            <p data-i18n="heroCard1Text">Accede rápido a cálculos técnicos, referencias prácticas y herramientas listas para campo u oficina técnica.</p>
           </div>
           <div class="hero-card">
-            <h3>Biblioteca técnica descargable</h3>
-            <p>Organiza guías, tablas y documentos descargables desde tu propio dominio para una experiencia más profesional.</p>
+            <h3 data-i18n="heroCard2Title">Biblioteca técnica descargable</h3>
+            <p data-i18n="heroCard2Text">Organiza guías, tablas y documentos descargables desde tu propio dominio para una experiencia más profesional.</p>
           </div>
           <div class="hero-card">
-            <h3>Base real de experiencia</h3>
-            <p>Más de 30 años aplicados a tratamiento de agua, instrumentación, procesos y soporte técnico industrial.</p>
+            <h3 data-i18n="heroCard3Title">Base real de experiencia</h3>
+            <p data-i18n="heroCard3Text">Más de 30 años aplicados a tratamiento de agua, instrumentación, procesos y soporte técnico industrial.</p>
           </div>
         </aside>
       </div>
@@ -730,36 +788,36 @@
       <div class="container">
         <div class="section-heading">
           <div>
-            <h2>Empieza por tu área de trabajo</h2>
-            <p>Accede más rápido a las herramientas y recursos que mejor encajan con tu trabajo diario.</p>
+            <h2 data-i18n="routesTitle">Empieza por tu área de trabajo</h2>
+            <p data-i18n="routesText">Accede más rápido a las herramientas y recursos que mejor encajan con tu trabajo diario.</p>
           </div>
         </div>
 
         <div class="grid-3">
           <article class="card route-card">
             <div class="icon">H₂O</div>
-            <h3>Tratamiento de agua</h3>
-            <p>Para operación de planta, calidad de agua, dosificación química, ETAP, EDAR, DAF y ósmosis inversa.</p>
+            <h3 data-i18n="route1Title">Tratamiento de agua</h3>
+            <p data-i18n="route1Text">Para operación de planta, calidad de agua, dosificación química, ETAP, EDAR, DAF y ósmosis inversa.</p>
             <div class="tool-actions">
-              <a class="btn btn-secondary" href="#herramientas">Ver herramientas de agua</a>
+              <a class="btn btn-secondary" href="#herramientas" data-i18n="route1Btn">Ver herramientas de agua</a>
             </div>
           </article>
 
           <article class="card route-card">
             <div class="icon">4–20</div>
-            <h3>Instrumentación industrial</h3>
-            <p>Para señal 4–20 mA, caudal, nivel, pH, conductividad, calibración y diagnóstico de equipos.</p>
+            <h3 data-i18n="route2Title">Instrumentación industrial</h3>
+            <p data-i18n="route2Text">Para señal 4–20 mA, caudal, nivel, pH, conductividad, calibración y diagnóstico de equipos.</p>
             <div class="tool-actions">
-              <a class="btn btn-secondary" href="#herramientas">Ver instrumentación</a>
+              <a class="btn btn-secondary" href="#herramientas" data-i18n="route2Btn">Ver instrumentación</a>
             </div>
           </article>
 
           <article class="card route-card">
             <div class="icon">PROC</div>
-            <h3>Procesos y refinería</h3>
-            <p>Para troubleshooting, separación agua/aceite, desalter, overhead y apoyo a procesos industriales.</p>
+            <h3 data-i18n="route3Title">Procesos y refinería</h3>
+            <p data-i18n="route3Text">Para troubleshooting, separación agua/aceite, desalter, overhead y apoyo a procesos industriales.</p>
             <div class="tool-actions">
-              <a class="btn btn-secondary" href="#biblioteca">Ver recursos de procesos</a>
+              <a class="btn btn-secondary" href="#biblioteca" data-i18n="route3Btn">Ver recursos de procesos</a>
             </div>
           </article>
         </div>
@@ -770,55 +828,55 @@
       <div class="container">
         <div class="section-heading">
           <div>
-            <h2>Herramientas destacadas</h2>
-            <p>Presenta tus utilidades como un catálogo técnico claro, escaneable y orientado a la acción.</p>
+            <h2 data-i18n="toolsTitle">Herramientas destacadas</h2>
+            <p data-i18n="toolsText">Presenta tus utilidades como un catálogo técnico claro, escaneable y orientado a la acción.</p>
           </div>
         </div>
 
         <div class="grid-3">
           <article class="card tool-card">
-            <span class="tag">Instrumentación</span>
+            <span class="tag" data-i18n="tagInstrumentation">Instrumentación</span>
             <div>
               <h3>AQUA-INST PRO</h3>
-              <p class="accent">Instrumentación práctica para técnicos de agua</p>
+              <p class="accent" data-i18n="tool1Sub">Instrumentación práctica para técnicos de agua</p>
             </div>
             <div class="tool-meta">
-              <span class="pill">Campo</span>
-              <span class="pill">Diagnóstico</span>
-              <span class="pill">HTML offline</span>
+              <span class="pill" data-i18n="pillField">Campo</span>
+              <span class="pill" data-i18n="pillDiagnosis">Diagnóstico</span>
+              <span class="pill" data-i18n="pillOffline">HTML offline</span>
             </div>
-            <p>Ideal para técnicos de campo en EDAR y ETAP que necesitan referencias rápidas y soporte operativo.</p>
+            <p data-i18n="tool1Text">Ideal para técnicos de campo en EDAR y ETAP que necesitan referencias rápidas y soporte operativo.</p>
             <ul class="tool-list">
-              <li>Conversión y validación de señal 4–20 mA</li>
-              <li>Diagnóstico práctico de instrumentos</li>
-              <li>Consulta rápida de calibración y referencias</li>
+              <li data-i18n="tool1Li1">Conversión y validación de señal 4–20 mA</li>
+              <li data-i18n="tool1Li2">Diagnóstico práctico de instrumentos</li>
+              <li data-i18n="tool1Li3">Consulta rápida de calibración y referencias</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/aqua-inst-pro.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/aqua-inst-pro.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="tools/aqua-inst-pro.html" data-i18n="openTool">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/aqua-inst-pro.html" download data-i18n="downloadHtml">Descargar HTML</a>
             </div>
           </article>
 
           <article class="card tool-card">
-            <span class="tag">Ósmosis inversa</span>
+            <span class="tag" data-i18n="tagRO">Ósmosis inversa</span>
             <div>
               <h3>RO Plant Advisor</h3>
-              <p class="accent">Cálculo y optimización de ósmosis inversa</p>
+              <p class="accent" data-i18n="tool2Sub">Cálculo y optimización de ósmosis inversa</p>
             </div>
             <div class="tool-meta">
-              <span class="pill">Diseño</span>
-              <span class="pill">Optimización</span>
-              <span class="pill">Operación</span>
+              <span class="pill" data-i18n="pillDesign">Diseño</span>
+              <span class="pill" data-i18n="pillOptimization">Optimización</span>
+              <span class="pill" data-i18n="pillOperation">Operación</span>
             </div>
-            <p>Ideal para diseño y operación de sistemas OI con foco en variables de desempeño y ajuste operativo.</p>
+            <p data-i18n="tool2Text">Ideal para diseño y operación de sistemas OI con foco en variables de desempeño y ajuste operativo.</p>
             <ul class="tool-list">
-              <li>Recuperación y rechazo de sales</li>
-              <li>Variables de operación y control</li>
-              <li>Apoyo a dosificación química</li>
+              <li data-i18n="tool2Li1">Recuperación y rechazo de sales</li>
+              <li data-i18n="tool2Li2">Variables de operación y control</li>
+              <li data-i18n="tool2Li3">Apoyo a dosificación química</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/ro-plant-advisor.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/ro-plant-advisor.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="tools/ro-plant-advisor.html" data-i18n="openTool">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/ro-plant-advisor.html" download data-i18n="downloadHtml">Descargar HTML</a>
             </div>
           </article>
 
@@ -826,80 +884,77 @@
             <span class="tag">EDAR</span>
             <div>
               <h3>EDAR mA Calculator</h3>
-              <p class="accent">Conversión mA-proceso para planta depuradora</p>
+              <p class="accent" data-i18n="tool3Sub">Conversión mA-proceso para planta depuradora</p>
             </div>
             <div class="tool-meta">
-              <span class="pill">Operación</span>
-              <span class="pill">Cálculo rápido</span>
-              <span class="pill">Normativa</span>
+              <span class="pill" data-i18n="pillOperation">Operación</span>
+              <span class="pill" data-i18n="pillQuickCalc">Cálculo rápido</span>
+              <span class="pill" data-i18n="pillStandard">Normativa</span>
             </div>
-            <p>Ideal para operación, instrumentación y validación rápida de variables críticas de proceso.</p>
+            <p data-i18n="tool3Text">Ideal para operación, instrumentación y validación rápida de variables críticas de proceso.</p>
             <ul class="tool-list">
-              <li>Conversión mA a variable de proceso</li>
-              <li>Soporte en interpretación de señales</li>
-              <li>Referencia rápida para condiciones de planta</li>
+              <li data-i18n="tool3Li1">Conversión mA a variable de proceso</li>
+              <li data-i18n="tool3Li2">Soporte en interpretación de señales</li>
+              <li data-i18n="tool3Li3">Referencia rápida para condiciones de planta</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/edar-ma-calculator.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/edar-ma-calculator.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="tools/edar-ma-calculator.html" data-i18n="openTool">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/edar-ma-calculator.html" download data-i18n="downloadHtml">Descargar HTML</a>
             </div>
           </article>
 
           <article class="card tool-card">
-            <span class="tag">Química de proceso</span>
+            <span class="tag" data-i18n="tagChemistry">Química de proceso</span>
             <div>
               <h3>Tratamiento de Agua PRO</h3>
-              <p class="accent">Referencia operativa para tratamiento de agua</p>
+              <p class="accent" data-i18n="tool4Sub">Referencia operativa para tratamiento de agua</p>
             </div>
             <div class="tool-meta">
-              <span class="pill">Proceso</span>
-              <span class="pill">Química</span>
-              <span class="pill">Consulta rápida</span>
+              <span class="pill" data-i18n="pillProcess">Proceso</span>
+              <span class="pill" data-i18n="pillChemistry">Química</span>
+              <span class="pill" data-i18n="pillQuickReference">Consulta rápida</span>
             </div>
-            <p>Ideal para ingenieros y responsables de proceso que requieren una base rápida de apoyo técnico.</p>
+            <p data-i18n="tool4Text">Ideal para ingenieros y responsables de proceso que requieren una base rápida de apoyo técnico.</p>
             <ul class="tool-list">
-              <li>Química y operaciones unitarias</li>
-              <li>Variables clave de tratamiento</li>
-              <li>Apoyo a troubleshooting y revisión</li>
+              <li data-i18n="tool4Li1">Química y operaciones unitarias</li>
+              <li data-i18n="tool4Li2">Variables clave de tratamiento</li>
+              <li data-i18n="tool4Li3">Apoyo a troubleshooting y revisión</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/tratamiento-agua-pro.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/tratamiento-agua-pro.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="tools/tratamiento-agua-pro.html" data-i18n="openTool">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/tratamiento-agua-pro.html" download data-i18n="downloadHtml">Descargar HTML</a>
             </div>
           </article>
 
           <article class="card tool-card">
-            <span class="tag">Cálculo general</span>
+            <span class="tag" data-i18n="tagGeneralCalc">Cálculo general</span>
             <div>
               <h3>WT Smart Calculator</h3>
-              <p class="accent">Calculadora multipropósito para agua</p>
+              <p class="accent" data-i18n="tool5Sub">Calculadora multipropósito para agua</p>
             </div>
             <div class="tool-meta">
-              <span class="pill">Cálculo rápido</span>
-              <span class="pill">Diseño</span>
-              <span class="pill">Operación</span>
+              <span class="pill" data-i18n="pillQuickCalc">Cálculo rápido</span>
+              <span class="pill" data-i18n="pillDesign">Diseño</span>
+              <span class="pill" data-i18n="pillOperation">Operación</span>
             </div>
-            <p>Ideal para cálculos rápidos en operación y diseño con foco en productividad y claridad.</p>
+            <p data-i18n="tool5Text">Ideal para cálculos rápidos en operación y diseño con foco en productividad y claridad.</p>
             <ul class="tool-list">
-              <li>Caudales y conversiones</li>
-              <li>Dosificación química</li>
-              <li>Parámetros habituales de proceso</li>
+              <li data-i18n="tool5Li1">Caudales y conversiones</li>
+              <li data-i18n="tool5Li2">Dosificación química</li>
+              <li data-i18n="tool5Li3">Parámetros habituales de proceso</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/wt-smart-calculator.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/wt-smart-calculator.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="tools/wt-smart-calculator.html" data-i18n="openTool">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/wt-smart-calculator.html" download data-i18n="downloadHtml">Descargar HTML</a>
             </div>
           </article>
 
           <article class="card callout">
-            <h3>¿Quieres más herramientas?</h3>
-            <p>
-              Convierte los módulos marcados como “Próximamente” en captación real: acceso anticipado,
-              lista de espera o descarga bajo solicitud.
-            </p>
+            <h3 data-i18n="toolsCalloutTitle">¿Quieres más herramientas?</h3>
+            <p data-i18n="toolsCalloutText">Convierte los módulos marcados como “Próximamente” en captación real: acceso anticipado, lista de espera o descarga bajo solicitud.</p>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="#empresas">Solicitar herramienta</a>
-              <a class="btn btn-secondary" href="#biblioteca">Ver recursos</a>
+              <a class="btn btn-primary" href="#empresas" data-i18n="toolsCalloutBtn1">Solicitar herramienta</a>
+              <a class="btn btn-secondary" href="#biblioteca" data-i18n="toolsCalloutBtn2">Ver recursos</a>
             </div>
           </article>
         </div>
@@ -911,19 +966,19 @@
         <div class="grid-4">
           <article class="card stat-card">
             <span class="stat-value">5</span>
-            <span>herramientas técnicas activas</span>
+            <span data-i18n="stat1">herramientas técnicas activas</span>
           </article>
           <article class="card stat-card">
             <span class="stat-value">30+</span>
-            <span>años de experiencia aplicada</span>
+            <span data-i18n="stat2">años de experiencia aplicada</span>
           </article>
           <article class="card stat-card">
             <span class="stat-value">100%</span>
-            <span>gratis y código abierto</span>
+            <span data-i18n="stat3">gratis y código abierto</span>
           </article>
           <article class="card stat-card">
             <span class="stat-value">0</span>
-            <span>anuncios o rastreo invasivo</span>
+            <span data-i18n="stat4">anuncios o rastreo invasivo</span>
           </article>
         </div>
       </div>
@@ -933,71 +988,62 @@
       <div class="container">
         <div class="section-heading">
           <div>
-            <h2>Biblioteca técnica para descargar</h2>
-            <p>Guías, tablas y documentos prácticos para consulta rápida en planta, oficina técnica o campo.</p>
+            <h2 data-i18n="libraryTitle">Biblioteca técnica para descargar</h2>
+            <p data-i18n="libraryText">Guías, tablas y documentos prácticos para consulta rápida en planta, oficina técnica o campo.</p>
           </div>
         </div>
 
         <div class="grid-2 downloads-grid">
           <article class="card">
-            <div class="resource-type">Guía PDF</div>
-            <h3>Guía de instrumentación industrial para tratamiento de agua</h3>
-            <p>Fundamentos de señal 4–20 mA, HART, calibración y diagnóstico para operación y mantenimiento.</p>
+            <div class="resource-type" data-i18n="pdfGuide">Guía PDF</div>
+            <h3 data-i18n="resource1Title">Guía de instrumentación industrial para tratamiento de agua</h3>
+            <p data-i18n="resource1Text">Fundamentos de señal 4–20 mA, HART, calibración y diagnóstico para operación y mantenimiento.</p>
             <div class="resource-meta">
               <span>PDF</span>
-              <span>Actualizable</span>
-              <span>Uso en campo</span>
+              <span data-i18n="metaUpdatable">Actualizable</span>
+              <span data-i18n="metaFieldUse">Uso en campo</span>
             </div>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download>Descargar guía</a>
+              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download data-i18n="downloadGuide">Descargar guía</a>
             </div>
           </article>
 
           <article class="card">
-            <div class="resource-type">Documento técnico</div>
-            <h3>Química del agua para ingenieros</h3>
-            <p>pH, alcalinidad, coagulación, corrosión, interpretación química y apoyo a decisiones operativas.</p>
+            <div class="resource-type" data-i18n="techDocument">Documento técnico</div>
+            <h3 data-i18n="resource2Title">Química del agua para ingenieros</h3>
+            <p data-i18n="resource2Text">pH, alcalinidad, coagulación, corrosión, interpretación química y apoyo a decisiones operativas.</p>
             <div class="resource-meta">
               <span>PDF</span>
-              <span>Proceso</span>
-              <span>Consulta técnica</span>
+              <span data-i18n="metaProcess">Proceso</span>
+              <span data-i18n="metaTechConsult">Consulta técnica</span>
             </div>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download>Descargar PDF</a>
+              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download data-i18n="downloadPdf">Descargar PDF</a>
             </div>
           </article>
 
           <article class="card">
-            <div class="resource-type">Guía de procesos</div>
-            <h3>Guía técnica Desalter</h3>
-            <p>Referencia práctica para troubleshooting, operación y análisis técnico en procesos industriales.</p>
+            <div class="resource-type" data-i18n="processGuide">Guía de procesos</div>
+            <h3 data-i18n="resource3Title">Guía técnica Desalter</h3>
+            <p data-i18n="resource3Text">Referencia práctica para troubleshooting, operación y análisis técnico en procesos industriales.</p>
             <div class="resource-meta">
               <span>PDF</span>
-              <span>Procesos</span>
-              <span>Diagnóstico</span>
+              <span data-i18n="metaProcesses">Procesos</span>
+              <span data-i18n="metaDiagnosis">Diagnóstico</span>
             </div>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/guia-desalter.pdf" download>Descargar guía</a>
+              <a class="btn btn-primary" href="downloads/guia-desalter.pdf" download data-i18n="downloadGuide">Descargar guía</a>
             </div>
           </article>
 
           <article class="card callout">
-            <h3>Próximamente: hojas de datos, tablas normativas y diagnóstico de campo</h3>
-            <p>
-              Sustituye los bloques vacíos por captación real. Puedes conectar este formulario a Formspree,
-              Netlify Forms o tu backend favorito.
-            </p>
+            <h3 data-i18n="waitlistTitle">Próximamente: hojas de datos, tablas normativas y diagnóstico de campo</h3>
+            <p data-i18n="waitlistText">Sustituye los bloques vacíos por captación real. Puedes conectar este formulario a Formspree, Netlify Forms o tu backend favorito.</p>
             <form action="#" method="post">
-              <label for="email" class="muted">Recibe aviso cuando estén disponibles</label>
+              <label for="email" class="muted" data-i18n="waitlistLabel">Recibe aviso cuando estén disponibles</label>
               <div class="tool-actions">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="tu@email.com"
-                  style="flex:1; min-width:220px; padding:0.95rem 1rem; border-radius:999px; border:1px solid rgba(255,255,255,0.12); background:rgba(8,19,31,0.68); color:var(--text);"
-                />
-                <button class="btn btn-primary" type="submit">Quiero acceso anticipado</button>
+                <input id="email" name="email" type="email" placeholder="tu@email.com" style="flex:1; min-width:220px; padding:0.95rem 1rem; border-radius:999px; border:1px solid rgba(255,255,255,0.12); background:rgba(8,19,31,0.68); color:var(--text);" />
+                <button class="btn btn-primary" type="submit" data-i18n="waitlistBtn">Quiero acceso anticipado</button>
               </div>
             </form>
           </article>
@@ -1009,36 +1055,36 @@
       <div class="container">
         <div class="section-heading">
           <div>
-            <h2>Aprende con formación práctica</h2>
-            <p>Contenido técnico orientado a operación, diseño y diagnóstico en tratamiento de agua.</p>
+            <h2 data-i18n="trainingTitle">Aprende con formación práctica</h2>
+            <p data-i18n="trainingText">Contenido técnico orientado a operación, diseño y diagnóstico en tratamiento de agua.</p>
           </div>
         </div>
 
         <div class="grid-3 training-grid">
           <article class="card">
-            <span class="tag">Disponible</span>
-            <h3>Instrumentación industrial para tratamiento de agua</h3>
-            <p>Aprende señal 4–20 mA, HART, calibración, fallos habituales y diagnóstico de campo.</p>
+            <span class="tag" data-i18n="available">Disponible</span>
+            <h3 data-i18n="training1Title">Instrumentación industrial para tratamiento de agua</h3>
+            <p data-i18n="training1Text">Aprende señal 4–20 mA, HART, calibración, fallos habituales y diagnóstico de campo.</p>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download>Descargar guía</a>
+              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download data-i18n="downloadGuide">Descargar guía</a>
             </div>
           </article>
 
           <article class="card">
-            <span class="tag">Disponible</span>
-            <h3>Química del agua para ingenieros</h3>
-            <p>Revisa fundamentos para operación, diseño, control químico e interpretación de parámetros de calidad.</p>
+            <span class="tag" data-i18n="available">Disponible</span>
+            <h3 data-i18n="training2Title">Química del agua para ingenieros</h3>
+            <p data-i18n="training2Text">Revisa fundamentos para operación, diseño, control químico e interpretación de parámetros de calidad.</p>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download>Descargar PDF</a>
+              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download data-i18n="downloadPdf">Descargar PDF</a>
             </div>
           </article>
 
           <article class="card">
-            <span class="tag">En preparación</span>
-            <h3>Diseño y optimización de sistemas OI / Operación EDAR</h3>
-            <p>Convierte el “próximamente” en lista de interés para validar demanda antes de publicar más contenido.</p>
+            <span class="tag" data-i18n="inPreparation">En preparación</span>
+            <h3 data-i18n="training3Title">Diseño y optimización de sistemas OI / Operación EDAR</h3>
+            <p data-i18n="training3Text">Convierte el “próximamente” en lista de interés para validar demanda antes de publicar más contenido.</p>
             <div class="tool-actions">
-              <a class="btn btn-secondary" href="#biblioteca">Avisarme cuando salga</a>
+              <a class="btn btn-secondary" href="#biblioteca" data-i18n="notifyMe">Avisarme cuando salga</a>
             </div>
           </article>
         </div>
@@ -1049,40 +1095,37 @@
       <div class="container">
         <div class="section-heading">
           <div>
-            <h2>¿Necesitas soluciones para tu empresa?</h2>
-            <p>Además de herramientas gratuitas, puedes abrir una vía clara para soporte técnico, formación y soluciones a medida.</p>
+            <h2 data-i18n="businessTitle">¿Necesitas soluciones para tu empresa?</h2>
+            <p data-i18n="businessText">Además de herramientas gratuitas, puedes abrir una vía clara para soporte técnico, formación y soluciones a medida.</p>
           </div>
         </div>
 
         <div class="grid-3 business-grid">
           <article class="card">
             <div class="icon">EQ</div>
-            <h3>Formación técnica para equipos</h3>
-            <p>Capacitación práctica en tratamiento de agua, instrumentación, operación y troubleshooting.</p>
+            <h3 data-i18n="business1Title">Formación técnica para equipos</h3>
+            <p data-i18n="business1Text">Capacitación práctica en tratamiento de agua, instrumentación, operación y troubleshooting.</p>
           </article>
 
           <article class="card">
             <div class="icon">DX</div>
-            <h3>Asesoría en instrumentación y diagnóstico</h3>
-            <p>Soporte para lectura de señales, interpretación de variables, revisión de instrumentación y diagnóstico operativo.</p>
+            <h3 data-i18n="business2Title">Asesoría en instrumentación y diagnóstico</h3>
+            <p data-i18n="business2Text">Soporte para lectura de señales, interpretación de variables, revisión de instrumentación y diagnóstico operativo.</p>
           </article>
 
           <article class="card">
             <div class="icon">DEV</div>
-            <h3>Herramientas y recursos adaptados</h3>
-            <p>Desarrollo de calculadoras, plantillas y recursos técnicos enfocados en procesos reales de planta.</p>
+            <h3 data-i18n="business3Title">Herramientas y recursos adaptados</h3>
+            <p data-i18n="business3Text">Desarrollo de calculadoras, plantillas y recursos técnicos enfocados en procesos reales de planta.</p>
           </article>
         </div>
 
         <div class="callout" style="margin-top:1.15rem;">
-          <h3>Convierte visitas técnicas en oportunidades de servicio</h3>
-          <p>
-            Añade aquí tu formulario de contacto, un correo profesional o un botón directo a LinkedIn y correo.
-            Puedes conectar este bloque a un formulario estático o a un CRM sencillo.
-          </p>
+          <h3 data-i18n="businessCalloutTitle">Convierte visitas técnicas en oportunidades de servicio</h3>
+          <p data-i18n="businessCalloutText">Añade aquí tu formulario de contacto, un correo profesional o un botón directo a LinkedIn y correo. Puedes conectar este bloque a un formulario estático o a un CRM sencillo.</p>
           <div class="tool-actions">
-            <a class="btn btn-primary" href="mailto:gjosebw.es@gmail.com">Solicitar información</a>
-            <a class="btn btn-secondary" href="https://www.linkedin.com/in/gustavo-blanco-walter" target="_blank" rel="noreferrer">Ver LinkedIn</a>
+            <a class="btn btn-primary" href="mailto:gjosebw.es@gmail.com" data-i18n="requestInfo">Solicitar información</a>
+            <a class="btn btn-secondary" href="https://www.linkedin.com/in/gustavo-blanco-walter" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
         </div>
       </div>
@@ -1091,17 +1134,13 @@
     <section class="section">
       <div class="container about-grid">
         <div class="card">
-          <span class="tag">Basado en experiencia real de planta</span>
-          <h2 style="margin-top:0;">Ingeniería útil, directa y aplicable</h2>
-          <p>
-            Estas herramientas nacen de experiencia en tratamiento industrial de agua, instrumentación,
-            Oil & Gas, petroquímica, alimentos y utilities, con foco en problemas reales de planta,
-            troubleshooting y mejora operativa.
-          </p>
+          <span class="tag" data-i18n="realExperience">Basado en experiencia real de planta</span>
+          <h2 style="margin-top:0;" data-i18n="aboutBlockTitle">Ingeniería útil, directa y aplicable</h2>
+          <p data-i18n="aboutBlockText">Estas herramientas nacen de experiencia en tratamiento industrial de agua, instrumentación, Oil & Gas, petroquímica, alimentos y utilities, con foco en problemas reales de planta, troubleshooting y mejora operativa.</p>
           <ul class="check-list" style="margin-top:1rem;">
-            <li>Aplicado en agua, petroquímica, alimentos, minería y papel</li>
-            <li>Experiencia en campo, operación, soporte y optimización</li>
-            <li>Enfoque práctico para uso real, no solo teórico</li>
+            <li data-i18n="aboutLi1">Aplicado en agua, petroquímica, alimentos, minería y papel</li>
+            <li data-i18n="aboutLi2">Experiencia en campo, operación, soporte y optimización</li>
+            <li data-i18n="aboutLi3">Enfoque práctico para uso real, no solo teórico</li>
           </ul>
         </div>
 
@@ -1109,20 +1148,14 @@
           <div class="profile-card">
             <div class="avatar">GB</div>
             <div>
-              <span class="tag">Sobre el creador</span>
+              <span class="tag" data-i18n="aboutCreatorTag">Sobre el creador</span>
               <h3 style="margin-top:0;">Gustavo Blanco Walter</h3>
-              <p>
-                Ingeniero senior de agua y procesos, con más de 30 años de experiencia en tratamiento industrial
-                de agua, instrumentación de campo, Oil & Gas y optimización de procesos en España y Latinoamérica.
-              </p>
-              <p style="margin-top:0.9rem;">
-                WaterTools.es nace para convertir experiencia técnica de planta en herramientas útiles,
-                prácticas y accesibles para otros profesionales del sector.
-              </p>
+              <p data-i18n="creatorText1">Ingeniero senior de agua y procesos, con más de 30 años de experiencia en tratamiento industrial de agua, instrumentación de campo, Oil & Gas y optimización de procesos en España y Latinoamérica.</p>
+              <p style="margin-top:0.9rem;" data-i18n="creatorText2">WaterTools.es nace para convertir experiencia técnica de planta en herramientas útiles, prácticas y accesibles para otros profesionales del sector.</p>
               <div class="about-actions">
-                <a class="btn btn-primary" href="https://www.linkedin.com/in/gustavo-blanco-walter" target="_blank" rel="noreferrer">Ver LinkedIn</a>
-                <a class="btn btn-secondary" href="https://github.com/" target="_blank" rel="noreferrer">Ver GitHub</a>
-                <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com">Contactar</a>
+                <a class="btn btn-primary" href="https://www.linkedin.com/in/gustavo-blanco-walter" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="btn btn-secondary" href="https://github.com/gjosebwes-sketch" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com" data-i18n="contactBtn">Contactar</a>
               </div>
             </div>
           </div>
@@ -1133,12 +1166,12 @@
     <section class="section footer-cta">
       <div class="container">
         <div class="footer-card">
-          <h2>Empieza hoy con tus herramientas técnicas</h2>
-          <p>Abre una calculadora, descarga una guía o explora recursos creados para profesionales del agua, instrumentación y procesos.</p>
+          <h2 data-i18n="footerTitle">Empieza hoy con tus herramientas técnicas</h2>
+          <p data-i18n="footerText">Abre una calculadora, descarga una guía o explora recursos creados para profesionales del agua, instrumentación y procesos.</p>
           <div class="hero-actions" style="justify-content:center; margin-top:0;">
-            <a class="btn btn-primary" href="#herramientas">Abrir herramientas</a>
-            <a class="btn btn-secondary" href="#biblioteca">Descargar recursos</a>
-            <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com">Contactar</a>
+            <a class="btn btn-primary" href="#herramientas" data-i18n="footerBtn1">Abrir herramientas</a>
+            <a class="btn btn-secondary" href="#biblioteca" data-i18n="footerBtn2">Descargar recursos</a>
+            <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com" data-i18n="contactBtn">Contactar</a>
           </div>
         </div>
       </div>
@@ -1147,8 +1180,8 @@
 
   <footer class="site-footer">
     <div class="container site-footer-inner">
-      <span>© <span id="year"></span> WaterTools.es · Herramientas técnicas para profesionales del agua</span>
-      <span>Diseño preparado para GitHub Pages · HTML + CSS puro</span>
+      <span>© <span id="year"></span> WaterTools.es · <span data-i18n="footerLegal">Herramientas técnicas para profesionales del agua</span></span>
+      <span data-i18n="footerTech">Diseño preparado para GitHub Pages · HTML + CSS puro</span>
     </div>
   </footer>
 
@@ -1177,7 +1210,143 @@
         ctaUseTools: 'Usar herramientas',
         heroEyebrow: 'Herramientas técnicas para profesionales del agua',
         heroTitle: 'Calculadoras, guías y recursos técnicos para tratamiento de agua e instrumentación industrial',
-        heroText: 'Usa herramientas prácticas para EDAR, ETAP, ósmosis inversa, dosificación química, señal 4–20 mA y diagnóstico de campo. Diseñadas desde experiencia real en planta para profesionales que necesitan resultados claros, rápidos y aplicables.'
+        heroText: 'Usa herramientas prácticas para EDAR, ETAP, ósmosis inversa, dosificación química, señal 4–20 mA y diagnóstico de campo. Diseñadas desde experiencia real en planta para profesionales que necesitan resultados claros, rápidos y aplicables.',
+        heroPrimary: 'Usar herramientas ahora',
+        heroSecondary: 'Descargar recursos técnicos',
+        trust1: 'Gratis',
+        trust2: 'Sin anuncios',
+        trust3: 'Uso directo en navegador',
+        trust4: 'HTML offline disponible',
+        heroCard1Title: 'Para operación, diseño y diagnóstico',
+        heroCard1Text: 'Accede rápido a cálculos técnicos, referencias prácticas y herramientas listas para campo u oficina técnica.',
+        heroCard2Title: 'Biblioteca técnica descargable',
+        heroCard2Text: 'Organiza guías, tablas y documentos descargables desde tu propio dominio para una experiencia más profesional.',
+        heroCard3Title: 'Base real de experiencia',
+        heroCard3Text: 'Más de 30 años aplicados a tratamiento de agua, instrumentación, procesos y soporte técnico industrial.',
+        routesTitle: 'Empieza por tu área de trabajo',
+        routesText: 'Accede más rápido a las herramientas y recursos que mejor encajan con tu trabajo diario.',
+        route1Title: 'Tratamiento de agua',
+        route1Text: 'Para operación de planta, calidad de agua, dosificación química, ETAP, EDAR, DAF y ósmosis inversa.',
+        route1Btn: 'Ver herramientas de agua',
+        route2Title: 'Instrumentación industrial',
+        route2Text: 'Para señal 4–20 mA, caudal, nivel, pH, conductividad, calibración y diagnóstico de equipos.',
+        route2Btn: 'Ver instrumentación',
+        route3Title: 'Procesos y refinería',
+        route3Text: 'Para troubleshooting, separación agua/aceite, desalter, overhead y apoyo a procesos industriales.',
+        route3Btn: 'Ver recursos de procesos',
+        toolsTitle: 'Herramientas destacadas',
+        toolsText: 'Presenta tus utilidades como un catálogo técnico claro, escaneable y orientado a la acción.',
+        tagInstrumentation: 'Instrumentación',
+        tagRO: 'Ósmosis inversa',
+        tagChemistry: 'Química de proceso',
+        tagGeneralCalc: 'Cálculo general',
+        pillField: 'Campo',
+        pillDiagnosis: 'Diagnóstico',
+        pillOffline: 'HTML offline',
+        pillDesign: 'Diseño',
+        pillOptimization: 'Optimización',
+        pillOperation: 'Operación',
+        pillQuickCalc: 'Cálculo rápido',
+        pillStandard: 'Normativa',
+        pillProcess: 'Proceso',
+        pillChemistry: 'Química',
+        pillQuickReference: 'Consulta rápida',
+        tool1Sub: 'Instrumentación práctica para técnicos de agua',
+        tool1Text: 'Ideal para técnicos de campo en EDAR y ETAP que necesitan referencias rápidas y soporte operativo.',
+        tool1Li1: 'Conversión y validación de señal 4–20 mA',
+        tool1Li2: 'Diagnóstico práctico de instrumentos',
+        tool1Li3: 'Consulta rápida de calibración y referencias',
+        tool2Sub: 'Cálculo y optimización de ósmosis inversa',
+        tool2Text: 'Ideal para diseño y operación de sistemas OI con foco en variables de desempeño y ajuste operativo.',
+        tool2Li1: 'Recuperación y rechazo de sales',
+        tool2Li2: 'Variables de operación y control',
+        tool2Li3: 'Apoyo a dosificación química',
+        tool3Sub: 'Conversión mA-proceso para planta depuradora',
+        tool3Text: 'Ideal para operación, instrumentación y validación rápida de variables críticas de proceso.',
+        tool3Li1: 'Conversión mA a variable de proceso',
+        tool3Li2: 'Soporte en interpretación de señales',
+        tool3Li3: 'Referencia rápida para condiciones de planta',
+        tool4Sub: 'Referencia operativa para tratamiento de agua',
+        tool4Text: 'Ideal para ingenieros y responsables de proceso que requieren una base rápida de apoyo técnico.',
+        tool4Li1: 'Química y operaciones unitarias',
+        tool4Li2: 'Variables clave de tratamiento',
+        tool4Li3: 'Apoyo a troubleshooting y revisión',
+        tool5Sub: 'Calculadora multipropósito para agua',
+        tool5Text: 'Ideal para cálculos rápidos en operación y diseño con foco en productividad y claridad.',
+        tool5Li1: 'Caudales y conversiones',
+        tool5Li2: 'Dosificación química',
+        tool5Li3: 'Parámetros habituales de proceso',
+        openTool: 'Abrir herramienta',
+        downloadHtml: 'Descargar HTML',
+        toolsCalloutTitle: '¿Quieres más herramientas?',
+        toolsCalloutText: 'Convierte los módulos marcados como “Próximamente” en captación real: acceso anticipado, lista de espera o descarga bajo solicitud.',
+        toolsCalloutBtn1: 'Solicitar herramienta',
+        toolsCalloutBtn2: 'Ver recursos',
+        stat1: 'herramientas técnicas activas',
+        stat2: 'años de experiencia aplicada',
+        stat3: 'gratis y código abierto',
+        stat4: 'anuncios o rastreo invasivo',
+        libraryTitle: 'Biblioteca técnica para descargar',
+        libraryText: 'Guías, tablas y documentos prácticos para consulta rápida en planta, oficina técnica o campo.',
+        pdfGuide: 'Guía PDF',
+        techDocument: 'Documento técnico',
+        processGuide: 'Guía de procesos',
+        resource1Title: 'Guía de instrumentación industrial para tratamiento de agua',
+        resource1Text: 'Fundamentos de señal 4–20 mA, HART, calibración y diagnóstico para operación y mantenimiento.',
+        resource2Title: 'Química del agua para ingenieros',
+        resource2Text: 'pH, alcalinidad, coagulación, corrosión, interpretación química y apoyo a decisiones operativas.',
+        resource3Title: 'Guía técnica Desalter',
+        resource3Text: 'Referencia práctica para troubleshooting, operación y análisis técnico en procesos industriales.',
+        metaUpdatable: 'Actualizable',
+        metaFieldUse: 'Uso en campo',
+        metaProcess: 'Proceso',
+        metaTechConsult: 'Consulta técnica',
+        metaProcesses: 'Procesos',
+        metaDiagnosis: 'Diagnóstico',
+        downloadGuide: 'Descargar guía',
+        downloadPdf: 'Descargar PDF',
+        waitlistTitle: 'Próximamente: hojas de datos, tablas normativas y diagnóstico de campo',
+        waitlistText: 'Sustituye los bloques vacíos por captación real. Puedes conectar este formulario a Formspree, Netlify Forms o tu backend favorito.',
+        waitlistLabel: 'Recibe aviso cuando estén disponibles',
+        waitlistBtn: 'Quiero acceso anticipado',
+        trainingTitle: 'Aprende con formación práctica',
+        trainingText: 'Contenido técnico orientado a operación, diseño y diagnóstico en tratamiento de agua.',
+        available: 'Disponible',
+        inPreparation: 'En preparación',
+        training1Title: 'Instrumentación industrial para tratamiento de agua',
+        training1Text: 'Aprende señal 4–20 mA, HART, calibración, fallos habituales y diagnóstico de campo.',
+        training2Title: 'Química del agua para ingenieros',
+        training2Text: 'Revisa fundamentos para operación, diseño, control químico e interpretación de parámetros de calidad.',
+        training3Title: 'Diseño y optimización de sistemas OI / Operación EDAR',
+        training3Text: 'Convierte el “próximamente” en lista de interés para validar demanda antes de publicar más contenido.',
+        notifyMe: 'Avisarme cuando salga',
+        businessTitle: '¿Necesitas soluciones para tu empresa?',
+        businessText: 'Además de herramientas gratuitas, puedes abrir una vía clara para soporte técnico, formación y soluciones a medida.',
+        business1Title: 'Formación técnica para equipos',
+        business1Text: 'Capacitación práctica en tratamiento de agua, instrumentación, operación y troubleshooting.',
+        business2Title: 'Asesoría en instrumentación y diagnóstico',
+        business2Text: 'Soporte para lectura de señales, interpretación de variables, revisión de instrumentación y diagnóstico operativo.',
+        business3Title: 'Herramientas y recursos adaptados',
+        business3Text: 'Desarrollo de calculadoras, plantillas y recursos técnicos enfocados en procesos reales de planta.',
+        businessCalloutTitle: 'Convierte visitas técnicas en oportunidades de servicio',
+        businessCalloutText: 'Añade aquí tu formulario de contacto, un correo profesional o un botón directo a LinkedIn y correo. Puedes conectar este bloque a un formulario estático o a un CRM sencillo.',
+        requestInfo: 'Solicitar información',
+        realExperience: 'Basado en experiencia real de planta',
+        aboutBlockTitle: 'Ingeniería útil, directa y aplicable',
+        aboutBlockText: 'Estas herramientas nacen de experiencia en tratamiento industrial de agua, instrumentación, Oil & Gas, petroquímica, alimentos y utilities, con foco en problemas reales de planta, troubleshooting y mejora operativa.',
+        aboutLi1: 'Aplicado en agua, petroquímica, alimentos, minería y papel',
+        aboutLi2: 'Experiencia en campo, operación, soporte y optimización',
+        aboutLi3: 'Enfoque práctico para uso real, no solo teórico',
+        aboutCreatorTag: 'Sobre el creador',
+        creatorText1: 'Ingeniero senior de agua y procesos, con más de 30 años de experiencia en tratamiento industrial de agua, instrumentación de campo, Oil & Gas y optimización de procesos en España y Latinoamérica.',
+        creatorText2: 'WaterTools.es nace para convertir experiencia técnica de planta en herramientas útiles, prácticas y accesibles para otros profesionales del sector.',
+        contactBtn: 'Contactar',
+        footerTitle: 'Empieza hoy con tus herramientas técnicas',
+        footerText: 'Abre una calculadora, descarga una guía o explora recursos creados para profesionales del agua, instrumentación y procesos.',
+        footerBtn1: 'Abrir herramientas',
+        footerBtn2: 'Descargar recursos',
+        footerLegal: 'Herramientas técnicas para profesionales del agua',
+        footerTech: 'Diseño preparado para GitHub Pages · HTML + CSS puro'
       },
       en: {
         navAreas: 'Areas',
@@ -1189,7 +1358,143 @@
         ctaUseTools: 'Use tools',
         heroEyebrow: 'Technical tools for water professionals',
         heroTitle: 'Calculators, guides and technical resources for water treatment and industrial instrumentation',
-        heroText: 'Use practical tools for WWTP, DWTP, reverse osmosis, chemical dosing, 4–20 mA signals and field diagnostics. Built from real plant experience for professionals who need clear, fast and applicable results.'
+        heroText: 'Use practical tools for WWTP, DWTP, reverse osmosis, chemical dosing, 4–20 mA signals and field diagnostics. Built from real plant experience for professionals who need clear, fast and applicable results.',
+        heroPrimary: 'Use tools now',
+        heroSecondary: 'Download technical resources',
+        trust1: 'Free',
+        trust2: 'No ads',
+        trust3: 'Direct browser use',
+        trust4: 'Offline HTML available',
+        heroCard1Title: 'For operation, design and diagnostics',
+        heroCard1Text: 'Quick access to technical calculations, practical references and tools ready for field or technical office use.',
+        heroCard2Title: 'Downloadable technical library',
+        heroCard2Text: 'Organize guides, tables and downloadable documents from your own domain for a more professional experience.',
+        heroCard3Title: 'Real experience base',
+        heroCard3Text: 'More than 30 years applied to water treatment, instrumentation, process support and industrial troubleshooting.',
+        routesTitle: 'Start with your work area',
+        routesText: 'Access the tools and resources that best fit your daily work more quickly.',
+        route1Title: 'Water treatment',
+        route1Text: 'For plant operation, water quality, chemical dosing, DWTP, WWTP, DAF and reverse osmosis.',
+        route1Btn: 'View water tools',
+        route2Title: 'Industrial instrumentation',
+        route2Text: 'For 4–20 mA signals, flow, level, pH, conductivity, calibration and equipment diagnostics.',
+        route2Btn: 'View instrumentation',
+        route3Title: 'Processes and refinery',
+        route3Text: 'For troubleshooting, water/oil separation, desalter, overhead and industrial process support.',
+        route3Btn: 'View process resources',
+        toolsTitle: 'Featured tools',
+        toolsText: 'Present your utilities as a clear, scannable technical catalog oriented to action.',
+        tagInstrumentation: 'Instrumentation',
+        tagRO: 'Reverse osmosis',
+        tagChemistry: 'Process chemistry',
+        tagGeneralCalc: 'General calculation',
+        pillField: 'Field',
+        pillDiagnosis: 'Diagnostics',
+        pillOffline: 'Offline HTML',
+        pillDesign: 'Design',
+        pillOptimization: 'Optimization',
+        pillOperation: 'Operation',
+        pillQuickCalc: 'Quick calc',
+        pillStandard: 'Standards',
+        pillProcess: 'Process',
+        pillChemistry: 'Chemistry',
+        pillQuickReference: 'Quick reference',
+        tool1Sub: 'Practical instrumentation for water technicians',
+        tool1Text: 'Ideal for field technicians in WWTP and DWTP environments who need quick references and operational support.',
+        tool1Li1: '4–20 mA signal conversion and validation',
+        tool1Li2: 'Practical instrument diagnostics',
+        tool1Li3: 'Fast calibration and reference lookup',
+        tool2Sub: 'Reverse osmosis calculation and optimization',
+        tool2Text: 'Ideal for RO system design and operation with focus on performance variables and operational tuning.',
+        tool2Li1: 'Recovery and salt rejection',
+        tool2Li2: 'Operation and control variables',
+        tool2Li3: 'Support for chemical dosing',
+        tool3Sub: 'mA-to-process conversion for wastewater plants',
+        tool3Text: 'Ideal for operation, instrumentation and quick validation of critical process variables.',
+        tool3Li1: 'mA to process variable conversion',
+        tool3Li2: 'Signal interpretation support',
+        tool3Li3: 'Fast reference for plant conditions',
+        tool4Sub: 'Operational reference for water treatment',
+        tool4Text: 'Ideal for engineers and process leaders who need a fast technical support base.',
+        tool4Li1: 'Chemistry and unit operations',
+        tool4Li2: 'Key treatment variables',
+        tool4Li3: 'Support for troubleshooting and review',
+        tool5Sub: 'Multipurpose calculator for water systems',
+        tool5Text: 'Ideal for quick calculations in operation and design with focus on productivity and clarity.',
+        tool5Li1: 'Flows and conversions',
+        tool5Li2: 'Chemical dosing',
+        tool5Li3: 'Common process parameters',
+        openTool: 'Open tool',
+        downloadHtml: 'Download HTML',
+        toolsCalloutTitle: 'Need more tools?',
+        toolsCalloutText: 'Turn upcoming modules into real demand capture: early access, waiting list or requested download.',
+        toolsCalloutBtn1: 'Request tool',
+        toolsCalloutBtn2: 'View resources',
+        stat1: 'active technical tools',
+        stat2: 'years of applied experience',
+        stat3: 'free and open source',
+        stat4: 'ads or invasive tracking',
+        libraryTitle: 'Technical library to download',
+        libraryText: 'Guides, tables and practical documents for fast consultation in plant, field or technical office.',
+        pdfGuide: 'PDF guide',
+        techDocument: 'Technical document',
+        processGuide: 'Process guide',
+        resource1Title: 'Industrial instrumentation guide for water treatment',
+        resource1Text: '4–20 mA fundamentals, HART, calibration and diagnostics for operation and maintenance.',
+        resource2Title: 'Water chemistry for engineers',
+        resource2Text: 'pH, alkalinity, coagulation, corrosion, chemistry interpretation and operational decision support.',
+        resource3Title: 'Desalter technical guide',
+        resource3Text: 'Practical reference for troubleshooting, operation and technical analysis in industrial processes.',
+        metaUpdatable: 'Updatable',
+        metaFieldUse: 'Field use',
+        metaProcess: 'Process',
+        metaTechConsult: 'Technical reference',
+        metaProcesses: 'Processes',
+        metaDiagnosis: 'Diagnostics',
+        downloadGuide: 'Download guide',
+        downloadPdf: 'Download PDF',
+        waitlistTitle: 'Coming soon: datasheets, standards tables and field diagnostics',
+        waitlistText: 'Replace empty blocks with real lead capture. You can connect this form to Formspree, Netlify Forms or your preferred backend.',
+        waitlistLabel: 'Get notified when available',
+        waitlistBtn: 'I want early access',
+        trainingTitle: 'Learn with practical training',
+        trainingText: 'Technical content oriented to operation, design and diagnostics in water treatment.',
+        available: 'Available',
+        inPreparation: 'In preparation',
+        training1Title: 'Industrial instrumentation for water treatment',
+        training1Text: 'Learn 4–20 mA signals, HART, calibration, common failures and field diagnostics.',
+        training2Title: 'Water chemistry for engineers',
+        training2Text: 'Review fundamentals for operation, design, chemical control and interpretation of quality parameters.',
+        training3Title: 'RO system design and optimization / WWTP operation',
+        training3Text: 'Turn “coming soon” into a waiting list to validate demand before publishing more content.',
+        notifyMe: 'Notify me when available',
+        businessTitle: 'Need solutions for your company?',
+        businessText: 'Beyond free tools, create a clear path for technical support, training and custom solutions.',
+        business1Title: 'Technical training for teams',
+        business1Text: 'Practical training in water treatment, instrumentation, operation and troubleshooting.',
+        business2Title: 'Instrumentation and diagnostics advisory',
+        business2Text: 'Support for signal reading, variable interpretation, instrumentation review and operational diagnostics.',
+        business3Title: 'Custom tools and resources',
+        business3Text: 'Development of calculators, templates and technical resources focused on real plant processes.',
+        businessCalloutTitle: 'Turn technical visits into service opportunities',
+        businessCalloutText: 'Add your contact form, professional email or direct LinkedIn and email buttons here. You can connect this block to a static form or a simple CRM.',
+        requestInfo: 'Request information',
+        realExperience: 'Based on real plant experience',
+        aboutBlockTitle: 'Useful, direct and applicable engineering',
+        aboutBlockText: 'These tools come from experience in industrial water treatment, instrumentation, Oil & Gas, petrochemicals, food and utilities, focused on real plant problems, troubleshooting and operational improvement.',
+        aboutLi1: 'Applied in water, petrochemical, food, mining and paper sectors',
+        aboutLi2: 'Experience in field work, operation, support and optimization',
+        aboutLi3: 'Practical approach for real use, not only theory',
+        aboutCreatorTag: 'About the creator',
+        creatorText1: 'Senior water and process engineer with more than 30 years of experience in industrial water treatment, field instrumentation, Oil & Gas and process optimization across Spain and Latin America.',
+        creatorText2: 'WaterTools.es was created to transform real plant experience into useful, practical and accessible tools for other professionals in the sector.',
+        contactBtn: 'Contact',
+        footerTitle: 'Start today with your technical tools',
+        footerText: 'Open a calculator, download a guide or explore resources created for water, instrumentation and process professionals.',
+        footerBtn1: 'Open tools',
+        footerBtn2: 'Download resources',
+        footerLegal: 'Technical tools for water professionals',
+        footerTech: 'Built for GitHub Pages · Pure HTML + CSS'
       }
     };
 
@@ -1197,7 +1502,13 @@
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-i18n]').forEach((el) => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) el.textContent = translations[lang][key];
+        if (translations[lang] && translations[lang][key]) {
+          if (el.tagName === 'INPUT') {
+            el.placeholder = translations[lang][key];
+          } else {
+            el.textContent = translations[lang][key];
+          }
+        }
       });
       document.querySelectorAll('[data-lang]').forEach((btn) => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);

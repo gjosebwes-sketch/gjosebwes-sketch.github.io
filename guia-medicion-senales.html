@@ -617,40 +617,15 @@
       }
     }
 
-    @media print {
-      body {
-        background: white;
-        color: black;
-      }
+  ...css anterior...
 
-      .topbar,
-      .back-top,
-      .hidden-print {
-        display: none !important;
-      }
+@media print {
+  ...
+}
 
-      main {
-        padding: 0;
-      }
-
-      .section-card,
-      .executive-summary,
-      .quick-sequence,
-      .card,
-      .diagram-container,
-      .index-box {
-        box-shadow: none;
-        background: white;
-        border: 1px solid #ddd;
-        break-inside: avoid;
-      }
-
-      table { min-width: auto; }
-      th { color: black; background: #ddd; }
-      td { color: black; }
-      h2, h3, h4, p, li { color: black !important; }
-      a { color: black; text-decoration: none; }
-    }
+</style>
+</head>
+<body>
   </style>
 </head>
 <body>

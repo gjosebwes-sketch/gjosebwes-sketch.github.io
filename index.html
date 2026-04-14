@@ -349,7 +349,32 @@ text-wrap: balance;
       font-size: 0.94rem;
       line-height: 1.55;
     }
+.resource-highlight {
+  margin: 2rem 0;
+}
 
+.resource-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 1.4rem;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+
+.resource-card h3 {
+  margin: 0 0 0.7rem;
+}
+
+.resource-card p {
+  margin: 0 0 1rem;
+  color: var(--muted, #bfd1e5);
+}
+
+.resource-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
     .section {
       padding: 2rem 0 4.4rem;
     }
@@ -772,7 +797,25 @@ max-width: 210px;
         </aside>
       </div>
     </section>
+</section>
 
+<section class="resource-highlight">
+  <div class="resource-card">
+    <h3>Guía profesional: medición de señales 4-20 mA, 0-20 mA y pulso</h3>
+    <p>
+      Aprende a diferenciar corriente y voltaje, medir en serie y en paralelo,
+      evaluar lazos de control y diagnosticar señales de proceso correctamente.
+    </p>
+    <div class="resource-actions">
+      <a class="btn btn-secondary" href="/guia-medicion-senales.html">Ver guía</a>
+      <a class="btn btn-primary" href="/docs/Guia_Medicion_Senales_WaterTools.pdf" target="_blank" rel="noopener">
+        Descargar PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rutas">
     <section class="section" id="rutas">
       <div class="container">
         <div class="section-heading">

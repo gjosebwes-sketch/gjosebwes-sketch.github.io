@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 96" role="img" aria-label="WaterTools.es logo">
+  <defs>
+    <linearGradient id="wtGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8cf8ef"/>
+      <stop offset="55%" stop-color="#38d7ca"/>
+      <stop offset="100%" stop-color="#117a95"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="8" width="80" height="80" rx="24" fill="url(#wtGrad)"/>
+  <path d="M20 31h10l5 22 9-15 9 15 5-22h10l-9 30H48l-5-10-5 10H29z" fill="#052531"/>
+  <path d="M56 68c6-1.6 10.8-5.3 13.3-10.8-1 7.3-5.4 13.3-13.3 16z" fill="rgba(255,255,255,0.24)"/>
+
+  <text x="100" y="44" fill="#EFF6FF" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" letter-spacing="-0.8">
+    WaterTools.es
+  </text>
+  <text x="100" y="69" fill="#BFD2E7" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="500">
+    Ingeniería práctica para tratamiento de agua e instrumentación
+  </text>
+</svg>

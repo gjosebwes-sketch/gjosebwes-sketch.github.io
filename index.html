@@ -1,1218 +1,1046 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WaterTools.es — Ingeniería para Agua, Instrumentación y Procesos</title>
-    <meta name="description" content="Herramientas, guías y recursos técnicos para tratamiento de agua, instrumentación industrial y procesos de refinería.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #f8fafb;
-            --bg-card: #ffffff;
-            --text: #1a2a3a;
-            --text-secondary: #5a6a7a;
-            --accent: #0e9aa7;
-            --accent-dark: #0a7a87;
-            --accent-light: #e0f5f7;
-            --border: #e2e8f0;
-            --shadow: 0 2px 16px rgba(14,154,167,0.08);
-            --shadow-lg: 0 8px 32px rgba(14,154,167,0.12);
-            --radius: 12px;
-            --font-body: 'DM Sans', sans-serif;
-            --font-display: 'Playfair Display', Georgia, serif;
-            --max-w: 1140px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WaterTools.es | Herramientas técnicas para tratamiento de agua</title>
+  <meta
+    name="description"
+    content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo."
+  />
+  <style>
+    :root {
+      --bg: #08131f;
+      --bg-soft: #0f2135;
+      --surface: rgba(255, 255, 255, 0.04);
+      --surface-2: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #eff6ff;
+      --muted: #bfd2e7;
+      --primary: #4fd1c5;
+      --primary-dark: #1ea89b;
+      --accent: #7dd3fc;
+      --warning: #fbbf24;
+      --success: #34d399;
+      --max: 1220px;
+      --radius: 22px;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+    }
 
-        [data-theme="dark"] {
-            --bg: #0d1b2a;
-            --bg-card: #1b2d3e;
-            --text: #e8edf2;
-            --text-secondary: #8fa3b8;
-            --accent: #2ecad4;
-            --accent-dark: #1ab0ba;
-            --accent-light: #132a3a;
-            --border: #2a3f52;
-            --shadow: 0 2px 16px rgba(0,0,0,0.2);
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.3);
-        }
+    * { box-sizing: border-box; }
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-        html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(79, 209, 197, 0.18), transparent 28%),
+        radial-gradient(circle at top left, rgba(125, 211, 252, 0.12), transparent 32%),
+        linear-gradient(180deg, #08131f 0%, #0b1827 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-        body {
-            font-family: var(--font-body);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            transition: background var(--transition), color var(--transition);
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        /* ── NAVBAR ── */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            backdrop-filter: blur(16px);
-            background: rgba(248,250,251,0.85);
-            border-bottom: 1px solid var(--border);
-            transition: background var(--transition);
-        }
-        [data-theme="dark"] .navbar { background: rgba(13,27,42,0.85); }
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-        .navbar-inner {
-            max-width: var(--max-w); margin: 0 auto;
-            padding: 0 24px; height: 64px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
+    .container {
+      width: min(calc(100% - 2rem), var(--max));
+      margin: 0 auto;
+    }
 
-        .nav-logo {
-            display: flex; align-items: center; gap: 10px;
-            text-decoration: none; color: var(--text);
-            font-family: var(--font-body); font-weight: 700; font-size: 1.1rem;
-        }
-        .nav-logo svg { flex-shrink: 0; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 19, 31, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
 
-        .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-secondary);
-            font-size: 0.9rem; font-weight: 500;
-            transition: color var(--transition);
-        }
-        .nav-links a:hover { color: var(--accent); }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      gap: 1rem;
+    }
 
-        .nav-controls { display: flex; align-items: center; gap: 12px; }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.15rem;
+    }
 
-        .lang-switch {
-            display: flex; gap: 4px; background: var(--accent-light);
-            border-radius: 6px; padding: 3px;
-        }
-        .lang-switch button {
-            border: none; background: transparent; padding: 4px 10px;
-            border-radius: 4px; font-size: 0.8rem; font-weight: 600;
-            cursor: pointer; color: var(--text-secondary);
-            transition: all var(--transition);
-        }
-        .lang-switch button.active {
-            background: var(--accent); color: white;
-        }
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      display: grid;
+      place-items: center;
+      color: #05202b;
+      font-weight: 900;
+      box-shadow: 0 10px 25px rgba(79, 209, 197, 0.28);
+    }
 
-        .theme-toggle {
-            border: none; background: var(--accent-light); color: var(--text);
-            width: 36px; height: 36px; border-radius: 8px;
-            cursor: pointer; font-size: 1rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all var(--transition);
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
 
-        .hamburger {
-            display: none; border: none; background: none; cursor: pointer;
-            width: 36px; height: 36px; flex-direction: column;
-            align-items: center; justify-content: center; gap: 5px;
-        }
-        .hamburger span {
-            display: block; width: 22px; height: 2px;
-            background: var(--text); border-radius: 2px;
-            transition: all var(--transition);
-        }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.96rem;
+      transition: color 0.2s ease;
+    }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .nav-links.open {
-                display: flex; flex-direction: column;
-                position: absolute; top: 64px; left: 0; right: 0;
-                background: var(--bg-card); border-bottom: 1px solid var(--border);
-                padding: 20px; gap: 16px;
-            }
-        }
+    .nav-links a:hover { color: var(--text); }
 
-        /* ── HERO ── */
-        .hero {
-            min-height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center; padding: 120px 24px 80px;
-            position: relative; overflow: hidden;
-        }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.15rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #042126;
+      font-weight: 800;
+      box-shadow: 0 14px 30px rgba(79, 209, 197, 0.25);
+    }
 
-        .hero::before {
-            content: ''; position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse 60% 50% at 20% 80%, rgba(14,154,167,0.08) 0%, transparent 70%),
-                radial-gradient(ellipse 50% 40% at 80% 20%, rgba(14,154,167,0.06) 0%, transparent 70%);
-            pointer-events: none;
-        }
+    .hero {
+      padding: 5.5rem 0 3rem;
+    }
 
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 16px; border-radius: 20px;
-            background: var(--accent-light); color: var(--accent);
-            font-size: 0.82rem; font-weight: 600;
-            margin-bottom: 28px;
-        }
-        .hero-badge::before {
-            content: ''; width: 6px; height: 6px;
-            background: var(--accent); border-radius: 50%;
-            animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.4); }
-        }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: center;
+    }
 
-        /* ── LOGO HERO (IMPACTANTE) ── */
-        .hero-logo-container {
-            margin-bottom: 32px;
-            animation: logoFadeIn 1.2s ease-out;
-        }
-        @keyframes logoFadeIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid rgba(79, 209, 197, 0.2);
+      border-radius: 999px;
+      background: rgba(79, 209, 197, 0.08);
+      color: #c8fff9;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
 
-        .hero-logo-container svg {
-            filter: drop-shadow(0 4px 24px rgba(14,154,167,0.3));
-        }
+    h1 {
+      margin: 1.2rem 0 1rem;
+      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      line-height: 1.06;
+      letter-spacing: -0.05em;
+      max-width: 12ch;
+    }
 
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2.4rem, 5vw, 3.8rem);
-            font-weight: 700; line-height: 1.15;
-            max-width: 720px; margin-bottom: 20px;
-        }
-        .hero h1 em {
-            font-style: italic; color: var(--accent);
-            text-decoration: underline;
-            text-decoration-color: rgba(14,154,167,0.3);
-            text-underline-offset: 6px;
-        }
-        .hero p {
-            font-size: 1.15rem; color: var(--text-secondary);
-            max-width: 560px; margin-bottom: 36px;
-        }
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 62ch;
+      margin: 0;
+    }
 
-        .hero-cta {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 14px 32px; border-radius: 8px;
-            background: var(--accent); color: white;
-            text-decoration: none; font-weight: 600; font-size: 1rem;
-            transition: all var(--transition);
-            box-shadow: 0 4px 16px rgba(14,154,167,0.25);
-        }
-        .hero-cta:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(14,154,167,0.35);
-        }
+    .hero-actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-top: 1.7rem;
+    }
 
-        .scroll-indicator {
-            margin-top: 60px; font-size: 0.78rem;
-            color: var(--text-secondary); letter-spacing: 2px;
-            text-transform: uppercase; animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(6px); }
-        }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.95rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      border: 1px solid transparent;
+    }
 
-        /* ── SECTIONS ── */
-        section { padding: 100px 24px; }
+    .btn:hover { transform: translateY(-1px); }
 
-        .section-inner { max-width: var(--max-w); margin: 0 auto; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #042126;
+      box-shadow: 0 14px 30px rgba(79, 209, 197, 0.22);
+    }
 
-        .section-label {
-            font-size: 0.78rem; font-weight: 600;
-            color: var(--accent); text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 12px;
-        }
+    .btn-secondary {
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
 
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-            font-weight: 700; margin-bottom: 16px;
-        }
-        .section-title em {
-            font-style: italic; color: var(--accent);
-        }
+    .microtrust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1.1rem;
+      color: #d7f4fb;
+      font-size: 0.92rem;
+    }
 
-        .section-desc {
-            color: var(--text-secondary); font-size: 1.05rem;
-            max-width: 600px; margin-bottom: 48px;
-        }
+    .microtrust span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+    }
 
-        /* ── SPECIALTIES ── */
-        .specialties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
+    .hero-panel {
+      padding: 1.25rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
 
-        .specialty-card {
-            display: block;
-            text-decoration: none;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
-            transition: all var(--transition);
-            color: var(--text);
-            box-shadow: var(--shadow);
-        }
+    .hero-card {
+      background: rgba(7, 21, 35, 0.7);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
 
-        .specialty-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg);
-        }
+    .hero-card:last-child { margin-bottom: 0; }
 
-        .specialty-icon {
-            font-size: 1.8rem;
-            margin-bottom: 14px;
-        }
+    .hero-card h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
 
-        .specialty-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+    .hero-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
-        .specialty-card p {
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-            line-height: 1.65;
-            margin-bottom: 16px;
-        }
+    .section {
+      padding: 2rem 0 4.4rem;
+    }
 
-        .specialty-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
 
-        .specialty-tags span {
-            padding: 4px 10px;
-            border-radius: 4px;
-            background: var(--accent-light);
-            color: var(--accent);
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      letter-spacing: -0.04em;
+    }
 
-        /* ── TOOL CARDS ── */
-        .tools-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 24px;
-        }
+    .section-heading p {
+      max-width: 68ch;
+      margin: 0;
+      color: var(--muted);
+    }
 
-        .tool-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 32px;
-            transition: all var(--transition);
-            position: relative; overflow: hidden;
-        }
-        .tool-card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-4px);
-            border-color: var(--accent);
-        }
+    .grid-3,
+    .grid-4,
+    .grid-2 {
+      display: grid;
+      gap: 1.15rem;
+    }
 
-        .tool-number {
-            font-size: 0.72rem; font-weight: 600;
-            color: var(--accent); text-transform: uppercase;
-            letter-spacing: 1.5px; margin-bottom: 12px;
-        }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-        .tool-card h3 {
-            font-size: 1.25rem; font-weight: 700; margin-bottom: 12px;
-        }
+    .card {
+      padding: 1.4rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%);
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: var(--shadow);
+    }
 
-        .tool-card p {
-            color: var(--text-secondary); font-size: 0.92rem;
-            line-height: 1.65; margin-bottom: 16px;
-        }
+    .card h3, .card h4 {
+      margin: 0 0 0.55rem;
+      letter-spacing: -0.03em;
+    }
 
-        .tool-tags {
-            display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
-        }
-        .tool-tags span {
-            padding: 4px 10px; border-radius: 4px;
-            background: var(--accent-light); color: var(--accent);
-            font-size: 0.75rem; font-weight: 600;
-        }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
 
-        .tool-actions {
-            display: flex; gap: 12px; flex-wrap: wrap;
-        }
-        .tool-actions a {
-            text-decoration: none; font-size: 0.88rem; font-weight: 600;
-            color: var(--accent); transition: color var(--transition);
-        }
-        .tool-actions a:hover { color: var(--accent-dark); }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(125, 211, 252, 0.12);
+      color: #d5f4ff;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
 
-        /* ── STATS ── */
-        .stats-row {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 24px; margin-top: 64px;
-        }
-        .stat-item { text-align: center; }
-        .stat-number {
-            font-family: var(--font-display);
-            font-size: 2.4rem; font-weight: 700; color: var(--accent);
-        }
-        .stat-label {
-            font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;
-        }
+    .tool-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      height: 100%;
+    }
 
-        @media (max-width: 600px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-        }
+    .tool-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      font-size: 0.8rem;
+    }
 
-        /* ── COURSE CARDS ── */
-        .courses-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-        }
-        .course-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 28px;
-            transition: all var(--transition);
-        }
-        .course-card:hover {
-            box-shadow: var(--shadow);
-            border-color: var(--accent);
-        }
-        .course-icon { font-size: 1.6rem; margin-bottom: 12px; }
-        .course-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-        .course-card p {
-            color: var(--text-secondary); font-size: 0.88rem;
-            line-height: 1.6; margin-bottom: 14px;
-        }
-        .course-meta {
-            display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;
-            font-size: 0.78rem; color: var(--text-secondary);
-        }
-        .course-card a {
-            color: var(--accent); text-decoration: none; font-weight: 600;
-            font-size: 0.88rem;
-        }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #dbeafe;
+      font-weight: 700;
+    }
 
-        /* ── RESOURCES GRID ── */
-        .resources-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-        }
-        .resource-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 28px;
-            transition: all var(--transition);
-        }
-        .resource-card:hover {
-            box-shadow: var(--shadow);
-            border-color: var(--accent);
-        }
-        .resource-icon { font-size: 1.6rem; margin-bottom: 12px; }
-        .resource-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-        .resource-card p {
-            color: var(--text-secondary); font-size: 0.88rem;
-            line-height: 1.6; margin-bottom: 14px;
-        }
-        .resource-card a {
-            color: var(--accent); text-decoration: none; font-weight: 600;
-            font-size: 0.88rem;
-        }
+    .tool-list,
+    .check-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+    }
 
-        /* ── DOWNLOAD BANNER ── */
-        .download-banner {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            border-radius: var(--radius); padding: 48px;
-            text-align: center; color: white; margin-top: 64px;
-        }
-        .download-banner h2 {
-            font-family: var(--font-display); font-size: 1.6rem;
-            font-weight: 700; margin-bottom: 10px;
-        }
-        .download-banner p {
-            opacity: 0.9; font-size: 0.95rem; margin-bottom: 24px;
-        }
-        .download-banner-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .download-banner-actions a {
-            padding: 12px 24px; border-radius: 8px;
-            text-decoration: none; font-weight: 600; font-size: 0.92rem;
-            transition: all var(--transition);
-        }
-        .download-banner-actions a.primary {
-            background: white; color: var(--accent);
-        }
-        .download-banner-actions a.secondary {
-            background: rgba(255,255,255,0.15); color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
+    .tool-list li,
+    .check-list li {
+      margin-bottom: 0.45rem;
+    }
 
-        /* ── CLIENTS SECTION ── */
-        .clients-section {
-            padding: 80px 24px;
-            background: var(--accent-light);
-        }
-        .clients-section .section-inner { text-align: center; }
+    .tool-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 0.4rem;
+    }
 
-        .clients-country {
-            margin-bottom: 40px;
-        }
-        .clients-country:last-child { margin-bottom: 0; }
+    .tool-actions .btn {
+      padding: 0.82rem 1rem;
+      font-size: 0.95rem;
+    }
 
-        .country-label {
-            display: inline-flex; align-items: center; gap: 10px;
-            font-size: 1.1rem; font-weight: 700; color: var(--text);
-            margin-bottom: 20px;
-        }
-        .country-flag {
-            font-size: 1.4rem;
-        }
+    .stats {
+      margin-top: 0.25rem;
+    }
 
-        .clients-grid {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 12px; max-width: 900px; margin: 0 auto;
-        }
-        .client-badge {
-            display: inline-flex; align-items: center;
-            padding: 8px 18px; border-radius: 8px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            font-size: 0.82rem; font-weight: 600; color: var(--text);
-            letter-spacing: 0.5px; text-transform: uppercase;
-            transition: all var(--transition);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-        }
-        .client-badge:hover {
-            border-color: var(--accent);
-            box-shadow: var(--shadow);
-            transform: translateY(-2px);
-        }
+    .stat-card {
+      text-align: center;
+      padding: 1.35rem 1rem;
+    }
 
-        /* ── ABOUT SECTION ── */
-        .about-section { padding: 100px 24px; }
+    .stat-value {
+      display: block;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      margin-bottom: 0.25rem;
+      color: #d4fff9;
+    }
 
-        .about-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 40px;
-            max-width: 640px; margin: 0 auto;
-            box-shadow: var(--shadow);
-        }
-        .about-header {
-            display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
-        }
-        .about-avatar {
-            width: 60px; height: 60px; border-radius: 50%;
-            background: var(--accent); color: white;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem; font-weight: 700;
-        }
-        .about-name { font-size: 1.15rem; font-weight: 700; }
-        .about-role { font-size: 0.88rem; color: var(--accent); font-weight: 500; }
-        .about-card > p {
-            color: var(--text-secondary); font-size: 0.92rem;
-            line-height: 1.7; margin-bottom: 12px;
-        }
-        .about-links {
-            display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;
-        }
-        .about-links a {
-            color: var(--accent); text-decoration: none; font-size: 0.88rem;
-            font-weight: 600; transition: color var(--transition);
-        }
-        .about-links a:hover { color: var(--accent-dark); }
+    .downloads-grid .card,
+    .training-grid .card,
+    .business-grid .card {
+      height: 100%;
+    }
 
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 24px; text-align: center;
-            font-size: 0.82rem; color: var(--text-secondary);
-        }
-        footer a {
-            color: var(--accent); text-decoration: none; font-weight: 500;
-        }
+    .resource-type {
+      color: var(--warning);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.7rem;
+    }
 
-        /* ── ANIMATIONS ── */
-        .fade-up {
-            opacity: 0; transform: translateY(24px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .fade-up.visible {
-            opacity: 1; transform: translateY(0);
-        }
+    .resource-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: #d2e6f8;
+    }
 
-        /* Water ripple animation for logo */
-        @keyframes ripple1 {
-            0% { r: 18; opacity: 0.35; }
-            100% { r: 50; opacity: 0; }
-        }
-        @keyframes ripple2 {
-            0% { r: 18; opacity: 0.25; }
-            100% { r: 65; opacity: 0; }
-        }
-        @keyframes dropFall {
-            0% { transform: translateY(-8px); opacity: 0; }
-            30% { opacity: 1; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        .logo-drop { animation: dropFall 0.8s ease-out forwards; }
-        .logo-ripple-1 { animation: ripple1 2.5s ease-out infinite; }
-        .logo-ripple-2 { animation: ripple2 2.5s ease-out 0.6s infinite; }
+    .callout {
+      padding: 1.7rem;
+      border-radius: 26px;
+      background: linear-gradient(135deg, rgba(79,209,197,0.14), rgba(125,211,252,0.08));
+      border: 1px solid rgba(79,209,197,0.22);
+      box-shadow: var(--shadow);
+    }
 
-        /* Gear spin for logo */
-        @keyframes gearSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    .callout h3 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 1.4rem;
+      letter-spacing: -0.03em;
+    }
+
+    .business-grid .icon,
+    .route-card .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(79,209,197,0.12);
+      border: 1px solid rgba(79,209,197,0.24);
+      color: #d7fffb;
+      font-weight: 900;
+      margin-bottom: 0.9rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.2rem;
+      align-items: start;
+    }
+
+    .profile-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: #042126;
+      font-size: 1.7rem;
+      font-weight: 900;
+      box-shadow: 0 16px 30px rgba(79, 209, 197, 0.22);
+    }
+
+    .about-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .footer-cta {
+      padding-bottom: 5rem;
+    }
+
+    .footer-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: var(--shadow);
+    }
+
+    .footer-card h2 {
+      margin: 0 0 0.7rem;
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      letter-spacing: -0.04em;
+    }
+
+    .footer-card p {
+      max-width: 62ch;
+      margin: 0 auto 1.4rem;
+      color: var(--muted);
+    }
+
+    .site-footer {
+      padding: 1.1rem 0 2.4rem;
+      color: rgba(239,246,255,0.68);
+      font-size: 0.92rem;
+    }
+
+    .site-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1rem;
+    }
+
+    .muted { color: var(--muted); }
+
+    .accent { color: #d3fff8; }
+
+    .full-width { grid-column: 1 / -1; }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .about-grid,
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 1rem 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      h1 { max-width: none; }
+
+      .hero { padding-top: 3rem; }
+    }
+  </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio de WaterTools.es">
+        <span class="brand-badge">WT</span>
+        <span>WaterTools.es</span>
+      </a>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="navbar-inner">
-            <a href="#" class="nav-logo">
-                <!-- Mini logo in navbar -->
-                <svg width="32" height="32" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="60" cy="60" r="56" fill="var(--accent)" opacity="0.1"/>
-                    <path d="M60 22 C60 22 38 54 38 70 C38 82.15 47.85 92 60 92 C72.15 92 82 82.15 82 70 C82 54 60 22 60 22Z" fill="var(--accent)"/>
-                    <path d="M50 68 L54 64 L58 68 L62 60 L66 66 L70 62" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                </svg>
-                Water<span style="color:var(--accent)">Tools</span>.es
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#tools" data-i18n="nav_tools">Herramientas</a></li>
-                <li><a href="#courses" data-i18n="nav_courses">Cursos</a></li>
-                <li><a href="#resources" data-i18n="nav_resources">Recursos</a></li>
-                <li><a href="#clients" data-i18n="nav_clients">Empresas</a></li>
-                <li><a href="#about" data-i18n="nav_about">Acerca de</a></li>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#rutas">Áreas</a>
+        <a href="#herramientas">Herramientas</a>
+        <a href="#biblioteca">Recursos</a>
+        <a href="#formacion">Formación</a>
+        <a href="#empresas">Empresas</a>
+        <a href="#sobre-mi">Sobre mí</a>
+      </nav>
+
+      <a class="nav-cta" href="#herramientas">Usar herramientas</a>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Herramientas técnicas para profesionales del agua</span>
+          <h1>Calculadoras, guías y recursos técnicos para tratamiento de agua e instrumentación industrial</h1>
+          <p>
+            Usa herramientas prácticas para EDAR, ETAP, ósmosis inversa, dosificación química,
+            señal 4–20 mA y diagnóstico de campo. Diseñadas desde experiencia real en planta
+            para profesionales que necesitan resultados claros, rápidos y aplicables.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#herramientas">Usar herramientas ahora</a>
+            <a class="btn btn-secondary" href="#biblioteca">Descargar recursos técnicos</a>
+          </div>
+
+          <div class="microtrust" aria-label="Indicadores de confianza">
+            <span>Gratis</span>
+            <span>Sin anuncios</span>
+            <span>Uso directo en navegador</span>
+            <span>HTML offline disponible</span>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Resumen de valor de la plataforma">
+          <div class="hero-card">
+            <h3>Para operación, diseño y diagnóstico</h3>
+            <p>Accede rápido a cálculos técnicos, referencias prácticas y herramientas listas para campo u oficina técnica.</p>
+          </div>
+          <div class="hero-card">
+            <h3>Biblioteca técnica descargable</h3>
+            <p>Organiza guías, tablas y documentos descargables desde tu propio dominio para una experiencia más profesional.</p>
+          </div>
+          <div class="hero-card">
+            <h3>Base real de experiencia</h3>
+            <p>Más de 30 años aplicados a tratamiento de agua, instrumentación, procesos y soporte técnico industrial.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="rutas">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Empieza por tu área de trabajo</h2>
+            <p>Accede más rápido a las herramientas y recursos que mejor encajan con tu trabajo diario.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card route-card">
+            <div class="icon">H₂O</div>
+            <h3>Tratamiento de agua</h3>
+            <p>Para operación de planta, calidad de agua, dosificación química, ETAP, EDAR, DAF y ósmosis inversa.</p>
+            <div class="tool-actions">
+              <a class="btn btn-secondary" href="#herramientas">Ver herramientas de agua</a>
+            </div>
+          </article>
+
+          <article class="card route-card">
+            <div class="icon">4–20</div>
+            <h3>Instrumentación industrial</h3>
+            <p>Para señal 4–20 mA, caudal, nivel, pH, conductividad, calibración y diagnóstico de equipos.</p>
+            <div class="tool-actions">
+              <a class="btn btn-secondary" href="#herramientas">Ver instrumentación</a>
+            </div>
+          </article>
+
+          <article class="card route-card">
+            <div class="icon">PROC</div>
+            <h3>Procesos y refinería</h3>
+            <p>Para troubleshooting, separación agua/aceite, desalter, overhead y apoyo a procesos industriales.</p>
+            <div class="tool-actions">
+              <a class="btn btn-secondary" href="#biblioteca">Ver recursos de procesos</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="herramientas">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Herramientas destacadas</h2>
+            <p>Presenta tus utilidades como un catálogo técnico claro, escaneable y orientado a la acción.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card tool-card">
+            <span class="tag">Instrumentación</span>
+            <div>
+              <h3>AQUA-INST PRO</h3>
+              <p class="accent">Instrumentación práctica para técnicos de agua</p>
+            </div>
+            <div class="tool-meta">
+              <span class="pill">Campo</span>
+              <span class="pill">Diagnóstico</span>
+              <span class="pill">HTML offline</span>
+            </div>
+            <p>Ideal para técnicos de campo en EDAR y ETAP que necesitan referencias rápidas y soporte operativo.</p>
+            <ul class="tool-list">
+              <li>Conversión y validación de señal 4–20 mA</li>
+              <li>Diagnóstico práctico de instrumentos</li>
+              <li>Consulta rápida de calibración y referencias</li>
             </ul>
-            <div class="nav-controls">
-                <div class="lang-switch">
-                    <button class="active" onclick="setLang('es')">ES</button>
-                    <button onclick="setLang('en')">EN</button>
-                </div>
-                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button>
-                <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="tools/aqua-inst-pro.html">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/aqua-inst-pro.html" download>Descargar HTML</a>
             </div>
-        </div>
-    </nav>
+          </article>
 
-    <!-- HERO -->
-    <header class="hero">
-        <div class="hero-badge" data-i18n="hero_badge">Código abierto · Gratis para siempre</div>
-
-        <!-- ═══════ LOGO IMPACTANTE ═══════ -->
-        <div class="hero-logo-container">
-            <svg width="180" height="180" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Outer ring / water circle -->
-                <circle cx="100" cy="100" r="94" stroke="var(--accent)" stroke-width="2" fill="none" opacity="0.2"/>
-                <circle cx="100" cy="100" r="88" stroke="var(--accent)" stroke-width="1" fill="none" opacity="0.1"/>
-
-                <!-- Ripple circles (animated) -->
-                <circle cx="100" cy="115" class="logo-ripple-1" fill="none" stroke="var(--accent)" stroke-width="1.2" r="18"/>
-                <circle cx="100" cy="115" class="logo-ripple-2" fill="none" stroke="var(--accent)" stroke-width="0.8" r="18"/>
-
-                <!-- Main gradient background circle -->
-                <defs>
-                    <linearGradient id="dropGrad" x1="60" y1="20" x2="140" y2="170" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#2ecad4"/>
-                        <stop offset="100%" stop-color="#0a7a87"/>
-                    </linearGradient>
-                    <linearGradient id="gearGrad" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#0e9aa7"/>
-                        <stop offset="100%" stop-color="#06636d"/>
-                    </linearGradient>
-                    <filter id="glow">
-                        <feGaussianBlur stdDeviation="3" result="blur"/>
-                        <feMerge>
-                            <feMergeNode in="blur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-
-                <!-- Water drop shape - main element -->
-                <g class="logo-drop" filter="url(#glow)">
-                    <path d="M100 28 C100 28 66 76 66 102 C66 120.78 81.22 136 100 136 C118.78 136 134 120.78 134 102 C134 76 100 28 100 28Z"
-                          fill="url(#dropGrad)"/>
-
-                    <!-- Wave line inside drop (signal/process) -->
-                    <path d="M78 102 L84 94 L92 106 L100 90 L108 104 L116 92 L122 100"
-                          stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-                          fill="none" opacity="0.9"/>
-
-                    <!-- Measurement ticks (instrumentation reference) -->
-                    <line x1="76" y1="116" x2="82" y2="116" stroke="white" stroke-width="1.5" opacity="0.5"/>
-                    <line x1="76" y1="108" x2="80" y2="108" stroke="white" stroke-width="1" opacity="0.4"/>
-                    <line x1="76" y1="100" x2="82" y2="100" stroke="white" stroke-width="1.5" opacity="0.5"/>
-                    <line x1="76" y1="92" x2="80" y2="92" stroke="white" stroke-width="1" opacity="0.4"/>
-                </g>
-
-                <!-- Small gear / engineering symbol (bottom-right of drop) -->
-                <g transform="translate(126, 126)" style="animation: gearSpin 12s linear infinite; transform-origin: 126px 126px;">
-                    <circle cx="0" cy="0" r="14" fill="url(#gearGrad)" stroke="var(--bg)" stroke-width="2"/>
-                    <circle cx="0" cy="0" r="5" fill="var(--bg)"/>
-                    <!-- Gear teeth -->
-                    <rect x="-3" y="-17" width="6" height="6" rx="1" fill="url(#gearGrad)"/>
-                    <rect x="-3" y="11" width="6" height="6" rx="1" fill="url(#gearGrad)"/>
-                    <rect x="-17" y="-3" width="6" height="6" rx="1" fill="url(#gearGrad)"/>
-                    <rect x="11" y="-3" width="6" height="6" rx="1" fill="url(#gearGrad)"/>
-                    <!-- Diagonal teeth -->
-                    <rect x="7" y="-15" width="6" height="6" rx="1" fill="url(#gearGrad)" transform="rotate(45 10 -12)"/>
-                    <rect x="-15" y="7" width="6" height="6" rx="1" fill="url(#gearGrad)" transform="rotate(45 -12 10)"/>
-                    <rect x="-15" y="-15" width="6" height="6" rx="1" fill="url(#gearGrad)" transform="rotate(45 -12 -12)"/>
-                    <rect x="7" y="7" width="6" height="6" rx="1" fill="url(#gearGrad)" transform="rotate(45 10 10)"/>
-                </g>
-
-                <!-- Text arc: WATERTOOLS.ES -->
-                <path id="textArc" d="M 100 100 m -78 0 a 78 78 0 1 1 156 0" fill="none"/>
-                <text font-family="'DM Sans', sans-serif" font-size="11" font-weight="700" fill="var(--accent)" letter-spacing="6">
-                    <textPath href="#textArc" startOffset="15%" text-anchor="middle">WATERTOOLS.ES</textPath>
-                </text>
-
-                <!-- Bottom arc text -->
-                <path id="textArcBottom" d="M 100 100 m 78 0 a 78 78 0 1 1 -156 0" fill="none"/>
-                <text font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--text-secondary)" letter-spacing="4" opacity="0.6">
-                    <textPath href="#textArcBottom" startOffset="22%" text-anchor="middle">ENGINEERING TOOLS</textPath>
-                </text>
-            </svg>
-        </div>
-
-        <h1 data-i18n="hero_h1">Herramientas de <em>ingeniería</em> para agua, instrumentación y procesos</h1>
-        <p data-i18n="hero_p">Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial y operaciones de proceso en campo.</p>
-        <a href="#tools" class="hero-cta" data-i18n="hero_cta">Explorar herramientas ↓</a>
-        <div class="scroll-indicator">Scroll</div>
-    </header>
-
-    <!-- SPECIALTIES -->
-    <section id="specialties">
-        <div class="section-inner">
-            <div class="section-label" data-i18n="specialties_label">Áreas Técnicas</div>
-            <h2 class="section-title" data-i18n="specialties_title">Explora por <em>especialidad</em></h2>
-            <p class="section-desc" data-i18n="specialties_desc">Accede más rápido a herramientas, guías y recursos según tu área de trabajo: tratamiento de agua, instrumentación o petróleo y procesos.</p>
-
-            <div class="specialties-grid">
-                <a href="#tools" class="specialty-card fade-up">
-                    <div class="specialty-icon">💧</div>
-                    <h3 data-i18n="spec1_title">Tratamiento de Agua</h3>
-                    <p data-i18n="spec1_desc">EDAR, ETAP, RO/OI, DAF, BWT, CWT, calidad de agua, dosificación química y operación de planta.</p>
-                    <div class="specialty-tags" data-i18n-tags="spec1_tags">
-                        <span>EDAR</span><span>ETAP</span><span>RO</span><span>DAF</span>
-                    </div>
-                </a>
-
-                <a href="#resources" class="specialty-card fade-up">
-                    <div class="specialty-icon">📟</div>
-                    <h3 data-i18n="spec2_title">Instrumentación</h3>
-                    <p data-i18n="spec2_desc">Caudal, nivel, presión, pH, ORP, conductividad, 4–20 mA, HART, calibración y diagnóstico de equipos.</p>
-                    <div class="specialty-tags" data-i18n-tags="spec2_tags">
-                        <span>4–20 mA</span><span>HART</span><span>Sensores</span><span>Equipos</span>
-                    </div>
-                </a>
-
-                <a href="#resources" class="specialty-card fade-up">
-                    <div class="specialty-icon">🛢️</div>
-                    <h3 data-i18n="spec3_title">Petróleo y Procesos</h3>
-                    <p data-i18n="spec3_desc">Desalter, CDU, overhead, corrosión, separación agua/aceite, troubleshooting y procesos de refinería.</p>
-                    <div class="specialty-tags" data-i18n-tags="spec3_tags">
-                        <span>Desalter</span><span>CDU</span><span>Overhead</span><span>Refinería</span>
-                    </div>
-                </a>
+          <article class="card tool-card">
+            <span class="tag">Ósmosis inversa</span>
+            <div>
+              <h3>RO Plant Advisor</h3>
+              <p class="accent">Cálculo y optimización de ósmosis inversa</p>
             </div>
+            <div class="tool-meta">
+              <span class="pill">Diseño</span>
+              <span class="pill">Optimización</span>
+              <span class="pill">Operación</span>
+            </div>
+            <p>Ideal para diseño y operación de sistemas OI con foco en variables de desempeño y ajuste operativo.</p>
+            <ul class="tool-list">
+              <li>Recuperación y rechazo de sales</li>
+              <li>Variables de operación y control</li>
+              <li>Apoyo a dosificación química</li>
+            </ul>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="tools/ro-plant-advisor.html">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/ro-plant-advisor.html" download>Descargar HTML</a>
+            </div>
+          </article>
+
+          <article class="card tool-card">
+            <span class="tag">EDAR</span>
+            <div>
+              <h3>EDAR mA Calculator</h3>
+              <p class="accent">Conversión mA-proceso para planta depuradora</p>
+            </div>
+            <div class="tool-meta">
+              <span class="pill">Operación</span>
+              <span class="pill">Cálculo rápido</span>
+              <span class="pill">Normativa</span>
+            </div>
+            <p>Ideal para operación, instrumentación y validación rápida de variables críticas de proceso.</p>
+            <ul class="tool-list">
+              <li>Conversión mA a variable de proceso</li>
+              <li>Soporte en interpretación de señales</li>
+              <li>Referencia rápida para condiciones de planta</li>
+            </ul>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="tools/edar-ma-calculator.html">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/edar-ma-calculator.html" download>Descargar HTML</a>
+            </div>
+          </article>
+
+          <article class="card tool-card">
+            <span class="tag">Química de proceso</span>
+            <div>
+              <h3>Tratamiento de Agua PRO</h3>
+              <p class="accent">Referencia operativa para tratamiento de agua</p>
+            </div>
+            <div class="tool-meta">
+              <span class="pill">Proceso</span>
+              <span class="pill">Química</span>
+              <span class="pill">Consulta rápida</span>
+            </div>
+            <p>Ideal para ingenieros y responsables de proceso que requieren una base rápida de apoyo técnico.</p>
+            <ul class="tool-list">
+              <li>Química y operaciones unitarias</li>
+              <li>Variables clave de tratamiento</li>
+              <li>Apoyo a troubleshooting y revisión</li>
+            </ul>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="tools/tratamiento-agua-pro.html">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/tratamiento-agua-pro.html" download>Descargar HTML</a>
+            </div>
+          </article>
+
+          <article class="card tool-card">
+            <span class="tag">Cálculo general</span>
+            <div>
+              <h3>WT Smart Calculator</h3>
+              <p class="accent">Calculadora multipropósito para agua</p>
+            </div>
+            <div class="tool-meta">
+              <span class="pill">Cálculo rápido</span>
+              <span class="pill">Diseño</span>
+              <span class="pill">Operación</span>
+            </div>
+            <p>Ideal para cálculos rápidos en operación y diseño con foco en productividad y claridad.</p>
+            <ul class="tool-list">
+              <li>Caudales y conversiones</li>
+              <li>Dosificación química</li>
+              <li>Parámetros habituales de proceso</li>
+            </ul>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="tools/wt-smart-calculator.html">Abrir herramienta</a>
+              <a class="btn btn-secondary" href="downloads/wt-smart-calculator.html" download>Descargar HTML</a>
+            </div>
+          </article>
+
+          <article class="card callout">
+            <h3>¿Quieres más herramientas?</h3>
+            <p>
+              Convierte los módulos marcados como “Próximamente” en captación real: acceso anticipado,
+              lista de espera o descarga bajo solicitud.
+            </p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="#empresas">Solicitar herramienta</a>
+              <a class="btn btn-secondary" href="#biblioteca">Ver recursos</a>
+            </div>
+          </article>
         </div>
+      </div>
     </section>
 
-    <!-- TOOLS -->
-    <section id="tools">
-        <div class="section-inner">
-            <div class="section-label" data-i18n="tools_label">Herramientas y Calculadoras</div>
-            <h2 class="section-title" data-i18n="tools_title">Diseñadas para <em>profesionales del agua</em></h2>
-            <p class="section-desc" data-i18n="tools_desc">Cada herramienta está diseñada a partir de experiencia real en plantas de tratamiento de agua en España, Latinoamérica y Medio Oriente.</p>
-
-            <div class="tools-grid">
-                <div class="tool-card fade-up">
-                    <div class="tool-number">Tool 01</div>
-                    <h3 data-i18n="tool1_title">AQUA-INST PRO</h3>
-                    <p data-i18n="tool1_desc">Kit completo de instrumentación para técnicos de tratamiento de agua. Calculadoras de señal, árboles de diagnóstico, registros de calibración y referencia rápida para E+H, Siemens, KROHNE y Yokogawa.</p>
-                    <div class="tool-tags" data-i18n-tags="tool1_tags">
-                        <span>4–20 mA</span><span>EDAR</span><span>ETAP</span><span>Calibración</span>
-                    </div>
-                    <div class="tool-actions">
-                        <a href="https://watertools.es/aqua-inst-pro" data-i18n="open_tool">Abrir herramienta →</a>
-                        <a href="https://github.com/gjosebwes-sketch/aqua-inst-pro/archive/refs/heads/main.zip" data-i18n="download">⬇ Descargar</a>
-                    </div>
-                </div>
-
-                <div class="tool-card fade-up">
-                    <div class="tool-number">Tool 02</div>
-                    <h3 data-i18n="tool2_title">RO Plant Advisor</h3>
-                    <p data-i18n="tool2_desc">Calculadora interactiva de procesos de ósmosis inversa con diagramas de flujo SVG animados. Diseño y optimización de sistemas OI incluyendo dosificación química, rechazo de sales y cálculos de recuperación.</p>
-                    <div class="tool-tags" data-i18n-tags="tool2_tags">
-                        <span>Ósmosis Inversa</span><span>Dosificación Química</span><span>Diagrama SVG</span>
-                    </div>
-                    <div class="tool-actions">
-                        <a href="https://watertools.es/ro-plant-advisor" data-i18n="open_tool">Abrir herramienta →</a>
-                        <a href="https://github.com/gjosebwes-sketch/ro-plant-advisor/archive/refs/heads/main.zip" data-i18n="download">⬇ Descargar</a>
-                    </div>
-                </div>
-
-                <div class="tool-card fade-up">
-                    <div class="tool-number">Tool 03</div>
-                    <h3 data-i18n="tool3_title">EDAR mA Calculator</h3>
-                    <p data-i18n="tool3_desc">Conversor preciso de señal mA-a-proceso y proceso-a-mA para plantas depuradoras. Incluye datos normativos verificados del MSAN 2019 para conductividad, turbidez y pH.</p>
-                    <div class="tool-tags" data-i18n-tags="tool3_tags">
-                        <span>4–20 mA</span><span>Conversión de Señal</span><span>MSAN 2019</span>
-                    </div>
-                    <div class="tool-actions">
-                        <a href="https://watertools.es/edar-ma-calculator" data-i18n="open_tool">Abrir herramienta →</a>
-                        <a href="https://github.com/gjosebwes-sketch/edar-ma-calculator/archive/refs/heads/main.zip" data-i18n="download">⬇ Descargar</a>
-                    </div>
-                </div>
-
-                <div class="tool-card fade-up">
-                    <div class="tool-number">Tool 04</div>
-                    <h3 data-i18n="tool4_title">Tratamiento de Agua PRO</h3>
-                    <p data-i18n="tool4_desc">Herramienta de referencia completa para tratamiento de agua que cubre química de procesos, operaciones unitarias y diseño de trenes de tratamiento para agua potable e industrial.</p>
-                    <div class="tool-tags" data-i18n-tags="tool4_tags">
-                        <span>ETAP</span><span>Química de Procesos</span><span>Diseño de Tratamiento</span>
-                    </div>
-                    <div class="tool-actions">
-                        <a href="https://watertools.es/tratamiento-de-agua-pro" data-i18n="open_tool">Abrir herramienta →</a>
-                        <a href="https://github.com/gjosebwes-sketch/tratamiento-de-agua-pro/archive/refs/heads/main.zip" data-i18n="download">⬇ Descargar</a>
-                    </div>
-                </div>
-
-                <div class="tool-card fade-up">
-                    <div class="tool-number">Tool 05</div>
-                    <h3 data-i18n="tool5_title">WT Smart Calculator</h3>
-                    <p data-i18n="tool5_desc">Calculadora de ingeniería multipropósito para profesionales del tratamiento de agua. Conversiones de unidades, cálculos de caudal, dosificación química y estimación de parámetros de proceso en una sola interfaz.</p>
-                    <div class="tool-tags" data-i18n-tags="tool5_tags">
-                        <span>Conversión de Unidades</span><span>Cálc. Caudal</span><span>Dosificación Química</span>
-                    </div>
-                    <div class="tool-actions">
-                        <a href="https://watertools.es/wt-smart-calculator" data-i18n="open_tool">Abrir herramienta →</a>
-                        <a href="https://github.com/gjosebwes-sketch/wt-smart-calculator/archive/refs/heads/main.zip" data-i18n="download">⬇ Descargar</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-row fade-up">
-                <div class="stat-item">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label" data-i18n="stat1">Herramientas de ingeniería</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">30+</div>
-                    <div class="stat-label" data-i18n="stat2">Años de experiencia</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label" data-i18n="stat3">Gratis y código abierto</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label" data-i18n="stat4">Sin anuncios ni rastreo</div>
-                </div>
-            </div>
+    <section class="section stats" aria-label="Indicadores de confianza">
+      <div class="container">
+        <div class="grid-4">
+          <article class="card stat-card">
+            <span class="stat-value">5</span>
+            <span>herramientas técnicas activas</span>
+          </article>
+          <article class="card stat-card">
+            <span class="stat-value">30+</span>
+            <span>años de experiencia aplicada</span>
+          </article>
+          <article class="card stat-card">
+            <span class="stat-value">100%</span>
+            <span>gratis y código abierto</span>
+          </article>
+          <article class="card stat-card">
+            <span class="stat-value">0</span>
+            <span>anuncios o rastreo invasivo</span>
+          </article>
         </div>
+      </div>
     </section>
 
-    <!-- COURSES -->
-    <section id="courses" style="background: var(--accent-light);">
-        <div class="section-inner">
-            <div class="section-label" data-i18n="courses_label">Cursos y Formación</div>
-            <h2 class="section-title" data-i18n="courses_title">Aprende <em>ingeniería del agua</em></h2>
-            <p class="section-desc" data-i18n="courses_desc">Cursos seleccionados y recursos de formación para profesionales del tratamiento de agua — desde fundamentos hasta diseño avanzado de procesos.</p>
-
-            <div class="courses-grid">
-                <div class="course-card fade-up">
-                    <div class="course-icon">📐</div>
-                    <h3 data-i18n="course1_title">Instrumentación Industrial para Tratamiento de Agua</h3>
-                    <p data-i18n="course1_desc">Fundamentos de señal 4–20 mA, protocolo HART, procedimientos de calibración de sensores y diagnóstico de campo para sistemas de instrumentación EDAR/ETAP.</p>
-                    <div class="course-meta"><span data-i18n="course_meta_pdf">📄 Guía PDF</span><span data-i18n="course_meta_pace">🕐 A tu ritmo</span><span data-i18n="course_meta_free">🆓 Gratis</span></div>
-                    <a href="downloads/guia-practica-sistema-desalter-refinerias.docx" data-i18n="download_guide">⬇ Descargar guía →</a>
-                </div>
-                <div class="course-card fade-up">
-                    <div class="course-icon">💧</div>
-                    <h3 data-i18n="course2_title">Diseño y Optimización de Sistemas OI</h3>
-                    <p data-i18n="course2_desc">Guía completa de diseño de sistemas de ósmosis inversa: selección de pretratamiento, cálculos de membrana, dosificación química, optimización de recuperación y casos de estudio reales.</p>
-                    <div class="course-meta"><span data-i18n="course_meta_pdf">📄 Guía PDF</span><span data-i18n="course_meta_pace">🕐 A tu ritmo</span><span data-i18n="course_meta_free">🆓 Gratis</span></div>
-                    <a href="#" data-i18n="coming_soon">Próximamente →</a>
-                </div>
-                <div class="course-card fade-up">
-                    <div class="course-icon">🏭</div>
-                    <h3 data-i18n="course3_title">Operaciones de Planta Depuradora (EDAR)</h3>
-                    <p data-i18n="course3_desc">Fundamentos operativos para instalaciones EDAR: tratamiento biológico, gestión de lodos, control de procesos, cumplimiento normativo y monitoreo del rendimiento.</p>
-                    <div class="course-meta"><span data-i18n="course_meta_pdf">📄 Guía PDF</span><span data-i18n="course_meta_pace">🕐 A tu ritmo</span><span data-i18n="course_meta_free">🆓 Gratis</span></div>
-                    <a href="#" data-i18n="coming_soon">Próximamente →</a>
-                </div>
-                <div class="course-card fade-up">
-                    <div class="course-icon">⚗️</div>
-                    <h3 data-i18n="course4_title">Química del Agua para Ingenieros</h3>
-                    <p data-i18n="course4_desc">Química del agua esencial para ingenieros de campo: control de pH, alcalinidad, coagulación-floculación, desinfección, índices de corrosión (LSI, RSI) y cálculos de dosificación química.</p>
-                    <div class="course-meta"><span data-i18n="course_meta_pdf">📄 Guía PDF</span><span data-i18n="course_meta_pace">🕐 A tu ritmo</span><span data-i18n="course_meta_free">🆓 Gratis</span></div>
-                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/download/v1.0/1.Quimica.del.Agua.pdf" data-i18n="download_pdf">⬇ Descargar PDF →</a>
-                </div>
-            </div>
+    <section class="section" id="biblioteca">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Biblioteca técnica para descargar</h2>
+            <p>Guías, tablas y documentos prácticos para consulta rápida en planta, oficina técnica o campo.</p>
+          </div>
         </div>
+
+        <div class="grid-2 downloads-grid">
+          <article class="card">
+            <div class="resource-type">Guía PDF</div>
+            <h3>Guía de instrumentación industrial para tratamiento de agua</h3>
+            <p>Fundamentos de señal 4–20 mA, HART, calibración y diagnóstico para operación y mantenimiento.</p>
+            <div class="resource-meta">
+              <span>PDF</span>
+              <span>Actualizable</span>
+              <span>Uso en campo</span>
+            </div>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download>Descargar guía</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="resource-type">Documento técnico</div>
+            <h3>Química del agua para ingenieros</h3>
+            <p>pH, alcalinidad, coagulación, corrosión, interpretación química y apoyo a decisiones operativas.</p>
+            <div class="resource-meta">
+              <span>PDF</span>
+              <span>Proceso</span>
+              <span>Consulta técnica</span>
+            </div>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download>Descargar PDF</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="resource-type">Guía de procesos</div>
+            <h3>Guía técnica Desalter</h3>
+            <p>Referencia práctica para troubleshooting, operación y análisis técnico en procesos industriales.</p>
+            <div class="resource-meta">
+              <span>PDF</span>
+              <span>Procesos</span>
+              <span>Diagnóstico</span>
+            </div>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="downloads/guia-desalter.pdf" download>Descargar guía</a>
+            </div>
+          </article>
+
+          <article class="card callout">
+            <h3>Próximamente: hojas de datos, tablas normativas y diagnóstico de campo</h3>
+            <p>
+              Sustituye los bloques vacíos por captación real. Puedes conectar este formulario a Formspree,
+              Netlify Forms o tu backend favorito.
+            </p>
+            <form action="#" method="post">
+              <label for="email" class="muted">Recibe aviso cuando estén disponibles</label>
+              <div class="tool-actions">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="tu@email.com"
+                  style="flex:1; min-width:220px; padding:0.95rem 1rem; border-radius:999px; border:1px solid rgba(255,255,255,0.12); background:rgba(8,19,31,0.68); color:var(--text);"
+                />
+                <button class="btn btn-primary" type="submit">Quiero acceso anticipado</button>
+              </div>
+            </form>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <!-- RESOURCES -->
-    <section id="resources">
-        <div class="section-inner">
-            <div class="section-label" data-i18n="resources_label">Recursos Técnicos</div>
-            <h2 class="section-title" data-i18n="resources_title">Biblioteca de <em>referencia</em></h2>
-            <p class="section-desc" data-i18n="resources_desc">Documentos técnicos, referencias de fabricantes y recursos de ingeniería para agua, instrumentación y procesos industriales.</p>
-
-            <div class="resources-grid">
-                <div class="resource-card fade-up">
-                    <div class="resource-icon">📊</div>
-                    <h3 data-i18n="res1_title">Hojas de Datos de Instrumentos</h3>
-                    <p data-i18n="res1_desc">Hojas de referencia rápida para E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa y más — cableado, rangos y configuración.</p>
-                    <a href="#" data-i18n="coming_soon">Próximamente →</a>
-                </div>
-                <div class="resource-card fade-up">
-                    <div class="resource-icon">📐</div>
-                    <h3 data-i18n="res2_title">Tablas de Ingeniería</h3>
-                    <p data-i18n="res2_desc">Dimensionamiento de tuberías, velocidad de flujo, factores de conversión, propiedades químicas y límites normativos para EDAR/ETAP en una sola referencia.</p>
-                    <a href="#" data-i18n="coming_soon">Próximamente →</a>
-               </div>
-               <div class="resource-card fade-up">
-                  <div class="resource-icon">📘</div>
-                  <h3 data-i18n="res3_title">Guías Técnicas</h3>
-                  <p data-i18n="res3_desc">Guías prácticas para tratamiento de agua, instrumentación y procesos industriales. Incluye la guía técnica del sistema desalter en refinerías de petróleo.</p>
-                  <a href="https://github.com/gjosebwes-sketch/watertools-downloads/releases/latest/download/guia-practica-sistema-desalter-refinerias.pdf" target="_blank" rel="noopener">⬇ Descargar guía Desalter</a>
-             </div>
-                <div class="resource-card fade-up">
-                    <div class="resource-icon">⚗️</div>
-                    <h3 data-i18n="res4_title">Tablas de Dosificación Química</h3>
-                    <p data-i18n="res4_desc">Tablas de referencia de dosificación para coagulantes, floculantes, ajustadores de pH, antiincrustantes, biocidas y agentes reductores usados en tratamiento de agua.</p>
-                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/download/v1.0/1.Quimica.del.Agua.pdf" data-i18n="download_pdf">⬇ Descargar PDF →</a>
-                </div>
-                <div class="resource-card fade-up">
-                    <div class="resource-icon">📋</div>
-                    <h3 data-i18n="res5_title">Referencias Normativas</h3>
-                    <p data-i18n="res5_desc">Estándares de calidad de agua españoles y de la UE: RD 140/2003, parámetros MSAN 2019, límites de vertido (RDPH) y normas ISO/EN relevantes.</p>
-                    <a href="#" data-i18n="coming_soon">Próximamente →</a>
-                </div>
-                <div class="resource-card fade-up">
-                    <div class="resource-icon">🔧</div>
-                    <h3 data-i18n="res6_title">Diagnóstico de Campo</h3>
-                    <p data-i18n="res6_desc">Árboles de decisión y listas de verificación para diagnosticar problemas comunes de campo: deriva de sensores, ruido de señal, fallos de comunicación y alarmas de proceso.</p>
-                    <a href="#" data-i18n="coming_soon">Próximamente →</a>
-                </div>
-            </div>
-
-            <!-- Download banner -->
-            <div class="download-banner fade-up">
-                <h2 data-i18n="dl_all_title">Descargar todas las herramientas</h2>
-                <p data-i18n="dl_all_desc">Cada herramienta funciona offline como un solo archivo HTML. No requiere instalación — solo ábrelo en cualquier navegador.</p>
-                <div class="download-banner-actions">
-                    <a href="https://github.com/gjosebwes-sketch?tab=repositories" class="primary" data-i18n="dl_github">⬇ Descargar desde GitHub</a>
-                    <a href="https://github.com/gjosebwes-sketch" class="secondary" data-i18n="star_github">★ Dar estrella en GitHub</a>
-                </div>
-            </div>
+    <section class="section" id="formacion">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Aprende con formación práctica</h2>
+            <p>Contenido técnico orientado a operación, diseño y diagnóstico en tratamiento de agua.</p>
+          </div>
         </div>
+
+        <div class="grid-3 training-grid">
+          <article class="card">
+            <span class="tag">Disponible</span>
+            <h3>Instrumentación industrial para tratamiento de agua</h3>
+            <p>Aprende señal 4–20 mA, HART, calibración, fallos habituales y diagnóstico de campo.</p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download>Descargar guía</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="tag">Disponible</span>
+            <h3>Química del agua para ingenieros</h3>
+            <p>Revisa fundamentos para operación, diseño, control químico e interpretación de parámetros de calidad.</p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download>Descargar PDF</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="tag">En preparación</span>
+            <h3>Diseño y optimización de sistemas OI / Operación EDAR</h3>
+            <p>Convierte el “próximamente” en lista de interés para validar demanda antes de publicar más contenido.</p>
+            <div class="tool-actions">
+              <a class="btn btn-secondary" href="#biblioteca">Avisarme cuando salga</a>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <!-- ═══════ CLIENTS SECTION (RESTORED) ═══════ -->
-    <section id="clients" class="clients-section">
-        <div class="section-inner">
-            <div class="section-label" data-i18n="clients_label">Experiencia Comprobada</div>
-            <h2 class="section-title" data-i18n="clients_title">Probado en <em>industrias y continentes</em></h2>
-            <p class="section-desc" style="margin-left:auto;margin-right:auto;" data-i18n="clients_desc">Herramientas basadas en más de 30 años de ingeniería práctica para empresas líderes en Oil & Gas, petroquímica, alimentos y bebidas, celulosa y papel, minería y utilities de agua.</p>
-
-            <!-- VENEZUELA -->
-            <div class="clients-country fade-up">
-                <div class="country-label"><span class="country-flag">🇻🇪</span> Venezuela</div>
-                <div class="clients-grid">
-                    <span class="client-badge">PDVSA</span>
-                    <span class="client-badge">PEQUIVEN</span>
-                    <span class="client-badge">VENEPAL</span>
-                    <span class="client-badge">MANPA</span>
-                    <span class="client-badge">PURATOS</span>
-                    <span class="client-badge">Central Azucarero El Palmar</span>
-                    <span class="client-badge">CAPCA</span>
-                    <span class="client-badge">Central La Pastora</span>
-                    <span class="client-badge">General Motors</span>
-                    <span class="client-badge">Refinería de Amuay</span>
-                    <span class="client-badge">Kellogg's</span>
-                    <span class="client-badge">CEMEX</span>
-                    <span class="client-badge">Purina</span>
-                    <span class="client-badge">Alfonzo Rivas</span>
-                    <span class="client-badge">RESIMON</span>
-                    <span class="client-badge">PROQUIM</span>
-                </div>
-            </div>
-
-            <!-- PERU -->
-            <div class="clients-country fade-up">
-                <div class="country-label"><span class="country-flag">🇵🇪</span> Perú</div>
-                <div class="clients-grid">
-                    <span class="client-badge">EXALMAR</span>
-                    <span class="client-badge">PROANCO</span>
-                    <span class="client-badge">CBC Peruana</span>
-                    <span class="client-badge">PRODUMAR</span>
-                </div>
-            </div>
-
-            <!-- SPAIN -->
-            <div class="clients-country fade-up">
-                <div class="country-label"><span class="country-flag">🇪🇸</span> <span data-i18n="clients_es_label">España</span></div>
-                <div class="clients-grid">
-                    <span class="client-badge">Cartodelta</span>
-                    <span class="client-badge">Tintas y Soporte</span>
-                    <span class="client-badge">467+ EDAR Stations</span>
-                </div>
-            </div>
+    <section class="section" id="empresas">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>¿Necesitas soluciones para tu empresa?</h2>
+            <p>Además de herramientas gratuitas, puedes abrir una vía clara para soporte técnico, formación y soluciones a medida.</p>
+          </div>
         </div>
+
+        <div class="grid-3 business-grid">
+          <article class="card">
+            <div class="icon">EQ</div>
+            <h3>Formación técnica para equipos</h3>
+            <p>Capacitación práctica en tratamiento de agua, instrumentación, operación y troubleshooting.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon">DX</div>
+            <h3>Asesoría en instrumentación y diagnóstico</h3>
+            <p>Soporte para lectura de señales, interpretación de variables, revisión de instrumentación y diagnóstico operativo.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon">DEV</div>
+            <h3>Herramientas y recursos adaptados</h3>
+            <p>Desarrollo de calculadoras, plantillas y recursos técnicos enfocados en procesos reales de planta.</p>
+          </article>
+        </div>
+
+        <div class="callout" style="margin-top:1.15rem;">
+          <h3>Convierte visitas técnicas en oportunidades de servicio</h3>
+          <p>
+            Añade aquí tu formulario de contacto, un correo profesional o un botón directo a LinkedIn y correo.
+            Puedes conectar este bloque a un formulario estático o a un CRM sencillo.
+          </p>
+          <div class="tool-actions">
+            <a class="btn btn-primary" href="mailto:gjosebw.es@gmail.com">Solicitar información</a>
+            <a class="btn btn-secondary" href="https://www.linkedin.com/in/gustavo-blanco-walter" target="_blank" rel="noreferrer">Ver LinkedIn</a>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- ABOUT -->
-    <section id="about" class="about-section">
-        <div class="section-inner" style="text-align:center;">
-            <div class="section-label" data-i18n="about_label">Sobre el creador</div>
-            <!-- ═══════ LEMA CORREGIDO ═══════ -->
-            <h2 class="section-title" data-i18n="about_title">Herramientas de <em>ingeniería</em>, para todos los profesionales del agua</h2>
-
-            <div class="about-card" style="text-align:left;">
-                <div class="about-header">
-                    <div class="about-avatar">GB</div>
-                    <div>
-                        <div class="about-name">Ing. Gustavo Blanco Walter</div>
-                        <div class="about-role" data-i18n="about_role">Ingeniero Senior de Agua y Procesos · Valencia, España</div>
-                    </div>
-                </div>
-                <p data-i18n="about_p1">Más de 30 años de experiencia en tratamiento industrial de agua, instrumentación, Oil & Gas, EDAR/ETAP y sistemas petroquímicos. Especializado en OI/UF/MBR/DAF, instrumentación de campo (E+H, Siemens, KROHNE, Yokogawa, ABB) y optimización de procesos en Venezuela, Colombia, Perú y España.</p>
-                <p data-i18n="about_p2">Anteriormente en Amuzca Proyectos, Corp. Quimica La Américas, Wet Chemical Corp., GE Water & Process Technologies, Nalco/Ecolab, SUEZ/Veolia Water Solutions. Asesoría PDVSA en Refinería El Palito y Refinería Amuay, Pequiven, CAPCA, CEPSA, Azucarera La pastora, Venepal, Manpa Papel.</p>
-                <div class="about-links">
-                    <a href="https://linkedin.com/in/gustavo-blanco-walter">🔗 LinkedIn</a>
-                    <a href="https://github.com/gjosebwes-sketch">🔗 GitHub</a>
-                    <a href="mailto:gjosebw.es@gmail.com">✉ Contact</a>
-                </div>
-            </div>
+    <section class="section">
+      <div class="container about-grid">
+        <div class="card">
+          <span class="tag">Basado en experiencia real de planta</span>
+          <h2 style="margin-top:0;">Ingeniería útil, directa y aplicable</h2>
+          <p>
+            Estas herramientas nacen de experiencia en tratamiento industrial de agua, instrumentación,
+            Oil & Gas, petroquímica, alimentos y utilities, con foco en problemas reales de planta,
+            troubleshooting y mejora operativa.
+          </p>
+          <ul class="check-list" style="margin-top:1rem;">
+            <li>Aplicado en agua, petroquímica, alimentos, minería y papel</li>
+            <li>Experiencia en campo, operación, soporte y optimización</li>
+            <li>Enfoque práctico para uso real, no solo teórico</li>
+          </ul>
         </div>
+
+        <div class="card" id="sobre-mi">
+          <div class="profile-card">
+            <div class="avatar">GB</div>
+            <div>
+              <span class="tag">Sobre el creador</span>
+              <h3 style="margin-top:0;">Gustavo Blanco Walter</h3>
+              <p>
+                Ingeniero senior de agua y procesos, con más de 30 años de experiencia en tratamiento industrial
+                de agua, instrumentación de campo, Oil & Gas y optimización de procesos en España y Latinoamérica.
+              </p>
+              <p style="margin-top:0.9rem;">
+                WaterTools.es nace para convertir experiencia técnica de planta en herramientas útiles,
+                prácticas y accesibles para otros profesionales del sector.
+              </p>
+              <div class="about-actions">
+                <a class="btn btn-primary" href="https://www.linkedin.com/in/gustavo-blanco-walter" target="_blank" rel="noreferrer">Ver LinkedIn</a>
+                <a class="btn btn-secondary" href="https://github.com/" target="_blank" rel="noreferrer">Ver GitHub</a>
+                <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com">Contactar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <span data-i18n="footer">© 2026 watertools.es — Desarrollado por</span> <a href="https://linkedin.com/in/gustavo-blanco-walter">Ing. Gustavo Blanco Walter</a> · <span data-i18n="footer_role">Ingeniero Senior de Agua y Procesos</span>
-    </footer>
+    <section class="section footer-cta">
+      <div class="container">
+        <div class="footer-card">
+          <h2>Empieza hoy con tus herramientas técnicas</h2>
+          <p>Abre una calculadora, descarga una guía o explora recursos creados para profesionales del agua, instrumentación y procesos.</p>
+          <div class="hero-actions" style="justify-content:center; margin-top:0;">
+            <a class="btn btn-primary" href="#herramientas">Abrir herramientas</a>
+            <a class="btn btn-secondary" href="#biblioteca">Descargar recursos</a>
+            <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com">Contactar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <script>
-        // ══════════════════════════════════════════════
-        // TRANSLATION DICTIONARY — ES / EN
-        // ══════════════════════════════════════════════
-        const i18n = {
-            // — Navbar —
-            nav_tools:        { es: "Herramientas", en: "Tools" },
-            nav_courses:      { es: "Cursos", en: "Courses" },
-            nav_resources:    { es: "Recursos", en: "Resources" },
-            nav_clients:      { es: "Clientes", en: "Clients" },
-            nav_about:        { es: "Acerca de", en: "About" },
+  <footer class="site-footer">
+    <div class="container site-footer-inner">
+      <span>© <span id="year"></span> WaterTools.es · Herramientas técnicas para profesionales del agua</span>
+      <span>Diseño preparado para GitHub Pages · HTML + CSS puro</span>
+    </div>
+  </footer>
 
-            // — Hero —
-            hero_badge:       { es: "Código abierto · Gratis para siempre", en: "Open source · Free forever" },
-            hero_h1:          { es: 'Herramientas de <em>ingeniería</em> para agua, instrumentación y procesos', en: '<em>Engineering tools</em> for water, instrumentation, and process operations' },
-            hero_p:           { es: "Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial y operaciones de proceso en campo.", en: "Calculators, guides, and technical resources for water treatment, industrial instrumentation, and field process operations." },
-            hero_cta:         { es: "Explorar herramientas ↓", en: "Explore tools ↓" },
-
-            // — Specialties Section —
-            specialties_label:{ es: "Áreas Técnicas", en: "Technical Areas" },
-            specialties_title:{ es: 'Explora por <em>especialidad</em>', en: 'Explore by <em>specialty</em>' },
-            specialties_desc: { es: "Accede más rápido a herramientas, guías y recursos según tu área de trabajo: tratamiento de agua, instrumentación o petróleo y procesos.", en: "Access tools, guides, and technical resources faster by area: water treatment, instrumentation, or oil and process operations." },
-            spec1_title:      { es: "Tratamiento de Agua", en: "Water Treatment" },
-            spec1_desc:       { es: "EDAR, ETAP, RO/OI, DAF, BWT, CWT, calidad de agua, dosificación química y operación de planta.", en: "WWTP, DWTP, RO, DAF, boiler water, cooling water, water quality, chemical dosing, and plant operations." },
-            spec1_tags:       { es: "EDAR|ETAP|RO|DAF", en: "WWTP|DWTP|RO|DAF" },
-            spec2_title:      { es: "Instrumentación", en: "Instrumentation" },
-            spec2_desc:       { es: "Caudal, nivel, presión, pH, ORP, conductividad, 4–20 mA, HART, calibración y diagnóstico de equipos.", en: "Flow, level, pressure, pH, ORP, conductivity, 4–20 mA, HART, calibration, and equipment diagnostics." },
-            spec2_tags:       { es: "4–20 mA|HART|Sensores|Equipos", en: "4–20 mA|HART|Sensors|Equipment" },
-            spec3_title:      { es: "Petróleo y Procesos", en: "Oil & Process" },
-            spec3_desc:       { es: "Desalter, CDU, overhead, corrosión, separación agua/aceite, troubleshooting y procesos de refinería.", en: "Desalters, CDU, overhead systems, corrosion, oil-water separation, troubleshooting, and refinery processes." },
-            spec3_tags:       { es: "Desalter|CDU|Overhead|Refinería", en: "Desalter|CDU|Overhead|Refinery" },
-
-            // — Tools Section —
-            tools_label:      { es: "Herramientas y Calculadoras", en: "Tools & Calculators" },
-            tools_title:      { es: 'Diseñadas para <em>profesionales del agua</em>', en: 'Built for <em>water professionals</em>' },
-            tools_desc:       { es: "Cada herramienta está diseñada a partir de experiencia real en plantas de tratamiento de agua en España, Latinoamérica y Medio Oriente.", en: "Each tool is designed from real-world experience in water treatment plants across Spain, Latin America, and the Middle East." },
-
-            tool1_title:      { es: "AQUA-INST PRO", en: "AQUA-INST PRO" },
-            tool1_desc:       { es: "Kit completo de instrumentación para técnicos de tratamiento de agua. Calculadoras de señal, árboles de diagnóstico, registros de calibración y referencia rápida para E+H, Siemens, KROHNE y Yokogawa.", en: "Complete instrumentation toolkit for water treatment technicians. Signal calculators, troubleshooting trees, calibration registers, and instrument quick-reference for E+H, Siemens, KROHNE, and Yokogawa." },
-            tool1_tags:       { es: "4–20 mA|EDAR|ETAP|Calibración", en: "4–20 mA|EDAR|ETAP|Calibration" },
-
-            tool2_title:      { es: "RO Plant Advisor", en: "RO Plant Advisor" },
-            tool2_desc:       { es: "Calculadora interactiva de procesos de ósmosis inversa con diagramas de flujo SVG animados. Diseño y optimización de sistemas OI incluyendo dosificación química, rechazo de sales y cálculos de recuperación.", en: "Interactive reverse osmosis process calculator with animated SVG flow diagrams. Design and optimize RO systems including chemical dosing, salt rejection, and recovery calculations." },
-            tool2_tags:       { es: "Ósmosis Inversa|Dosificación Química|Diagrama SVG", en: "Reverse Osmosis|Chemical Dosing|SVG Diagram" },
-
-            tool3_title:      { es: "EDAR mA Calculator", en: "EDAR mA Calculator" },
-            tool3_desc:       { es: "Conversor preciso de señal mA-a-proceso y proceso-a-mA para plantas depuradoras. Incluye datos normativos verificados del MSAN 2019 para conductividad, turbidez y pH.", en: "Precision mA-to-process and process-to-mA signal converter for wastewater treatment plants. Includes verified normative data from MSAN 2019 for conductivity, turbidity, and pH." },
-            tool3_tags:       { es: "4–20 mA|Conversión de Señal|MSAN 2019", en: "4–20 mA|Signal Conversion|MSAN 2019" },
-
-            tool4_title:      { es: "Tratamiento de Agua PRO", en: "Tratamiento de Agua PRO" },
-            tool4_desc:       { es: "Herramienta de referencia completa para tratamiento de agua que cubre química de procesos, operaciones unitarias y diseño de trenes de tratamiento para agua potable e industrial.", en: "Comprehensive water treatment reference tool covering process chemistry, unit operations, and treatment train design for potable and industrial water applications." },
-            tool4_tags:       { es: "ETAP|Química de Procesos|Diseño de Tratamiento", en: "ETAP|Process Chemistry|Treatment Design" },
-
-            tool5_title:      { es: "WT Smart Calculator", en: "WT Smart Calculator" },
-            tool5_desc:       { es: "Calculadora de ingeniería multipropósito para profesionales del tratamiento de agua. Conversiones de unidades, cálculos de caudal, dosificación química y estimación de parámetros de proceso en una sola interfaz.", en: "Multi-purpose engineering calculator for water treatment professionals. Unit conversions, flow calculations, chemical dosing, and process parameter estimation in a single interface." },
-            tool5_tags:       { es: "Conversión de Unidades|Cálc. Caudal|Dosificación Química", en: "Unit Conversion|Flow Calc|Chemical Dosing" },
-
-            open_tool:        { es: "Abrir herramienta →", en: "Open tool →" },
-            download:         { es: "⬇ Descargar", en: "⬇ Download" },
-
-            stat1:            { es: "Herramientas de ingeniería", en: "Engineering tools" },
-            stat2:            { es: "Años de experiencia", en: "Years experience" },
-            stat3:            { es: "Gratis y código abierto", en: "Free & open source" },
-            stat4:            { es: "Sin anuncios ni rastreo", en: "Ads or tracking" },
-
-            // — Courses Section —
-            courses_label:    { es: "Cursos y Formación", en: "Courses & Training" },
-            courses_title:    { es: 'Aprende <em>ingeniería del agua</em>', en: 'Learn <em>water engineering</em>' },
-            courses_desc:     { es: "Cursos seleccionados y recursos de formación para profesionales del tratamiento de agua — desde fundamentos hasta diseño avanzado de procesos.", en: "Curated courses and training resources for water treatment professionals — from fundamentals to advanced process design." },
-
-            course1_title:    { es: "Instrumentación Industrial para Tratamiento de Agua", en: "Industrial Instrumentation for Water Treatment" },
-            course1_desc:     { es: "Fundamentos de señal 4–20 mA, protocolo HART, procedimientos de calibración de sensores y diagnóstico de campo para sistemas de instrumentación EDAR/ETAP.", en: "4–20 mA signal fundamentals, HART protocol, sensor calibration procedures, and field troubleshooting for EDAR/ETAP instrumentation systems." },
-            course2_title:    { es: "Diseño y Optimización de Sistemas OI", en: "RO System Design & Optimization" },
-            course2_desc:     { es: "Guía completa de diseño de sistemas de ósmosis inversa: selección de pretratamiento, cálculos de membrana, dosificación química, optimización de recuperación y casos de estudio reales.", en: "Complete guide to reverse osmosis system design: pretreatment selection, membrane calculations, chemical dosing, recovery optimization, and real-world case studies." },
-            course3_title:    { es: "Operaciones de Planta Depuradora (EDAR)", en: "Wastewater Treatment Plant Operations" },
-            course3_desc:     { es: "Fundamentos operativos para instalaciones EDAR: tratamiento biológico, gestión de lodos, control de procesos, cumplimiento normativo y monitoreo del rendimiento.", en: "Operational fundamentals for EDAR facilities: biological treatment, sludge management, process control, regulatory compliance, and performance monitoring." },
-            course4_title:    { es: "Química del Agua para Ingenieros", en: "Water Chemistry for Engineers" },
-            course4_desc:     { es: "Química del agua esencial para ingenieros de campo: control de pH, alcalinidad, coagulación-floculación, desinfección, índices de corrosión (LSI, RSI) y cálculos de dosificación química.", en: "Essential water chemistry for field engineers: pH control, alkalinity, coagulation-flocculation, disinfection, corrosion indices (LSI, RSI), and chemical dosing calculations." },
-
-            course_meta_pdf:  { es: "📄 Guía PDF", en: "📄 PDF Guide" },
-            course_meta_pace: { es: "🕐 A tu ritmo", en: "🕐 Self-paced" },
-            course_meta_free: { es: "🆓 Gratis", en: "🆓 Free" },
-            coming_soon:      { es: "Próximamente →", en: "Coming soon →" },
-            download_pdf:     { es: "⬇ Descargar PDF →", en: "⬇ Download PDF →" },
-            download_guide:   { es: "⬇ Descargar guía →", en: "⬇ Download guide →" },
-
-            // — Resources Section —
-            resources_label:  { es: "Recursos Técnicos", en: "Technical Resources" },
-            resources_title:  { es: 'Biblioteca de <em>referencia</em>', en: 'Reference <em>library</em>' },
-            resources_desc:   { es: "Documentos técnicos, referencias de fabricantes y recursos de ingeniería para agua, instrumentación y procesos industriales.", en: "Technical documents, manufacturer references, and engineering resources for water, instrumentation, and industrial process professionals." },
-
-            res1_title:       { es: "Hojas de Datos de Instrumentos", en: "Instrument Datasheets" },
-            res1_desc:        { es: "Hojas de referencia rápida para E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa y más — cableado, rangos y configuración.", en: "Quick-reference datasheets for E+H Promag, Siemens SITRANS, KROHNE IFC, Yokogawa, and more — wiring, ranges, and configuration." },
-            res2_title:       { es: "Tablas de Ingeniería", en: "Engineering Tables" },
-            res2_desc:        { es: "Dimensionamiento de tuberías, velocidad de flujo, factores de conversión, propiedades químicas y límites normativos para EDAR/ETAP en una sola referencia.", en: "Pipe sizing, flow velocity, conversion factors, chemical properties, and regulatory limits for EDAR/ETAP in a single reference." },
-            res3_title:       { es: "Guías Técnicas", en: "Technical Guides" },
-            res3_desc:        { es: "Guías prácticas de campo para instrumentación, operación de planta, troubleshooting y procesos industriales especializados, incluyendo petróleo y refinación.", en: "Practical field guides for instrumentation, plant operations, troubleshooting, and specialized industrial processes, including oil and refining." },
-            res4_title:       { es: "Tablas de Dosificación Química", en: "Chemical Dosing Charts" },
-            res4_desc:        { es: "Tablas de referencia de dosificación para coagulantes, floculantes, ajustadores de pH, antiincrustantes, biocidas y agentes reductores usados en tratamiento de agua.", en: "Dosing reference charts for coagulants, flocculants, pH adjusters, antiscalants, biocides, and reducing agents used in water treatment." },
-            res5_title:       { es: "Referencias Normativas", en: "Normative References" },
-            res5_desc:        { es: "Estándares de calidad de agua españoles y de la UE: RD 140/2003, parámetros MSAN 2019, límites de vertido (RDPH) y normas ISO/EN relevantes.", en: "Spanish and EU water quality standards: RD 140/2003, MSAN 2019 parameters, discharge limits (RDPH), and relevant ISO/EN norms." },
-            res6_title:       { es: "Diagnóstico de Campo", en: "Field Troubleshooting" },
-            res6_desc:        { es: "Árboles de decisión y listas de verificación para diagnosticar problemas comunes de campo: deriva de sensores, ruido de señal, fallos de comunicación y alarmas de proceso.", en: "Decision trees and checklists for diagnosing common field issues: sensor drift, signal noise, communication failures, and process alarms." },
-
-            dl_all_title:     { es: "Descargar todas las herramientas", en: "Download all tools" },
-            dl_all_desc:      { es: "Cada herramienta funciona offline como un solo archivo HTML. No requiere instalación — solo ábrelo en cualquier navegador.", en: "Every tool runs offline as a single HTML file. No installation needed — just open in any browser." },
-            dl_github:        { es: "⬇ Descargar desde GitHub", en: "⬇ Download from GitHub" },
-            star_github:      { es: "★ Dar estrella en GitHub", en: "★ Star on GitHub" },
-
-            // — Clients Section —
-            clients_label:    { es: "Experiencia Comprobada", en: "Trusted Experience" },
-            clients_title:    { es: 'Probado en <em>industrias y continentes</em>', en: 'Proven across <em>industries & continents</em>' },
-            clients_desc:     { es: "Herramientas basadas en más de 30 años de ingeniería práctica para empresas líderes en Oil & Gas, petroquímica, alimentos y bebidas, celulosa y papel, minería y utilities de agua.", en: "Tools built on 30+ years of hands-on engineering for leading companies in Oil & Gas, petrochemical, food & beverage, pulp & paper, mining, and water utilities." },
-            clients_es_label: { es: "España", en: "Spain" },
-
-            // — About Section —
-            about_label:      { es: "Sobre el creador", en: "About the creator" },
-            about_title:      { es: 'Herramientas de <em>ingeniería</em>, para todos los profesionales del agua', en: 'Engineering <em>tools</em>, for all water professionals' },
-            about_role:       { es: "Ingeniero Senior de Agua y Procesos · Valencia, España", en: "Senior Water & Process Engineer · Valencia, Spain" },
-            about_p1:         { es: "Más de 30 años de experiencia en tratamiento industrial de agua, instrumentación, Oil & Gas, EDAR/ETAP y sistemas petroquímicos. Especializado en OI/UF/MBR/DAF, instrumentación de campo (E+H, Siemens, KROHNE, Yokogawa) y optimización de procesos en Venezuela, Perú y España.", en: "30+ years of experience in industrial water treatment, instrumentation, Oil & Gas, EDAR/ETAP, and petrochemical systems. Specialized in RO/UF/MBR/DAF systems, field instrumentation (E+H, Siemens, KROHNE, Yokogawa), and process optimization across Venezuela, Peru, and Spain." },
-            about_p2:         { es: "Anteriormente en GE Power & Water, Nalco/Ecolab, SUEZ y Veolia Water Solutions. Asesoría PDVSA en Refinería El Palito y Refinería Amuay.", en: "Previously at GE Power & Water, Nalco/Ecolab, SUEZ, and Veolia Water Solutions. PDVSA advisory experience at Refinería El Palito and Refinería Amuay." },
-
-            // — Footer —
-            footer:           { es: '© 2026 watertools.es — Desarrollado por', en: '© 2026 watertools.es — Developed by' },
-            footer_role:      { es: "Ingeniero Senior de Agua y Procesos", en: "Senior Water & Process Engineer" },
-        };
-
-        let currentLang = localStorage.getItem('lang') || 'es';
-
-        // ══════════════════════════════════════════════
-        // APPLY TRANSLATIONS
-        // ══════════════════════════════════════════════
-        function applyLang(lang) {
-            currentLang = lang;
-            localStorage.setItem('lang', lang);
-            document.documentElement.lang = lang;
-
-            // Update all elements with data-i18n
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (i18n[key] && i18n[key][lang]) {
-                    // Check if translation contains HTML (like <em>)
-                    if (i18n[key][lang].includes('<')) {
-                        el.innerHTML = i18n[key][lang];
-                    } else {
-                        el.textContent = i18n[key][lang];
-                    }
-                }
-            });
-
-            // Update tag groups (pipe-separated)
-            document.querySelectorAll('[data-i18n-tags]').forEach(container => {
-                const key = container.getAttribute('data-i18n-tags');
-                if (i18n[key] && i18n[key][lang]) {
-                    const tags = i18n[key][lang].split('|');
-                    const spans = container.querySelectorAll('span');
-                    tags.forEach((tag, idx) => {
-                        if (spans[idx]) spans[idx].textContent = tag;
-                    });
-                }
-            });
-
-            // Update lang switch buttons
-            document.querySelectorAll('.lang-switch button').forEach(b => {
-                b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang);
-            });
-
-            // Update page title
-            document.title = lang === 'es'
-                ? 'WaterTools.es — Ingeniería para Agua, Instrumentación y Procesos'
-                : 'WaterTools.es — Engineering for Water, Instrumentation & Process Operations';
-        }
-
-        function setLang(lang) {
-            applyLang(lang);
-        }
-
-        // ── Theme toggle ──
-        function toggleTheme() {
-            const body = document.body;
-            const isDark = body.getAttribute('data-theme') === 'dark';
-            body.setAttribute('data-theme', isDark ? '' : 'dark');
-            document.querySelector('.theme-toggle').textContent = isDark ? '☀️' : '🌙';
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
-        }
-
-        // Restore theme
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
-            document.querySelector('.theme-toggle').textContent = '🌙';
-        }
-
-        // ── Mobile menu ──
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('open');
-        }
-
-        // ── Intersection Observer for fade-up ──
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-        // ── Apply saved language on load ──
-        applyLang(currentLang);
-    </script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

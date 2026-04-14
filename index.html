@@ -3,12 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WaterTools.es | Herramientas técnicas para tratamiento de agua</title>
+  <title>WaterTools.es | Herramientas técnicas para tratamiento de agua e instrumentación</title>
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Gustavo Blanco Walter" />
+  <meta name="keywords" content="tratamiento de agua, calculadoras de agua, instrumentación industrial, EDAR, ETAP, ósmosis inversa, 4-20 mA, dosificación química, WaterTools" />
+  <link rel="canonical" href="https://watertools.es/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:title" content="WaterTools.es | Herramientas técnicas para tratamiento de agua e instrumentación" />
+  <meta property="og:description" content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo." />
+  <meta property="og:url" content="https://watertools.es/" />
+  <meta property="og:site_name" content="WaterTools.es" />
+  <meta property="og:image" content="https://watertools.es/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="WaterTools.es | Herramientas técnicas para tratamiento de agua e instrumentación" />
+  <meta name="twitter:description" content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo." />
+  <meta name="twitter:image" content="https://watertools.es/assets/og-image.jpg" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "WaterTools.es",
+      "url": "https://watertools.es/",
+      "description": "Herramientas técnicas, calculadoras y recursos para tratamiento de agua e instrumentación industrial.",
+      "inLanguage": ["es", "en"],
+      "publisher": {
+        "@type": "Person",
+        "name": "Gustavo Blanco Walter"
+      }
+    }
+  </script>
   <meta
     name="description"
     content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo."
   />
   <style>
+    html[data-theme="light"] {
+      --bg: #eef5fb;
+      --bg-soft: #ffffff;
+      --surface: rgba(8, 19, 31, 0.04);
+      --surface-2: rgba(8, 19, 31, 0.06);
+      --border: rgba(8, 19, 31, 0.12);
+      --text: #0b1b2b;
+      --muted: #47627f;
+      --primary: #14b8a6;
+      --primary-dark: #0f766e;
+      --accent: #0284c7;
+      --warning: #b45309;
+      --success: #059669;
+    }
     :root {
       --bg: #08131f;
       --bg-soft: #0f2135;
@@ -84,15 +127,75 @@
     }
 
     .brand-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 30% 30%, #8cf8ef 0%, #38d7ca 42%, #117a95 100%);
       display: grid;
       place-items: center;
       color: #05202b;
       font-weight: 900;
-      box-shadow: 0 10px 25px rgba(79, 209, 197, 0.28);
+      box-shadow: 0 14px 30px rgba(79, 209, 197, 0.32);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-badge::before {
+      content: "";
+      position: absolute;
+      inset: 10px 12px auto 12px;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.42);
+      filter: blur(1px);
+    }
+
+    .brand-badge::after {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .nav-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .lang-switch,
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      padding: 0.2rem 0.35rem;
+      border-radius: 999px;
+      opacity: 0.7;
+    }
+
+    .lang-switch button.active {
+      opacity: 1;
+      background: rgba(79,209,197,0.15);
     }
 
     .nav-links {
@@ -554,20 +657,28 @@
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="#inicio" aria-label="Ir al inicio de WaterTools.es">
-        <span class="brand-badge">WT</span>
+        <span class="brand-badge" aria-hidden="true">WT</span>
         <span>WaterTools.es</span>
       </a>
 
       <nav class="nav-links" aria-label="Navegación principal">
-        <a href="#rutas">Áreas</a>
-        <a href="#herramientas">Herramientas</a>
-        <a href="#biblioteca">Recursos</a>
-        <a href="#formacion">Formación</a>
-        <a href="#empresas">Empresas</a>
-        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#rutas" data-i18n="navAreas">Áreas</a>
+        <a href="#herramientas" data-i18n="navTools">Herramientas</a>
+        <a href="#biblioteca" data-i18n="navResources">Recursos</a>
+        <a href="#formacion" data-i18n="navTraining">Formación</a>
+        <a href="#empresas" data-i18n="navBusiness">Empresas</a>
+        <a href="#sobre-mi" data-i18n="navAbout">Sobre mí</a>
       </nav>
 
-      <a class="nav-cta" href="#herramientas">Usar herramientas</a>
+      <div class="nav-tools">
+        <div class="lang-switch" aria-label="Selector de idioma">
+          <button type="button" class="active" data-lang="es">ES</button>
+          <span>/</span>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Cambiar entre modo claro y oscuro">☀️ / 🌙</button>
+        <a class="nav-cta" href="#herramientas" data-i18n="ctaUseTools">Usar herramientas</a>
+      </div>
     </div>
   </header>
 
@@ -575,9 +686,9 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">Herramientas técnicas para profesionales del agua</span>
-          <h1>Calculadoras, guías y recursos técnicos para tratamiento de agua e instrumentación industrial</h1>
-          <p>
+          <span class="eyebrow" data-i18n="heroEyebrow">Herramientas técnicas para profesionales del agua</span>
+          <h1 data-i18n="heroTitle">Calculadoras, guías y recursos técnicos para tratamiento de agua e instrumentación industrial</h1>
+          <p data-i18n="heroText">
             Usa herramientas prácticas para EDAR, ETAP, ósmosis inversa, dosificación química,
             señal 4–20 mA y diagnóstico de campo. Diseñadas desde experiencia real en planta
             para profesionales que necesitan resultados claros, rápidos y aplicables.
@@ -1041,6 +1152,63 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('wt-theme') || 'dark';
+    root.setAttribute('data-theme', savedTheme);
+
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('wt-theme', next);
+    });
+
+    const translations = {
+      es: {
+        navAreas: 'Áreas',
+        navTools: 'Herramientas',
+        navResources: 'Recursos',
+        navTraining: 'Formación',
+        navBusiness: 'Empresas',
+        navAbout: 'Sobre mí',
+        ctaUseTools: 'Usar herramientas',
+        heroEyebrow: 'Herramientas técnicas para profesionales del agua',
+        heroTitle: 'Calculadoras, guías y recursos técnicos para tratamiento de agua e instrumentación industrial',
+        heroText: 'Usa herramientas prácticas para EDAR, ETAP, ósmosis inversa, dosificación química, señal 4–20 mA y diagnóstico de campo. Diseñadas desde experiencia real en planta para profesionales que necesitan resultados claros, rápidos y aplicables.'
+      },
+      en: {
+        navAreas: 'Areas',
+        navTools: 'Tools',
+        navResources: 'Resources',
+        navTraining: 'Training',
+        navBusiness: 'Companies',
+        navAbout: 'About me',
+        ctaUseTools: 'Use tools',
+        heroEyebrow: 'Technical tools for water professionals',
+        heroTitle: 'Calculators, guides and technical resources for water treatment and industrial instrumentation',
+        heroText: 'Use practical tools for WWTP, DWTP, reverse osmosis, chemical dosing, 4–20 mA signals and field diagnostics. Built from real plant experience for professionals who need clear, fast and applicable results.'
+      }
+    };
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) el.textContent = translations[lang][key];
+      });
+      document.querySelectorAll('[data-lang]').forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      localStorage.setItem('wt-lang', lang);
+    }
+
+    const savedLang = localStorage.getItem('wt-lang') || 'es';
+    setLanguage(savedLang);
+
+    document.querySelectorAll('[data-lang]').forEach((btn) => {
+      btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
+    });
   </script>
 </body>
 </html>

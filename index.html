@@ -135,23 +135,16 @@
       letter-spacing: -0.03em;
       font-size: 1.12rem;
     }
+    .brand-logo {
+display: block;
+height: 52px;
+width: auto;
+max-width: 240px;
+}
 
-    .brand-name {
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      color: var(--text);
-    }
+  
 
-    .brand-badge {
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      background: transparent;
-      box-shadow: 0 10px 24px rgba(79, 209, 197, 0.2);
-      flex-shrink: 0;
-    }
+  
 
     .nav-links {
       display: flex;
@@ -686,6 +679,10 @@
         flex-direction: column;
         padding: 1rem 0;
       }
+.brand-logo {
+height: 46px;
+max-width: 210px;
+}
 
       .nav-links {
         width: 100%;
@@ -708,22 +705,9 @@
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="#inicio" aria-label="Ir al inicio de WaterTools.es">
-        <span class="brand-badge" aria-hidden="true">
-          <svg viewBox="0 0 64 64" width="38" height="38" role="img" aria-hidden="true">
-            <defs>
-              <linearGradient id="brandWave" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stop-color="#8cf8ef"/>
-                <stop offset="55%" stop-color="#38d7ca"/>
-                <stop offset="100%" stop-color="#117a95"/>
-              </linearGradient>
-            </defs>
-            <rect x="3" y="3" width="58" height="58" rx="18" fill="url(#brandWave)"/>
-            <path d="M16 23h7l4 16 6-11 6 11 4-16h7l-7 21h-7l-3-7-3 7h-7z" fill="#052531"/>
-            <path d="M44 47c4.5-1.2 8.1-4 10-8.1-0.8 5.8-4.1 10-10 12.2z" fill="rgba(255,255,255,0.22)"/>
-          </svg>
-        </span>
-        <span class="brand-name">WaterTools.es</span>
-      </a>
+  <img class="brand-logo" src="/logo-watertools.svg" alt="WaterTools.es" />
+</a>
+
 
       <nav class="nav-links" aria-label="Navegación principal">
         <a href="#rutas" data-i18n="navAreas">Áreas</a>

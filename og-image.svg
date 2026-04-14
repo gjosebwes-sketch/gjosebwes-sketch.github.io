@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#08131f"/>
+      <stop offset="100%" stop-color="#123044"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8cf8ef"/>
+      <stop offset="55%" stop-color="#38d7ca"/>
+      <stop offset="100%" stop-color="#117a95"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <circle cx="1050" cy="120" r="180" fill="rgba(79,209,197,0.08)"/>
+  <circle cx="180" cy="520" r="220" fill="rgba(125,211,252,0.08)"/>
+
+  <rect x="80" y="90" width="110" height="110" rx="28" fill="url(#brand)"/>
+  <path d="M108 121h14l7 29 11-20 11 20 7-29h14l-12 40h-15l-6-13-6 13h-15z" fill="#052531"/>
+  <path d="M157 173c8-2 14-7 17-14-1 9-7 17-17 20z" fill="rgba(255,255,255,0.22)"/>
+
+  <text x="225" y="155" fill="#EFF6FF" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.5">
+    WaterTools.es
+  </text>
+
+  <text x="80" y="285" fill="#EFF6FF" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="800" letter-spacing="-2">
+    Calculadoras, guías y recursos
+  </text>
+  <text x="80" y="360" fill="#EFF6FF" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="800" letter-spacing="-2">
+    técnicos para tratamiento de agua
+  </text>
+
+  <text x="80" y="445" fill="#BFD2E7" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500">
+    Instrumentación · Ósmosis inversa · Dosificación química · Diagnóstico de campo
+  </text>
+
+  <rect x="80" y="500" width="255" height="56" rx="28" fill="rgba(79,209,197,0.14)" stroke="rgba(79,209,197,0.28)"/>
+  <text x="112" y="537" fill="#D7FFF8" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">
+    watertools.es
+  </text>
+</svg>

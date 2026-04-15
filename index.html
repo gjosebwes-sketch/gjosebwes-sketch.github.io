@@ -38,22 +38,6 @@
   </script>
 
   <style>
-    html[data-theme="light"] {
-      --bg: #eef5fb;
-      --bg-soft: #ffffff;
-      --surface: rgba(8, 19, 31, 0.04);
-      --surface-2: rgba(8, 19, 31, 0.06);
-      --border: rgba(8, 19, 31, 0.12);
-      --text: #0b1b2b;
-      --muted: #47627f;
-      --primary: #14b8a6;
-      --primary-dark: #0f766e;
-      --accent: #0284c7;
-      --warning: #b45309;
-      --success: #059669;
-      --input-bg: #ffffff;
-    }
-
     :root {
       --bg: #08131f;
       --bg-soft: #0f2135;
@@ -71,6 +55,23 @@
       --max: 1220px;
       --radius: 22px;
       --shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    html[data-theme="light"] {
+      --bg: #eef5fb;
+      --bg-soft: #ffffff;
+      --surface: rgba(8, 19, 31, 0.04);
+      --surface-2: rgba(8, 19, 31, 0.06);
+      --border: rgba(8, 19, 31, 0.12);
+      --text: #0b1b2b;
+      --muted: #47627f;
+      --primary: #14b8a6;
+      --primary-dark: #0f766e;
+      --accent: #0284c7;
+      --warning: #b45309;
+      --success: #059669;
+      --input-bg: #ffffff;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.08);
     }
 
     * { box-sizing: border-box; }
@@ -951,6 +952,10 @@
             <span class="tag">AQUA-INST PRO</span>
             <h3>Conversión 4–20 mA ↔ variable de proceso</h3>
             <p>Convierte señal analógica a variable de proceso y viceversa.</p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="https://gjosebwes-sketch.github.io/aqua-inst-pro/" target="_blank">Abrir en pestaña nueva ↗</a>
+              <a class="btn btn-secondary" onclick="downloadTool('https://gjosebwes-sketch.github.io/aqua-inst-pro/', 'AQUA-INST-PRO.html')">Descargar</a>
+            </div>
             <div class="tool-form-grid">
               <div class="field">
                 <label for="aquaMin">Rango mínimo</label>
@@ -976,6 +981,10 @@
             <span class="tag">RO Plant Advisor</span>
             <h3>Evaluación rápida de desempeño RO</h3>
             <p>Calcula recuperación, rechazo salino y diagnóstico preliminar.</p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="https://gjosebwes-sketch.github.io/ro-plant-advisor/" target="_blank">Abrir en pestaña nueva ↗</a>
+              <a class="btn btn-secondary" onclick="downloadTool('https://gjosebwes-sketch.github.io/ro-plant-advisor/', 'RO-Plant-Advisor.html')">Descargar</a>
+            </div>
             <div class="tool-form-grid">
               <div class="field">
                 <label for="roFeed">Caudal de alimentación (m³/h)</label>
@@ -1005,6 +1014,10 @@
             <span class="tag">EDAR mA Calculator</span>
             <h3>Escalado lineal de señal analógica</h3>
             <p>Convierte variable de proceso a mA y mA a variable de proceso.</p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="https://gjosebwes-sketch.github.io/edar-ma-calculator/" target="_blank">Abrir en pestaña nueva ↗</a>
+              <a class="btn btn-secondary" onclick="downloadTool('https://gjosebwes-sketch.github.io/edar-ma-calculator/', 'EDAR-mA-Calculator.html')">Descargar</a>
+            </div>
             <div class="tool-form-grid">
               <div class="field">
                 <label for="edarMin">Mínimo del instrumento</label>
@@ -1030,6 +1043,10 @@
             <span class="tag">Tratamiento de Agua PRO</span>
             <h3>Cálculo de dosificación química</h3>
             <p>Estimación simple de consumo químico por hora, por día y autonomía de tanque.</p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="https://gjosebwes-sketch.github.io/tratamiento-agua-pro/" target="_blank">Abrir en pestaña nueva ↗</a>
+              <a class="btn btn-secondary" onclick="downloadTool('https://gjosebwes-sketch.github.io/tratamiento-agua-pro/', 'Tratamiento-Agua-PRO.html')">Descargar</a>
+            </div>
             <div class="tool-form-grid">
               <div class="field">
                 <label for="doseFlow">Caudal de agua (m³/h)</label>
@@ -1055,6 +1072,10 @@
             <span class="tag">WT Smart Calculator</span>
             <h3>Conversión rápida de caudal y presión</h3>
             <p>Convierte m³/h a L/h y gpm; bar a psi y kPa.</p>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="https://gjosebwes-sketch.github.io/wt-smart-calculator/" target="_blank">Abrir en pestaña nueva ↗</a>
+              <a class="btn btn-secondary" onclick="downloadTool('https://gjosebwes-sketch.github.io/wt-smart-calculator/', 'WT-Smart-Calculator.html')">Descargar</a>
+            </div>
             <div class="tool-form-grid">
               <div class="field">
                 <label for="smartFlow">Caudal en m³/h</label>
@@ -1306,6 +1327,30 @@
   </footer>
 
   <script>
+    // Función para descargar herramientas desde GitHub Pages
+    function downloadTool(url, filename) {
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al descargar la herramienta. Verifica que la URL sea correcta.');
+          }
+          return response.text();
+        })
+        .then(html => {
+          const blob = new Blob([html], { type: 'text/html' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(error => {
+          alert('Error: ' + error.message);
+          console.error('Error descargando herramienta:', error);
+        });
+    }
+
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const root = document.documentElement;

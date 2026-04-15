@@ -4,39 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WaterTools.es | Herramientas técnicas para tratamiento de agua e instrumentación</title>
+
+  <meta name="description" content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo." />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Gustavo Blanco Walter" />
   <meta name="keywords" content="tratamiento de agua, calculadoras de agua, instrumentación industrial, EDAR, ETAP, ósmosis inversa, 4-20 mA, dosificación química, WaterTools" />
   <link rel="canonical" href="https://watertools.es/" />
+
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:title" content="WaterTools.es | Herramientas técnicas para tratamiento de agua e instrumentación" />
   <meta property="og:description" content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo." />
   <meta property="og:url" content="https://watertools.es/" />
   <meta property="og:site_name" content="WaterTools.es" />
-  <meta property="og:image" content="https://watertools.es/assets/og-image.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="WaterTools.es | Herramientas técnicas para tratamiento de agua e instrumentación" />
   <meta name="twitter:description" content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo." />
-  <meta name="twitter:image" content="https://watertools.es/assets/og-image.jpg" />
+
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "WaterTools.es",
-      "url": "https://watertools.es/",
-      "description": "Herramientas técnicas, calculadoras y recursos para tratamiento de agua e instrumentación industrial.",
-      "inLanguage": ["es", "en"],
-      "publisher": {
-        "@type": "Person",
-        "name": "Gustavo Blanco Walter"
-      }
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "WaterTools.es",
+    "url": "https://watertools.es/",
+    "description": "Herramientas técnicas, calculadoras y recursos para tratamiento de agua e instrumentación industrial.",
+    "inLanguage": ["es", "en"],
+    "publisher": {
+      "@type": "Person",
+      "name": "Gustavo Blanco Walter"
     }
+  }
   </script>
-  <meta
-    name="description"
-    content="Calculadoras, guías y recursos técnicos para tratamiento de agua, instrumentación industrial, ósmosis inversa, dosificación química y diagnóstico de campo."
-  />
+
   <style>
     html[data-theme="light"] {
       --bg: #eef5fb;
@@ -51,7 +51,9 @@
       --accent: #0284c7;
       --warning: #b45309;
       --success: #059669;
+      --input-bg: #ffffff;
     }
+
     :root {
       --bg: #08131f;
       --bg-soft: #0f2135;
@@ -65,13 +67,13 @@
       --accent: #7dd3fc;
       --warning: #fbbf24;
       --success: #34d399;
+      --input-bg: rgba(8, 19, 31, 0.68);
       --max: 1220px;
       --radius: 22px;
       --shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -85,15 +87,8 @@
       line-height: 1.6;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
     .container {
       width: min(calc(100% - 2rem), var(--max));
@@ -225,9 +220,7 @@
       box-shadow: 0 14px 30px rgba(79, 209, 197, 0.25);
     }
 
-    .hero {
-      padding: 5.5rem 0 3rem;
-    }
+    .hero { padding: 5.5rem 0 3rem; }
 
     .hero-grid {
       display: grid;
@@ -281,6 +274,7 @@
       font-weight: 800;
       transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
       border: 1px solid transparent;
+      cursor: pointer;
     }
 
     .btn:hover { transform: translateY(-1px); }
@@ -346,9 +340,7 @@
       font-size: 0.95rem;
     }
 
-    .section {
-      padding: 2rem 0 4.4rem;
-    }
+    .section { padding: 2rem 0 4.4rem; }
 
     .section-heading {
       display: flex;
@@ -462,9 +454,7 @@
       font-size: 0.95rem;
     }
 
-    .stats {
-      margin-top: 0.25rem;
-    }
+    .stats { margin-top: 0.25rem; }
 
     .stat-card {
       text-align: center;
@@ -567,9 +557,7 @@
       margin-top: 1rem;
     }
 
-    .footer-cta {
-      padding-bottom: 5rem;
-    }
+    .footer-cta { padding-bottom: 5rem; }
 
     .footer-card {
       text-align: center;
@@ -608,10 +596,72 @@
     }
 
     .muted { color: var(--muted); }
-
     .accent { color: #d3fff8; }
-
     .full-width { grid-column: 1 / -1; }
+
+    .tool-panel {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .tool-panel.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .tool-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .field label {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .result-box {
+      margin-top: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(79, 209, 197, 0.18);
+      background: rgba(79, 209, 197, 0.08);
+      color: var(--text);
+    }
+
+    .tool-shell {
+      margin-top: 1.2rem;
+    }
+
+    .helper {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     @media (max-width: 1080px) {
       .hero-grid,
@@ -643,12 +693,12 @@
       .grid-4,
       .grid-3,
       .grid-2,
-      .profile-card {
+      .profile-card,
+      .tool-form-grid {
         grid-template-columns: 1fr;
       }
 
       h1 { max-width: none; }
-
       .hero { padding-top: 3rem; }
     }
   </style>
@@ -696,14 +746,14 @@
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="#herramientas">Usar herramientas ahora</a>
-            <a class="btn btn-secondary" href="#biblioteca">Descargar recursos técnicos</a>
+            <a class="btn btn-secondary" href="#biblioteca">Ver recursos técnicos</a>
           </div>
 
           <div class="microtrust" aria-label="Indicadores de confianza">
             <span>Gratis</span>
             <span>Sin anuncios</span>
             <span>Uso directo en navegador</span>
-            <span>HTML offline disponible</span>
+            <span>Sin enlaces rotos</span>
           </div>
         </div>
 
@@ -713,8 +763,8 @@
             <p>Accede rápido a cálculos técnicos, referencias prácticas y herramientas listas para campo u oficina técnica.</p>
           </div>
           <div class="hero-card">
-            <h3>Biblioteca técnica descargable</h3>
-            <p>Organiza guías, tablas y documentos descargables desde tu propio dominio para una experiencia más profesional.</p>
+            <h3>Herramientas integradas en una sola página</h3>
+            <p>Esta versión evita errores 404: las calculadoras se abren dentro de la propia web, sin depender de archivos externos.</p>
           </div>
           <div class="hero-card">
             <h3>Base real de experiencia</h3>
@@ -769,7 +819,7 @@
         <div class="section-heading">
           <div>
             <h2>Herramientas destacadas</h2>
-            <p>Presenta tus utilidades como un catálogo técnico claro, escaneable y orientado a la acción.</p>
+            <p>Ahora cada botón abre una calculadora funcional en la misma página. No hay rutas rotas a <code>/tools</code> ni a <code>/downloads</code>.</p>
           </div>
         </div>
 
@@ -783,7 +833,7 @@
             <div class="tool-meta">
               <span class="pill">Campo</span>
               <span class="pill">Diagnóstico</span>
-              <span class="pill">HTML offline</span>
+              <span class="pill">4–20 mA</span>
             </div>
             <p>Ideal para técnicos de campo en EDAR y ETAP que necesitan referencias rápidas y soporte operativo.</p>
             <ul class="tool-list">
@@ -792,8 +842,7 @@
               <li>Consulta rápida de calibración y referencias</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/aqua-inst-pro.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/aqua-inst-pro.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="#tool-aqua">Abrir herramienta</a>
             </div>
           </article>
 
@@ -815,8 +864,7 @@
               <li>Apoyo a dosificación química</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/ro-plant-advisor.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/ro-plant-advisor.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="#tool-ro">Abrir herramienta</a>
             </div>
           </article>
 
@@ -838,8 +886,7 @@
               <li>Referencia rápida para condiciones de planta</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/edar-ma-calculator.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/edar-ma-calculator.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="#tool-edar">Abrir herramienta</a>
             </div>
           </article>
 
@@ -861,8 +908,7 @@
               <li>Apoyo a troubleshooting y revisión</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/tratamiento-agua-pro.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/tratamiento-agua-pro.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="#tool-dosing">Abrir herramienta</a>
             </div>
           </article>
 
@@ -884,21 +930,142 @@
               <li>Parámetros habituales de proceso</li>
             </ul>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="tools/wt-smart-calculator.html">Abrir herramienta</a>
-              <a class="btn btn-secondary" href="downloads/wt-smart-calculator.html" download>Descargar HTML</a>
+              <a class="btn btn-primary" href="#tool-smart">Abrir herramienta</a>
             </div>
           </article>
 
           <article class="card callout">
-            <h3>¿Quieres más herramientas?</h3>
+            <h3>Todo integrado y sin archivos faltantes</h3>
             <p>
-              Convierte los módulos marcados como “Próximamente” en captación real: acceso anticipado,
-              lista de espera o descarga bajo solicitud.
+              Esta versión ya no depende de carpetas externas que no existen. Puedes publicarla tal cual en GitHub Pages.
             </p>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="#empresas">Solicitar herramienta</a>
-              <a class="btn btn-secondary" href="#biblioteca">Ver recursos</a>
+              <a class="btn btn-primary" href="#tool-aqua">Probar herramientas</a>
+              <a class="btn btn-secondary" href="#empresas">Solicitar una nueva</a>
             </div>
+          </article>
+        </div>
+
+        <div class="tool-shell">
+          <article class="card" id="tool-aqua">
+            <span class="tag">AQUA-INST PRO</span>
+            <h3>Conversión 4–20 mA ↔ variable de proceso</h3>
+            <p>Convierte señal analógica a variable de proceso y viceversa.</p>
+            <div class="tool-form-grid">
+              <div class="field">
+                <label for="aquaMin">Rango mínimo</label>
+                <input id="aquaMin" type="number" step="0.01" value="0" />
+              </div>
+              <div class="field">
+                <label for="aquaMax">Rango máximo</label>
+                <input id="aquaMax" type="number" step="0.01" value="100" />
+              </div>
+              <div class="field">
+                <label for="aquaMa">mA medidos</label>
+                <input id="aquaMa" type="number" step="0.01" value="12" />
+              </div>
+              <div class="field">
+                <label for="aquaProc">Variable de proceso</label>
+                <input id="aquaProc" type="number" step="0.01" value="50" />
+              </div>
+            </div>
+            <div class="result-box" id="aquaResult"></div>
+          </article>
+
+          <article class="card" id="tool-ro" style="margin-top:1rem;">
+            <span class="tag">RO Plant Advisor</span>
+            <h3>Evaluación rápida de desempeño RO</h3>
+            <p>Calcula recuperación, rechazo salino y diagnóstico preliminar.</p>
+            <div class="tool-form-grid">
+              <div class="field">
+                <label for="roFeed">Caudal de alimentación (m³/h)</label>
+                <input id="roFeed" type="number" step="0.01" value="10" />
+              </div>
+              <div class="field">
+                <label for="roPerm">Caudal de permeado (m³/h)</label>
+                <input id="roPerm" type="number" step="0.01" value="7" />
+              </div>
+              <div class="field">
+                <label for="roCFeed">Conductividad alimentación (µS/cm)</label>
+                <input id="roCFeed" type="number" step="0.01" value="1500" />
+              </div>
+              <div class="field">
+                <label for="roCPerm">Conductividad permeado (µS/cm)</label>
+                <input id="roCPerm" type="number" step="0.01" value="50" />
+              </div>
+              <div class="field">
+                <label for="roDp">Presión diferencial (bar)</label>
+                <input id="roDp" type="number" step="0.01" value="1.2" />
+              </div>
+            </div>
+            <div class="result-box" id="roResult"></div>
+          </article>
+
+          <article class="card" id="tool-edar" style="margin-top:1rem;">
+            <span class="tag">EDAR mA Calculator</span>
+            <h3>Escalado lineal de señal analógica</h3>
+            <p>Convierte variable de proceso a mA y mA a variable de proceso.</p>
+            <div class="tool-form-grid">
+              <div class="field">
+                <label for="edarMin">Mínimo del instrumento</label>
+                <input id="edarMin" type="number" step="0.01" value="0" />
+              </div>
+              <div class="field">
+                <label for="edarMax">Máximo del instrumento</label>
+                <input id="edarMax" type="number" step="0.01" value="10" />
+              </div>
+              <div class="field">
+                <label for="edarValue">Valor de proceso</label>
+                <input id="edarValue" type="number" step="0.01" value="5" />
+              </div>
+              <div class="field">
+                <label for="edarMa">mA de entrada</label>
+                <input id="edarMa" type="number" step="0.01" value="10" />
+              </div>
+            </div>
+            <div class="result-box" id="edarResult"></div>
+          </article>
+
+          <article class="card" id="tool-dosing" style="margin-top:1rem;">
+            <span class="tag">Tratamiento de Agua PRO</span>
+            <h3>Cálculo de dosificación química</h3>
+            <p>Estimación simple de consumo químico por hora, por día y autonomía de tanque.</p>
+            <div class="tool-form-grid">
+              <div class="field">
+                <label for="doseFlow">Caudal de agua (m³/h)</label>
+                <input id="doseFlow" type="number" step="0.01" value="25" />
+              </div>
+              <div class="field">
+                <label for="dosePpm">Dosis objetivo (ppm o mg/L)</label>
+                <input id="dosePpm" type="number" step="0.01" value="8" />
+              </div>
+              <div class="field">
+                <label for="doseConc">Concentración del producto (%)</label>
+                <input id="doseConc" type="number" step="0.01" value="20" />
+              </div>
+              <div class="field">
+                <label for="doseTank">Volumen del tanque químico (L)</label>
+                <input id="doseTank" type="number" step="0.01" value="200" />
+              </div>
+            </div>
+            <div class="result-box" id="doseResult"></div>
+          </article>
+
+          <article class="card" id="tool-smart" style="margin-top:1rem;">
+            <span class="tag">WT Smart Calculator</span>
+            <h3>Conversión rápida de caudal y presión</h3>
+            <p>Convierte m³/h a L/h y gpm; bar a psi y kPa.</p>
+            <div class="tool-form-grid">
+              <div class="field">
+                <label for="smartFlow">Caudal en m³/h</label>
+                <input id="smartFlow" type="number" step="0.01" value="12" />
+              </div>
+              <div class="field">
+                <label for="smartPressure">Presión en bar</label>
+                <input id="smartPressure" type="number" step="0.01" value="5" />
+              </div>
+            </div>
+            <div class="result-box" id="smartResult"></div>
           </article>
         </div>
       </div>
@@ -917,11 +1084,11 @@
           </article>
           <article class="card stat-card">
             <span class="stat-value">100%</span>
-            <span>gratis y código abierto</span>
+            <span>gratis y en el navegador</span>
           </article>
           <article class="card stat-card">
             <span class="stat-value">0</span>
-            <span>anuncios o rastreo invasivo</span>
+            <span>enlaces 404 a herramientas</span>
           </article>
         </div>
       </div>
@@ -931,61 +1098,51 @@
       <div class="container">
         <div class="section-heading">
           <div>
-            <h2>Biblioteca técnica para descargar</h2>
-            <p>Guías, tablas y documentos prácticos para consulta rápida en planta, oficina técnica o campo.</p>
+            <h2>Biblioteca técnica</h2>
+            <p>Por ahora esta sección queda sin enlaces de descarga rotos. Puedes añadir los PDFs después, cuando realmente existan.</p>
           </div>
         </div>
 
         <div class="grid-2 downloads-grid">
           <article class="card">
-            <div class="resource-type">Guía PDF</div>
-            <h3>Guía de instrumentación industrial para tratamiento de agua</h3>
-            <p>Fundamentos de señal 4–20 mA, HART, calibración y diagnóstico para operación y mantenimiento.</p>
+            <div class="resource-type">Guía técnica</div>
+            <h3>Instrumentación industrial para tratamiento de agua</h3>
+            <p>Contenido recomendado para futura publicación en PDF: señal 4–20 mA, HART, calibración y diagnóstico de campo.</p>
             <div class="resource-meta">
-              <span>PDF</span>
-              <span>Actualizable</span>
-              <span>Uso en campo</span>
-            </div>
-            <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download>Descargar guía</a>
+              <span>PDF futuro</span>
+              <span>Instrumentación</span>
+              <span>Campo</span>
             </div>
           </article>
 
           <article class="card">
             <div class="resource-type">Documento técnico</div>
             <h3>Química del agua para ingenieros</h3>
-            <p>pH, alcalinidad, coagulación, corrosión, interpretación química y apoyo a decisiones operativas.</p>
+            <p>Contenido recomendado para futura publicación en PDF: pH, alcalinidad, coagulación, corrosión y decisiones operativas.</p>
             <div class="resource-meta">
-              <span>PDF</span>
+              <span>PDF futuro</span>
+              <span>Química</span>
               <span>Proceso</span>
-              <span>Consulta técnica</span>
-            </div>
-            <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download>Descargar PDF</a>
             </div>
           </article>
 
           <article class="card">
             <div class="resource-type">Guía de procesos</div>
             <h3>Guía técnica Desalter</h3>
-            <p>Referencia práctica para troubleshooting, operación y análisis técnico en procesos industriales.</p>
+            <p>Contenido recomendado para futura publicación: troubleshooting, operación y análisis técnico en procesos industriales.</p>
             <div class="resource-meta">
-              <span>PDF</span>
+              <span>PDF futuro</span>
               <span>Procesos</span>
               <span>Diagnóstico</span>
-            </div>
-            <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/guia-desalter.pdf" download>Descargar guía</a>
             </div>
           </article>
 
           <article class="card callout">
-            <h3>Próximamente: hojas de datos, tablas normativas y diagnóstico de campo</h3>
+            <h3>Activa captación sin depender de PDFs aún no subidos</h3>
             <p>
-              Sustituye los bloques vacíos por captación real. Puedes conectar este formulario a Formspree,
-              Netlify Forms o tu backend favorito.
+              Cuando tengas los documentos listos, sustituyes estos bloques por enlaces reales. Mientras tanto, no generas errores de descarga.
             </p>
-            <form action="#" method="post">
+            <form action="#" method="post" onsubmit="event.preventDefault(); alert('Formulario de demostración. Conéctalo después a Formspree o similar.');">
               <label for="email" class="muted">Recibe aviso cuando estén disponibles</label>
               <div class="tool-actions">
                 <input
@@ -993,7 +1150,7 @@
                   name="email"
                   type="email"
                   placeholder="tu@email.com"
-                  style="flex:1; min-width:220px; padding:0.95rem 1rem; border-radius:999px; border:1px solid rgba(255,255,255,0.12); background:rgba(8,19,31,0.68); color:var(--text);"
+                  style="flex:1; min-width:220px; padding:0.95rem 1rem; border-radius:999px; border:1px solid var(--border); background:var(--input-bg); color:var(--text);"
                 />
                 <button class="btn btn-primary" type="submit">Quiero acceso anticipado</button>
               </div>
@@ -1014,27 +1171,27 @@
 
         <div class="grid-3 training-grid">
           <article class="card">
-            <span class="tag">Disponible</span>
+            <span class="tag">Disponible en web</span>
             <h3>Instrumentación industrial para tratamiento de agua</h3>
-            <p>Aprende señal 4–20 mA, HART, calibración, fallos habituales y diagnóstico de campo.</p>
+            <p>Usa la calculadora AQUA-INST PRO y amplía después con guía PDF cuando la tengas preparada.</p>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/guia-instrumentacion-industrial.pdf" download>Descargar guía</a>
+              <a class="btn btn-primary" href="#tool-aqua">Abrir herramienta</a>
             </div>
           </article>
 
           <article class="card">
-            <span class="tag">Disponible</span>
+            <span class="tag">Disponible en web</span>
             <h3>Química del agua para ingenieros</h3>
-            <p>Revisa fundamentos para operación, diseño, control químico e interpretación de parámetros de calidad.</p>
+            <p>Usa la calculadora de dosificación y deja el PDF para una fase posterior.</p>
             <div class="tool-actions">
-              <a class="btn btn-primary" href="downloads/quimica-del-agua-para-ingenieros.pdf" download>Descargar PDF</a>
+              <a class="btn btn-primary" href="#tool-dosing">Abrir herramienta</a>
             </div>
           </article>
 
           <article class="card">
             <span class="tag">En preparación</span>
             <h3>Diseño y optimización de sistemas OI / Operación EDAR</h3>
-            <p>Convierte el “próximamente” en lista de interés para validar demanda antes de publicar más contenido.</p>
+            <p>Valida interés primero y publica contenido adicional después.</p>
             <div class="tool-actions">
               <a class="btn btn-secondary" href="#biblioteca">Avisarme cuando salga</a>
             </div>
@@ -1076,7 +1233,6 @@
           <h3>Convierte visitas técnicas en oportunidades de servicio</h3>
           <p>
             Añade aquí tu formulario de contacto, un correo profesional o un botón directo a LinkedIn y correo.
-            Puedes conectar este bloque a un formulario estático o a un CRM sencillo.
           </p>
           <div class="tool-actions">
             <a class="btn btn-primary" href="mailto:gjosebw.es@gmail.com">Solicitar información</a>
@@ -1119,7 +1275,6 @@
               </p>
               <div class="about-actions">
                 <a class="btn btn-primary" href="https://www.linkedin.com/in/gustavo-blanco-walter" target="_blank" rel="noreferrer">Ver LinkedIn</a>
-                <a class="btn btn-secondary" href="https://github.com/" target="_blank" rel="noreferrer">Ver GitHub</a>
                 <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com">Contactar</a>
               </div>
             </div>
@@ -1132,10 +1287,10 @@
       <div class="container">
         <div class="footer-card">
           <h2>Empieza hoy con tus herramientas técnicas</h2>
-          <p>Abre una calculadora, descarga una guía o explora recursos creados para profesionales del agua, instrumentación y procesos.</p>
+          <p>Abre una calculadora o explora recursos creados para profesionales del agua, instrumentación y procesos.</p>
           <div class="hero-actions" style="justify-content:center; margin-top:0;">
             <a class="btn btn-primary" href="#herramientas">Abrir herramientas</a>
-            <a class="btn btn-secondary" href="#biblioteca">Descargar recursos</a>
+            <a class="btn btn-secondary" href="#biblioteca">Ver recursos</a>
             <a class="btn btn-secondary" href="mailto:gjosebw.es@gmail.com">Contactar</a>
           </div>
         </div>
@@ -1146,7 +1301,7 @@
   <footer class="site-footer">
     <div class="container site-footer-inner">
       <span>© <span id="year"></span> WaterTools.es · Herramientas técnicas para profesionales del agua</span>
-      <span>Diseño preparado para GitHub Pages · HTML + CSS puro</span>
+      <span>Diseño preparado para GitHub Pages · HTML + CSS + JS puro</span>
     </div>
   </footer>
 
@@ -1195,7 +1350,9 @@
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-i18n]').forEach((el) => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) el.textContent = translations[lang][key];
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
       });
       document.querySelectorAll('[data-lang]').forEach((btn) => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
@@ -1209,6 +1366,154 @@
     document.querySelectorAll('[data-lang]').forEach((btn) => {
       btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
     });
+
+    function formatNumber(value) {
+      return Number.isFinite(value) ? value.toFixed(2) : '0.00';
+    }
+
+    function calcAqua() {
+      const min = parseFloat(document.getElementById('aquaMin').value);
+      const max = parseFloat(document.getElementById('aquaMax').value);
+      const ma = parseFloat(document.getElementById('aquaMa').value);
+      const proc = parseFloat(document.getElementById('aquaProc').value);
+      const out = document.getElementById('aquaResult');
+
+      if (max <= min) {
+        out.innerHTML = '<strong>Error:</strong> el rango máximo debe ser mayor que el mínimo.';
+        return;
+      }
+
+      const procFromMa = min + ((ma - 4) / 16) * (max - min);
+      const maFromProc = 4 + ((proc - min) / (max - min)) * 16;
+
+      out.innerHTML = `
+        <strong>Resultado</strong><br>
+        Valor calculado desde ${formatNumber(ma)} mA: <strong>${formatNumber(procFromMa)}</strong><br>
+        Señal calculada para ${formatNumber(proc)} unidades: <strong>${formatNumber(maFromProc)} mA</strong>
+      `;
+    }
+
+    function calcRO() {
+      const feed = parseFloat(document.getElementById('roFeed').value);
+      const perm = parseFloat(document.getElementById('roPerm').value);
+      const cFeed = parseFloat(document.getElementById('roCFeed').value);
+      const cPerm = parseFloat(document.getElementById('roCPerm').value);
+      const dp = parseFloat(document.getElementById('roDp').value);
+      const out = document.getElementById('roResult');
+
+      if (feed <= 0 || perm < 0 || perm > feed || cFeed <= 0) {
+        out.innerHTML = '<strong>Error:</strong> revisa los datos de entrada.';
+        return;
+      }
+
+      const recovery = (perm / feed) * 100;
+      const rejection = (1 - cPerm / cFeed) * 100;
+      let diagnosis = 'Operación en rango básico.';
+
+      if (recovery > 85) {
+        diagnosis = 'Recuperación alta. Revisa riesgo de incrustación y control de antincrustante.';
+      }
+      if (rejection < 95) {
+        diagnosis = 'Rechazo bajo. Revisa integridad de membranas, sellos u O-rings.';
+      }
+      if (dp > 1.5) {
+        diagnosis += ' ΔP elevado: posible ensuciamiento o canales parcialmente bloqueados.';
+      }
+
+      out.innerHTML = `
+        <strong>Recuperación:</strong> ${formatNumber(recovery)} %<br>
+        <strong>Rechazo salino:</strong> ${formatNumber(rejection)} %<br>
+        <strong>Diagnóstico:</strong> ${diagnosis}
+      `;
+    }
+
+    function calcEdar() {
+      const min = parseFloat(document.getElementById('edarMin').value);
+      const max = parseFloat(document.getElementById('edarMax').value);
+      const value = parseFloat(document.getElementById('edarValue').value);
+      const ma = parseFloat(document.getElementById('edarMa').value);
+      const out = document.getElementById('edarResult');
+
+      if (max <= min) {
+        out.innerHTML = '<strong>Error:</strong> el valor máximo debe ser mayor que el mínimo.';
+        return;
+      }
+
+      const maOut = 4 + ((value - min) / (max - min)) * 16;
+      const valueOut = min + ((ma - 4) / 16) * (max - min);
+
+      out.innerHTML = `
+        <strong>Salida calculada</strong><br>
+        Para ${formatNumber(value)} unidades ⇒ <strong>${formatNumber(maOut)} mA</strong><br>
+        Para ${formatNumber(ma)} mA ⇒ <strong>${formatNumber(valueOut)} unidades</strong>
+      `;
+    }
+
+    function calcDose() {
+      const flow = parseFloat(document.getElementById('doseFlow').value);
+      const ppm = parseFloat(document.getElementById('dosePpm').value);
+      const conc = parseFloat(document.getElementById('doseConc').value);
+      const tank = parseFloat(document.getElementById('doseTank').value);
+      const out = document.getElementById('doseResult');
+
+      if (flow <= 0 || ppm < 0 || conc <= 0 || tank <= 0) {
+        out.innerHTML = '<strong>Error:</strong> revisa los datos de entrada.';
+        return;
+      }
+
+      const activeFraction = conc / 100;
+      const productLph = (flow * 1000 * ppm / 1000000) / activeFraction;
+      const daily = productLph * 24;
+      const autonomy = tank / productLph;
+
+      out.innerHTML = `
+        <strong>Consumo químico estimado:</strong> ${formatNumber(productLph)} L/h<br>
+        <strong>Consumo diario:</strong> ${formatNumber(daily)} L/día<br>
+        <strong>Autonomía del tanque:</strong> ${formatNumber(autonomy)} horas
+      `;
+    }
+
+    function calcSmart() {
+      const flow = parseFloat(document.getElementById('smartFlow').value);
+      const pressure = parseFloat(document.getElementById('smartPressure').value);
+      const out = document.getElementById('smartResult');
+
+      const lph = flow * 1000;
+      const gpm = flow * 4.40287;
+      const psi = pressure * 14.5038;
+      const kpa = pressure * 100;
+
+      out.innerHTML = `
+        <strong>Caudal:</strong> ${formatNumber(flow)} m³/h = ${formatNumber(lph)} L/h = ${formatNumber(gpm)} gpm<br>
+        <strong>Presión:</strong> ${formatNumber(pressure)} bar = ${formatNumber(psi)} psi = ${formatNumber(kpa)} kPa
+      `;
+    }
+
+    ['aquaMin','aquaMax','aquaMa','aquaProc'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calcAqua);
+    });
+
+    ['roFeed','roPerm','roCFeed','roCPerm','roDp'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calcRO);
+    });
+
+    ['edarMin','edarMax','edarValue','edarMa'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calcEdar);
+    });
+
+    ['doseFlow','dosePpm','doseConc','doseTank'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calcDose);
+    });
+
+    ['smartFlow','smartPressure'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calcSmart);
+    });
+
+    calcAqua();
+    calcRO();
+    calcEdar();
+    calcDose();
+    calcSmart();
   </script>
 </body>
 </html>

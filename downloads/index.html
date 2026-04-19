@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargas — WaterTools.es</title>
+    <meta name="description" content="Descarga todas las herramientas, guías técnicas y recursos profesionales.">
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #f8fafb;
+            --bg-card: #ffffff;
+            --text: #1a2a3a;
+            --text-secondary: #5a6a7a;
+            --accent: #0e9aa7;
+            --accent-dark: #0a7a87;
+            --accent-light: #e0f5f7;
+            --border: #e2e8f0;
+            --font-body: 'DM Sans', sans-serif;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --max-w: 1200px;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d1b2a;
+            --bg-card: #1b2d3e;
+            --text: #e8edf2;
+            --text-secondary: #8fa3b8;
+            --accent: #2ecad4;
+            --accent-dark: #1ab0ba;
+            --border: #2a3f52;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(248,250,251,0.95);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            backdrop-filter: blur(16px);
+        }
+
+        [data-theme="dark"] .navbar { background: rgba(13,27,42,0.95); }
+
+        .navbar-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-inner a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .navbar-inner a:hover { color: var(--accent); }
+
+        .container {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+        }
+
+        .download-section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .download-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .download-item:hover {
+            box-shadow: 0 8px 32px rgba(14,154,167,0.12);
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .download-item-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .download-item h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .download-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            min-height: 40px;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            flex: 2;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-light);
+        }
+
+        .btn-info {
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            flex: auto;
+        }
+
+        .info-box {
+            background: var(--accent-light);
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+
+        .info-box h4 {
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            font-size: 0.95rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        thead {
+            background: var(--accent-light);
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            color: var(--accent);
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr:hover {
+            background: var(--accent-light);
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .container { padding: 40px 16px; }
+            h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.3rem; }
+            .btn { padding: 8px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/">WaterTools.es</a>
+            <a href="/#downloads" style="font-size: 0.95rem; font-weight: 500;">← Volver a inicio</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Inicio</a> > Descargas
+        </div>
+
+        <h1>Centro de Descargas</h1>
+        <p class="subtitle">Todas las herramientas, guías técnicas y recursos profesionales disponibles para descargar.</p>
+
+        <!-- HERRAMIENTAS HTML INTERACTIVAS -->
+        <div class="download-section">
+            <h2 class="section-title">🧮 Herramientas Interactivas (HTML)</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Abiertas en tu navegador. Puedes descargarlas para usar offline sin conexión.</p>
+
+            <div class="download-grid">
+                <!-- EDAR mA -->
+                <div class="download-item">
+                    <div class="download-item-icon">🧮</div>
+                    <h3>EDAR mA Calculator</h3>
+                    <p>Conversión de señales 4-20 mA a variables de proceso. Diagnóstico de sensores.</p>
+                    <div class="download-buttons">
+                        <a href="/tools/edar-ma-calculator.html" target="_blank" class="btn btn-secondary" title="Abrir online">🔗 Online</a>
+                        <a href="/tools/edar-ma-calculator.html" download="EDAR_mA_Calculator.html" class="btn btn-primary">⬇ Descargar HTML</a>
+                    </div>
+                </div>
+
+                <!-- Signal Analysis -->
+                <div class="download-item">
+                    <div class="download-item-icon">⚡</div>
+                    <h3>4-20 mA vs Pulso</h3>
+                    <p>Análisis comparativo exhaustivo entre señales. Decisiones de diseño e implementación.</p>
+                    <div class="download-buttons">
+                        <a href="/tools/signal-analysis.html" target="_blank" class="btn btn-secondary">🔗 Online</a>
+                        <a href="/tools/signal-analysis.html" download="Signal_Analysis_4-20mA_vs_Pulso.html" class="btn btn-primary">⬇ Descargar HTML</a>
+                    </div>
+                </div>
+
+                <!-- Desalter -->
+                <div class="download-item">
+                    <div class="download-item-icon">🛢️</div>
+                    <h3>Sistema Desalter</h3>
+                    <p>Guía interactiva del sistema desalter electroestático en refinerías.</p>
+                    <div class="download-buttons">
+                        <a href="/tools/desalter-guide.html" target="_blank" class="btn btn-secondary">🔗 Online</a>
+                        <a href="/tools/desalter-guide.html" download="Desalter_System_Guide.html" class="btn btn-primary">⬇ Descargar HTML</a>
+                    </div>
+                </div>
+
+                <!-- RO Advisor -->
+                <div class="download-item">
+                    <div class="download-item-icon">🌊</div>
+                    <h3>RO Plant Advisor</h3>
+                    <p>Diseño y optimización de plantas de ósmosis inversa. Cálculos de flujo y presión.</p>
+                    <div class="download-buttons">
+                        <a href="/tools/ro-plant-advisor.html" target="_blank" class="btn btn-secondary">🔗 Online</a>
+                        <a href="/tools/ro-plant-advisor.html" download="RO_Plant_Advisor.html" class="btn btn-primary">⬇ Descargar HTML</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📋 Cómo usar las herramientas descargadas</h4>
+                <p>Una vez descargado el archivo HTML, puedes abrirlo en cualquier navegador (Chrome, Firefox, Safari, Edge) sin necesidad de conexión a internet. Los cálculos se realizan completamente en tu computadora.</p>
+            </div>
+        </div>
+
+        <!-- DOCUMENTOS PDF -->
+        <div class="download-section">
+            <h2 class="section-title">📄 Documentos PDF y Guías</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Guías técnicas profesionales, procedimientos y recursos certificados. Disponibles en GitHub Releases.</p>
+
+            <div class="download-grid">
+                <!-- Desalter PDF -->
+                <div class="download-item">
+                    <div class="download-item-icon">📘</div>
+                    <h3>Guía Desalter Sistema</h3>
+                    <p><strong>31 páginas</strong> — Principios de funcionamiento, química de hidrólisis, operación optimizada, troubleshooting, especificaciones por tipo de crudo, control de corrosión.</p>
+                    <div class="download-buttons">
+                        <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">⬇ Descargar PDF</a>
+                    </div>
+                </div>
+
+                <!-- RO Curso -->
+                <div class="download-item">
+                    <div class="download-item-icon">📗</div>
+                    <h3>Curso RO Completo v2</h3>
+                    <p><strong>Completo</strong> — Diseño, operación y optimización de plantas de ósmosis inversa. Cálculos, especificaciones, control químico.</p>
+                    <div class="download-buttons">
+                        <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">⬇ Descargar PDF</a>
+                    </div>
+                </div>
+
+                <!-- Métodos -->
+                <div class="download-item">
+                    <div class="download-item-icon">🔬</div>
+                    <h3>Métodos de Análisis Certificados</h3>
+                    <p><strong>Métodos ISO/ASTM</strong> — Titulación, gravimetría, espectrofotometría, cromatografía, microbiología. Procedimientos paso a paso.</p>
+                    <div class="download-buttons">
+                        <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">⬇ Descargar PDF</a>
+                    </div>
+                </div>
+
+                <!-- Procedimientos -->
+                <div class="download-item">
+                    <div class="download-item-icon">📕</div>
+                    <h3>Procedimientos Técnicos</h3>
+                    <p><strong>Instrumentación</strong> — E+H Promag, Siemens SITRANS, KROHNE, calibración, verificación de señal, puesta en marcha.</p>
+                    <div class="download-buttons">
+                        <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">⬇ Descargar PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RELEASES TABLE -->
+        <div class="download-section">
+            <h2 class="section-title">📦 GitHub Releases</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Historial de versiones y descargas. Nuevas versiones cada domingo.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Release</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Enlace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>v2.0-content</strong></td>
+                            <td>Herramientas profesionales completas. PDFs, guías y recursos.</td>
+                            <td>Actualmente disponible</td>
+                            <td><a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/tag/v2.0-content" target="_blank" class="btn btn-secondary" style="width: auto;">Ver →</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>courses</strong></td>
+                            <td>Cursos y materiales de formación. Instrumentación, OI, EDAR, química.</td>
+                            <td>Hace 2 semanas</td>
+                            <td><a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/tag/courses" target="_blank" class="btn btn-secondary" style="width: auto;">Ver →</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>datasheets</strong></td>
+                            <td>Fichas técnicas de instrumentos. E+H, Siemens, KROHNE, Yokogawa, Aqualabo.</td>
+                            <td>Hace 2 semanas</td>
+                            <td><a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/tag/datasheets" target="_blank" class="btn btn-secondary" style="width: auto;">Ver →</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>guides</strong></td>
+                            <td>Guías y procedimientos técnicos. Calibración, verificación, mantenimiento.</td>
+                            <td>Hace 2 semanas</td>
+                            <td><a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/tag/guides" target="_blank" class="btn btn-secondary" style="width: auto;">Ver →</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>v1.0</strong></td>
+                            <td>Primera colección de recursos técnicos. Fichas, guías, manuales, tablas.</td>
+                            <td>Hace 2 semanas</td>
+                            <td><a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases/tag/v1.0" target="_blank" class="btn btn-secondary" style="width: auto;">Ver →</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h4>📅 Actualizaciones Regulares</h4>
+                <p><strong>Nuevas descargas cada domingo</strong> — Guías técnicas, procedimientos, análisis de métodos, herramientas mejoradas y contenido profesional certificado.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 watertools.es — Centro de descargas profesionales</p>
+        <p style="margin-top: 12px;">Todas las herramientas son de libre acceso para profesionales del agua</p>
+    </footer>
+
+</body>
+</html>

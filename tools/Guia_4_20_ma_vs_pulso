@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía Profesional: Medición de Señales 4-20 mA vs Pulso | WaterTools</title>
+  <meta name="description" content="Guía técnica profesional sobre medición de señales 4-20 mA y pulso con multímetro. Incluye corriente vs voltaje, lazos de control, medición en serie y paralelo, troubleshooting y diagramas eléctricos claros." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07131f;
+      --bg-2: #0b1c2c;
+      --panel: rgba(255,255,255,0.05);
+      --panel-2: rgba(255,255,255,0.04);
+      --panel-3: #0a2033;
+      --border: rgba(255,255,255,0.1);
+      --text: #eef6ff;
+      --muted: #bfd1e5;
+      --primary: #4fd1c5;
+      --primary-2: #1fb7a8;
+      --accent: #7dd3fc;
+      --warning: #fbbf24;
+      --danger: #fb7185;
+      --success: #34d399;
+      --max: 1220px;
+      --radius: 22px;
+      --shadow: 0 18px 50px rgba(0,0,0,0.28);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(79,209,197,0.12), transparent 30%),
+        radial-gradient(circle at top left, rgba(125,211,252,0.08), transparent 30%),
+        linear-gradient(180deg, var(--bg) 0%, #0a1827 100%);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, svg { max-width: 100%; display: block; }
+    code {
+      background: rgba(0,0,0,0.28);
+      color: #c7fff7;
+      padding: 0.15rem 0.45rem;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(7, 19, 31, 0.9);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+    }
+
+    .topbar-inner {
+      min-height: 74px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 26px rgba(79,209,197,0.18);
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy h1 {
+      font-size: 1.08rem;
+      letter-spacing: -0.03em;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .brand-copy p {
+      margin: 0.1rem 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 52ch;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.82rem 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      color: #042126;
+      box-shadow: 0 12px 24px rgba(79,209,197,0.2);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 2.6rem 0 1.7rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.48rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(79,209,197,0.18);
+      background: rgba(79,209,197,0.08);
+      color: #d8fffa;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 1.7rem;
+      align-items: start;
+    }
+
+    .hero-main h2 {
+      font-size: clamp(2rem, 3.8vw, 4rem);
+      line-height: 1.03;
+      letter-spacing: -0.05em;
+      margin: 0 0 1rem;
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+
+    .hero-main p {
+      color: var(--muted);
+      max-width: 66ch;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+
+    .hero-micro {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .hero-micro span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.45rem 0.72rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: #d9edf8;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .hero-panel {
+      padding: 1rem;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      background: rgba(7, 19, 31, 0.72);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-card:last-child { margin-bottom: 0; }
+    .hero-card h3 { margin: 0 0 0.35rem; font-size: 1rem; }
+    .hero-card p { margin: 0; color: var(--muted); }
+
+    main {
+      padding-bottom: 4rem;
+    }
+
+    section {
+      margin-bottom: 2.8rem;
+    }
+
+    .section-card,
+    .executive-summary,
+    .quick-sequence,
+    .card,
+    .diagram-container,
+    .index-box {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .section-card,
+    .executive-summary,
+    .quick-sequence,
+    .card,
+    .index-box {
+      padding: 1.5rem;
+    }
+
+    .section-heading {
+      margin-bottom: 1.2rem;
+    }
+
+    .section-heading h2,
+    section > h2 {
+      font-size: clamp(1.55rem, 2.5vw, 2.25rem);
+      letter-spacing: -0.04em;
+      margin-bottom: 0.7rem;
+      color: var(--primary);
+    }
+
+    h3 {
+      font-size: 1.28rem;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      margin: 1.2rem 0 0.75rem;
+    }
+
+    h4 {
+      font-size: 1.02rem;
+      color: #cffff8;
+      margin: 0.8rem 0 0.45rem;
+    }
+
+    p { margin-bottom: 0.9rem; }
+    strong { color: #d8fffa; }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .index-box h3 { margin-top: 0; }
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .toc a {
+      display: block;
+      padding: 0.9rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .executive-summary {
+      border: 1px solid rgba(79,209,197,0.22);
+      background: linear-gradient(135deg, rgba(79,209,197,0.11), rgba(125,211,252,0.07));
+    }
+
+    .summary-grid,
+    .comparison-grid,
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .summary-grid,
+    .comparison-grid,
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .summary-card,
+    .comparison-box {
+      padding: 1.25rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8, 23, 37, 0.6);
+    }
+
+    .comparison-box.analog { border-color: rgba(79,209,197,0.22); }
+    .comparison-box.pulse { border-color: rgba(251,191,36,0.22); }
+
+    .box-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .icon-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(79,209,197,0.12);
+      border: 1px solid rgba(79,209,197,0.2);
+      font-weight: 900;
+      color: #d9fffb;
+      flex-shrink: 0;
+    }
+
+    .pulse .icon-badge {
+      background: rgba(251,191,36,0.12);
+      border-color: rgba(251,191,36,0.22);
+    }
+
+    .features-list,
+    .check-list {
+      padding-left: 1.1rem;
+      margin: 0.9rem 0 0;
+      color: var(--muted);
+    }
+
+    .features-list li,
+    .check-list li,
+    li {
+      margin: 0.45rem 0;
+    }
+
+    .quick-sequence {
+      border-left: 4px solid var(--success);
+      background: linear-gradient(135deg, rgba(52,211,153,0.09), rgba(79,209,197,0.06));
+    }
+
+    .sequence-steps {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--success), var(--primary));
+      color: #042126;
+      font-weight: 900;
+    }
+
+    .step-content h4 { margin: 0 0 0.3rem; color: var(--success); }
+    .step-content p { margin: 0; }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1rem 0 1.2rem;
+    }
+
+    .concept-box {
+      border-radius: 18px;
+      padding: 1.2rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .concept-box.current { border-color: rgba(79,209,197,0.24); }
+    .concept-box.voltage { border-color: rgba(125,211,252,0.24); }
+
+    .diagram-container {
+      padding: 1rem;
+      overflow-x: auto;
+    }
+
+    .diagram-caption {
+      margin-top: 0.8rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .reference-table { overflow-x: auto; margin-top: 1rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #042126;
+      text-align: left;
+      padding: 0.95rem 0.9rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    td {
+      padding: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      vertical-align: top;
+      font-size: 0.95rem;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .alert {
+      border-left: 4px solid;
+      border-radius: 16px;
+      padding: 1.2rem 1.25rem;
+      margin: 1.25rem 0;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .alert.info { border-left-color: var(--accent); }
+    .alert.success { border-left-color: var(--success); }
+    .alert.warning { border-left-color: var(--warning); }
+    .alert.danger { border-left-color: var(--danger); }
+
+    .alert h4 { margin-top: 0; }
+
+    .card h3 { margin-top: 0; }
+
+    .procedure-block {
+      padding: 1.25rem;
+      border-radius: 18px;
+      background: rgba(8, 23, 37, 0.55);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin: 1rem 0;
+    }
+
+    .procedure-block h4 {
+      color: #d7fff8;
+      margin-top: 0;
+      margin-bottom: 0.55rem;
+    }
+
+    .procedure-block ol {
+      margin-left: 1.2rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .badge-row span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.42rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #d7edf9;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .sticky-anchor {
+      scroll-margin-top: 88px;
+    }
+
+    .footer-card {
+      padding: 1.8rem;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding: 2rem 0 3rem;
+      color: rgba(238,246,255,0.7);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .back-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform: translateY(6px);
+    }
+
+    .back-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .summary-grid,
+      .comparison-grid,
+      .concept-grid,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main h2 {
+        max-width: none;
+        font-size: clamp(2rem, 8vw, 3.2rem);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .topbar-actions {
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .brand-copy p {
+        white-space: normal;
+      }
+
+      .container {
+        width: min(calc(100% - 1rem), var(--max));
+      }
+
+      .hero {
+        padding-top: 1.7rem;
+      }
+
+      .section-card,
+      .executive-summary,
+      .quick-sequence,
+      .card,
+      .index-box {
+        padding: 1.1rem;
+      }
+
+      table {
+        min-width: 620px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .topbar,
+      .back-top,
+      .hidden-print {
+        display: none !important;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .section-card,
+      .executive-summary,
+      .quick-sequence,
+      .card,
+      .diagram-container,
+      .index-box {
+        box-shadow: none;
+        background: white;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+      }
+
+      table { min-width: auto; }
+      th { color: black; background: #ddd; }
+      td { color: black; }
+      h2, h3, h4, p, li { color: black !important; }
+      a { color: black; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar hidden-print">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top">
+        <svg class="brand-icon" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="wtBrand" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#8cf8ef" />
+              <stop offset="55%" stop-color="#38d7ca" />
+              <stop offset="100%" stop-color="#117a95" />
+            </linearGradient>
+          </defs>
+          <rect width="64" height="64" rx="18" fill="url(#wtBrand)" />
+          <path d="M15 22h7l5 18 5-13 5 13 5-18h7l-8 26h-7l-5-12-5 12h-7z" fill="#06202b" />
+        </svg>
+        <div class="brand-copy">
+          <h1>WaterTools</h1>
+          <p>Guía profesional de medición de señales 4-20 mA y pulso</p>
+        </div>
+      </a>
+      <div class="topbar-actions">
+        <a class="btn btn-secondary" href="https://watertools.es" target="_blank" rel="noreferrer">Ver WaterTools.es</a>
+        <button class="btn btn-primary btn-download-pdf" onclick="descargarPDF()">Descargar PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-main">
+          <span class="eyebrow">Instrumentación · Lazos de control · Troubleshooting</span>
+          <h2>Guía profesional para medir señales 4-20 mA y pulso con criterio técnico</h2>
+          <p>Esta versión está reforzada para aclarar la confusión más común en campo: qué es corriente, qué es voltaje, por qué medir un lazo en serie o en paralelo cambia el resultado y cómo evaluar correctamente un lazo de control antes de concluir que el transmisor “está malo”.</p>
+          <div class="hero-micro">
+            <span>Corriente vs voltaje</span>
+            <span>Serie vs paralelo</span>
+            <span>Lazos 2, 3 y 4 hilos</span>
+            <span>Diagramas claros</span>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="hero-card">
+            <h3>Qué resuelve esta guía</h3>
+            <p>Evita errores típicos al medir un lazo 4-20 mA con multímetro, aclara cuándo medir corriente y cuándo medir voltaje, y te ayuda a diferenciar una señal analógica de una de pulso.</p>
+          </div>
+          <div class="hero-card">
+            <h3>Para quién está pensada</h3>
+            <p>Técnicos de instrumentación, operadores de planta, electricistas industriales, personal de mantenimiento y profesionales de EDAR, ETAP, OI, utilities y procesos.</p>
+          </div>
+          <div class="hero-card">
+            <h3>Cómo usarla</h3>
+            <p>Empieza por el índice, revisa los conceptos de corriente y voltaje, luego ve a la parte de lazos y después al procedimiento práctico y troubleshooting.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="index-box hidden-print sticky-anchor" id="indice">
+        <h3>Índice rápido</h3>
+        <p class="lead">Usa este índice para navegar directamente a la parte que necesitas en campo o en oficina técnica.</p>
+        <div class="toc">
+          <a href="#resumen">1. Resumen ejecutivo</a>
+          <a href="#fundamentos">2. Corriente, voltaje y conceptos fundamentales</a>
+          <a href="#serie-paralelo">3. Medición en serie vs paralelo</a>
+          <a href="#lazos">4. Evaluación de lazos de control</a>
+          <a href="#diagramas">5. Diagramas eléctricos claros</a>
+          <a href="#multimetros">6. Tipos de multímetros</a>
+          <a href="#procedimiento">7. Procedimiento paso a paso</a>
+          <a href="#resumen-tabla">8. Tabla resumen</a>
+          <a href="#troubleshooting">9. Troubleshooting</a>
+          <a href="#casos">10. Casos reales</a>
+        </div>
+      </section>
+
+      <section class="executive-summary sticky-anchor" id="resumen">
+        <h2>1. Resumen ejecutivo</h2>
+        <p>En instrumentación industrial, medir mal un lazo es una de las causas más comunes de diagnósticos erróneos. Muchos técnicos confunden <strong>corriente</strong> con <strong>voltaje</strong>, conectan el multímetro en modo incorrecto o intentan medir una señal 4-20 mA en paralelo como si fuera un voltaje directo. Esta guía organiza los criterios correctos para evitar esos errores.</p>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4>Señal 4-20 mA</h4>
+            <p>Es una señal analógica de <strong>corriente</strong>. Su valor no se interpreta por tensión directa, sino por cuánta corriente circula en el lazo.</p>
+          </div>
+          <div class="summary-card">
+            <h4>Señal de pulso</h4>
+            <p>Es una señal digital o de frecuencia. Normalmente se identifica por cambios rápidos de estado, frecuencia o conteo de impulsos.</p>
+          </div>
+          <div class="summary-card">
+            <h4>Error de campo frecuente</h4>
+            <p>Poner el multímetro en voltios y concluir que “no hay señal” cuando en realidad el lazo sí tiene corriente, pero no se está midiendo donde corresponde.</p>
+          </div>
+          <div class="summary-card">
+            <h4>Criterio correcto</h4>
+            <p>Antes de medir: define el tipo de señal, identifica el lazo, revisa alimentación, verifica si el circuito admite abrirse y decide si medirás en serie o en paralelo.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="fundamentos">
+        <div class="section-heading">
+          <h2>2. Corriente, voltaje y conceptos fundamentales</h2>
+          <p class="lead">Esta es la base que más confusión genera en campo. Si esto queda claro, el resto del diagnóstico mejora mucho.</p>
+        </div>
+
+        <div class="concept-grid">
+          <article class="concept-box current">
+            <h3>¿Qué es la corriente?</h3>
+            <p><strong>Corriente</strong> es el flujo de carga eléctrica que circula por un circuito. Se mide en amperios, miliamperios o microamperios.</p>
+            <ul class="check-list">
+              <li>En 4-20 mA y 0-20 mA, la variable de proceso se representa como <strong>corriente circulante</strong>.</li>
+              <li>Para medirla de forma directa, el multímetro debe ponerse en <code>DC mA</code>.</li>
+              <li>La corriente se mide correctamente cuando el multímetro entra en el camino del lazo.</li>
+            </ul>
+          </article>
+
+          <article class="concept-box voltage">
+            <h3>¿Qué es el voltaje?</h3>
+            <p><strong>Voltaje</strong> es diferencia de potencial entre dos puntos. Se mide en voltios. No es lo mismo que corriente.</p>
+            <ul class="check-list">
+              <li>El voltaje se mide entre dos puntos sin romper el circuito.</li>
+              <li>En un lazo 4-20 mA o 0-20 mA, puedes medir voltaje sobre una resistencia conocida y calcular corriente con Ley de Ohm.</li>
+              <li>Un transmisor puede tener alimentación correcta en voltios y, aun así, entregar mal la corriente de señal.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="alert info">
+          <h4>Idea clave para técnicos</h4>
+          <p><strong>Voltaje no es igual a señal de corriente.</strong> Las señales 4-20 mA y 0-20 mA son señales de <strong>corriente</strong>. El voltaje se usa como apoyo para verificar alimentación o para inferir corriente cuando se mide una caída de tensión sobre una resistencia de referencia.</p>
+        </div>
+
+        <h3>2.1 Diferencia entre 4-20 mA y 0-20 mA</h3>
+        <div class="comparison-grid">
+          <article class="comparison-box analog">
+            <div class="box-header">
+              <div class="icon-badge">4</div>
+              <h3>Señal 4-20 mA</h3>
+            </div>
+            <p>Es el estándar más usado en instrumentación industrial moderna. El valor mínimo del proceso no se representa con 0 mA, sino con <strong>4 mA</strong>.</p>
+            <ul class="features-list">
+              <li><span><strong>4 mA</strong> representa el cero o mínimo del rango.</span></li>
+              <li><span><strong>20 mA</strong> representa el máximo del rango.</span></li>
+              <li><span>Permite detectar fallo de lazo más fácilmente: <strong>0 mA</strong> suele indicar corte, falta de alimentación o avería.</span></li>
+              <li><span>Muy adecuada para transmisores de proceso en campo.</span></li>
+            </ul>
+            <div class="badge-row">
+              <span>Ventaja: detecta fallo con más claridad</span>
+              <span>Ventaja: estándar industrial dominante</span>
+            </div>
+          </article>
+
+          <article class="comparison-box pulse">
+            <div class="box-header">
+              <div class="icon-badge">0</div>
+              <h3>Señal 0-20 mA</h3>
+            </div>
+            <p>También es una señal analógica de corriente, pero aquí el mínimo del proceso se representa con <strong>0 mA</strong>.</p>
+            <ul class="features-list">
+              <li><span><strong>0 mA</strong> representa el mínimo del rango.</span></li>
+              <li><span><strong>20 mA</strong> representa el máximo del rango.</span></li>
+              <li><span>Es más simple de interpretar matemáticamente en algunos sistemas antiguos o aplicaciones específicas.</span></li>
+              <li><span>Puede dificultar el diagnóstico porque <strong>0 mA</strong> puede ser mínimo real o fallo del lazo.</span></li>
+            </ul>
+            <div class="badge-row">
+              <span>Ventaja: escala directa desde cero</span>
+              <span>Desventaja: cero real y fallo se parecen</span>
+            </div>
+          </article>
+        </div>
+
+        <h3>2.2 Ventajas y desventajas operativas</h3>
+        <div class="reference-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Aspecto</th>
+                <th>4-20 mA</th>
+                <th>0-20 mA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Detección de fallo</strong></td>
+                <td>Mejor. Un valor cercano a 0 mA suele indicar problema real de lazo.</td>
+                <td>Más débil. 0 mA puede ser valor válido o fallo.</td>
+              </tr>
+              <tr>
+                <td><strong>Uso en transmisores de campo</strong></td>
+                <td>Muy extendido.</td>
+                <td>Menos frecuente en instalaciones modernas.</td>
+              </tr>
+              <tr>
+                <td><strong>Diagnóstico</strong></td>
+                <td>Más robusto para mantenimiento.</td>
+                <td>Puede inducir a error si no se conoce la filosofía de control.</td>
+              </tr>
+              <tr>
+                <td><strong>Consumo base</strong></td>
+                <td>Tiene un nivel vivo de 4 mA.</td>
+                <td>Arranca desde 0 mA.</td>
+              </tr>
+              <tr>
+                <td><strong>Aplicación histórica</strong></td>
+                <td>Estándar predominante en procesos.</td>
+                <td>Presente en algunas arquitecturas antiguas o específicas.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="alert warning">
+          <h4>Interpretación crítica</h4>
+          <p>En un sistema <strong>4-20 mA</strong>, leer <code>0.0 mA</code> normalmente es mala señal. En un sistema <strong>0-20 mA</strong>, leer <code>0.0 mA</code> podría significar que la variable está realmente en cero. Por eso, antes de diagnosticar, el técnico debe saber qué estándar usa el instrumento.</p>
+        </div>
+
+        <h3>2.3 Qué debes preguntarte antes de medir</h3>
+        <ul class="check-list">
+          <li>¿Estoy frente a una señal 4-20 mA, 0-20 mA, de voltaje o de pulso?</li>
+          <li>¿El instrumento está alimentado correctamente?</li>
+          <li>¿El lazo es de 2 hilos, 3 hilos o 4 hilos?</li>
+          <li>¿Puedo abrir el circuito para medir en serie o debo medir sin interrumpirlo?</li>
+          <li>¿Mi multímetro tiene el modo y el rango adecuados?</li>
+        </ul>
+      </section>
+
+      <section class="section-card sticky-anchor" id="serie-paralelo">
+        <div class="section-heading">
+          <h2>3. Medición en serie vs en paralelo</h2>
+          <p class="lead">Entender esta diferencia es esencial. Aquí se originan muchos errores de diagnóstico.</p>
+        </div>
+
+        <div class="comparison-grid">
+          <article class="comparison-box analog">
+            <div class="box-header">
+              <div class="icon-badge">S</div>
+              <h3>Medición en serie</h3>
+            </div>
+            <p>El multímetro se inserta en el camino por donde circula la corriente. Para hacerlo, normalmente debes abrir el circuito.</p>
+            <ul class="features-list">
+              <li><span>Mide corriente de forma directa.</span></li>
+              <li><span>Es el método más claro para verificar un lazo 4-20 mA.</span></li>
+              <li><span>Requiere cuidado porque interrumpe el circuito.</span></li>
+              <li><span>Un error de conexión puede dejar el lazo sin señal temporalmente.</span></li>
+            </ul>
+            <div class="badge-row">
+              <span>Ventaja: lectura directa</span>
+              <span>Desventaja: debes abrir el lazo</span>
+            </div>
+          </article>
+
+          <article class="comparison-box pulse">
+            <div class="box-header">
+              <div class="icon-badge">P</div>
+              <h3>Medición en paralelo</h3>
+            </div>
+            <p>El multímetro se conecta entre dos puntos sin abrir el circuito. Normalmente se usa para voltaje o para medir caída de tensión sobre una resistencia conocida.</p>
+            <ul class="features-list">
+              <li><span>No interrumpe el proceso.</span></li>
+              <li><span>Ideal para verificar alimentación de transmisor.</span></li>
+              <li><span>Útil para calcular corriente si conoces la resistencia.</span></li>
+              <li><span>No mide la corriente del lazo de forma directa.</span></li>
+            </ul>
+            <div class="badge-row">
+              <span>Ventaja: no abres el circuito</span>
+              <span>Desventaja: requiere interpretar</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="quick-sequence">
+          <h3>Cuándo conviene cada método</h3>
+          <div class="sequence-steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Usa serie cuando necesites confirmar el valor exacto de 4-20 mA</h4>
+                <p>Es el método más directo para saber si un transmisor está entregando, por ejemplo, 4 mA, 12 mA o 20 mA reales.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Usa paralelo cuando no quieras abrir el lazo</h4>
+                <p>Por ejemplo, para verificar tensión de alimentación o caída de tensión sobre una resistencia shunt o de 250 Ω.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>No confundas paralelo con “medir señal 4-20 mA”</h4>
+                <p>En paralelo no estás midiendo corriente directa, salvo que el instrumento o accesorio esté diseñado específicamente para ello.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert warning">
+          <h4>Error típico de campo</h4>
+          <p>Conectar el multímetro en modo <code>DC V</code> entre los bornes de salida de un transmisor y pensar que ya se midió la señal 4-20 mA. En realidad, eso solo da una diferencia de potencial. La corriente real del lazo se comprueba en serie o por caída de tensión sobre una resistencia conocida.</p>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="lazos">
+        <div class="section-heading">
+          <h2>4. Cómo evaluar correctamente un lazo de control</h2>
+          <p class="lead">Antes de culpar al transmisor, evalúa el lazo completo: alimentación, continuidad, carga, señal y receptor.</p>
+        </div>
+
+        <h3>4.1 Secuencia de evaluación recomendada</h3>
+        <div class="quick-sequence">
+          <div class="sequence-steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Identifica el tipo de lazo</h4>
+                <p>Determina si es 2 hilos, 3 hilos o 4 hilos. También identifica si la señal es 4-20 mA, pulso o voltaje.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Verifica alimentación</h4>
+                <p>Mide el voltaje de alimentación del instrumento. Un transmisor sin tensión suficiente no entregará una señal confiable.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Comprueba continuidad y estado de cableado</h4>
+                <p>Busca cortes, bornes flojos, inversión de polaridad, apantallamiento mal aterrizado y corrosión.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Mide la señal con el método correcto</h4>
+                <p>En serie si quieres corriente directa. En paralelo si quieres tensión o caída de tensión en resistencia conocida.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h4>Evalúa el receptor</h4>
+                <p>Si el transmisor entrega la señal correcta, revisa PLC, tarjeta AI/DI, contador, barrera o aislador antes de concluir falla del transmisor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3>4.2 Diferencias entre lazos típicos</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Lazo 2 hilos</h3>
+            <p>La alimentación y la señal comparten el mismo circuito. Muy común en transmisores de proceso 4-20 mA.</p>
+            <ul class="check-list">
+              <li>Simple y económico</li>
+              <li>Muy común en presión, nivel, pH, caudal</li>
+              <li>Debes revisar la carga total del lazo</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Lazo 3 hilos</h3>
+            <p>Tiene alimentación y una referencia común; la salida de señal suele estar diferenciada, pero no totalmente aislada.</p>
+            <ul class="check-list">
+              <li>Frecuente en sensores electrónicos</li>
+              <li>Puede generar confusión de referencias</li>
+              <li>Importa mucho identificar el común</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Lazo 4 hilos</h3>
+            <p>La alimentación y la señal van separadas. Normalmente ofrece mejor inmunidad y más claridad en diagnóstico.</p>
+            <ul class="check-list">
+              <li>Mejor separación poder/señal</li>
+              <li>Más fácil aislar fallos por bloques</li>
+              <li>Más cableado, más bornes, más control</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="alert info">
+          <h4>Regla práctica</h4>
+          <p>Cuando evalúes un lazo de control, no midas solo el transmisor. Evalúa siempre el sistema completo: <strong>fuente → transmisor → cable → resistencia/carga → tarjeta receptora</strong>.</p>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="diagramas">
+        <div class="section-heading">
+          <h2>5. Diagramas eléctricos bien definidos</h2>
+          <p class="lead">Estos diagramas están pensados para explicar visualmente dónde se mide corriente y dónde se mide voltaje.</p>
+        </div>
+
+        <h3>5.1 Medición directa de 4-20 mA en serie</h3>
+        <div class="diagram-container">
+          <svg viewBox="0 0 980 320" aria-label="Diagrama de medición en serie para lazo 4-20 mA">
+            <defs>
+              <linearGradient id="lineA" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#4fd1c5" />
+                <stop offset="100%" stop-color="#7dd3fc" />
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="944" height="284" rx="20" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" />
+            <rect x="70" y="110" width="150" height="90" rx="18" fill="#0b2436" stroke="#4fd1c5" />
+            <text x="145" y="145" text-anchor="middle" fill="#eef6ff" font-size="22" font-weight="700">Fuente 24 VDC</text>
+            <text x="145" y="172" text-anchor="middle" fill="#bfd1e5" font-size="15">Alimentación del lazo</text>
+
+            <rect x="370" y="95" width="180" height="120" rx="18" fill="#0b2436" stroke="#7dd3fc" />
+            <text x="460" y="133" text-anchor="middle" fill="#eef6ff" font-size="23" font-weight="700">Transmisor</text>
+            <text x="460" y="160" text-anchor="middle" fill="#bfd1e5" font-size="15">Salida 4-20 mA</text>
+            <text x="460" y="182" text-anchor="middle" fill="#bfd1e5" font-size="15">Presión / Caudal / Nivel</text>
+
+            <circle cx="655" cy="155" r="38" fill="#10283d" stroke="#fbbf24" stroke-width="3" />
+            <text x="655" y="148" text-anchor="middle" fill="#eef6ff" font-size="20" font-weight="800">mA</text>
+            <text x="655" y="171" text-anchor="middle" fill="#bfd1e5" font-size="13">Multímetro</text>
+
+            <rect x="780" y="95" width="130" height="120" rx="18" fill="#0b2436" stroke="#34d399" />
+            <text x="845" y="133" text-anchor="middle" fill="#eef6ff" font-size="22" font-weight="700">PLC / AI</text>
+            <text x="845" y="160" text-anchor="middle" fill="#bfd1e5" font-size="15">Carga / receptor</text>
+
+            <line x1="220" y1="155" x2="370" y2="155" stroke="url(#lineA)" stroke-width="6" />
+            <line x1="550" y1="155" x2="617" y2="155" stroke="url(#lineA)" stroke-width="6" />
+            <line x1="693" y1="155" x2="780" y2="155" stroke="url(#lineA)" stroke-width="6" />
+            <line x1="845" y1="215" x2="845" y2="255" stroke="#4fd1c5" stroke-width="6" />
+            <line x1="845" y1="255" x2="145" y2="255" stroke="#4fd1c5" stroke-width="6" />
+            <line x1="145" y1="255" x2="145" y2="200" stroke="#4fd1c5" stroke-width="6" />
+
+            <text x="650" y="92" text-anchor="middle" fill="#fbbf24" font-size="16" font-weight="700">Se inserta en serie</text>
+            <text x="490" y="280" text-anchor="middle" fill="#bfd1e5" font-size="16">La corriente real del lazo pasa a través del multímetro</text>
+          </svg>
+        </div>
+        <p class="diagram-caption">En este esquema, el multímetro se coloca en serie. Este es el método directo para verificar si el transmisor realmente entrega 4-20 mA.</p>
+
+        <h3>5.2 Medición en paralelo sobre resistencia de 250 Ω</h3>
+        <div class="diagram-container">
+          <svg viewBox="0 0 980 340" aria-label="Diagrama de medición en paralelo sobre resistencia de 250 ohmios">
+            <rect x="18" y="18" width="944" height="304" rx="20" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" />
+            <rect x="70" y="125" width="150" height="90" rx="18" fill="#0b2436" stroke="#4fd1c5" />
+            <text x="145" y="160" text-anchor="middle" fill="#eef6ff" font-size="22" font-weight="700">Fuente 24 VDC</text>
+            <text x="145" y="187" text-anchor="middle" fill="#bfd1e5" font-size="15">Alimentación del lazo</text>
+
+            <rect x="340" y="110" width="190" height="120" rx="18" fill="#0b2436" stroke="#7dd3fc" />
+            <text x="435" y="148" text-anchor="middle" fill="#eef6ff" font-size="23" font-weight="700">Transmisor</text>
+            <text x="435" y="175" text-anchor="middle" fill="#bfd1e5" font-size="15">Salida 4-20 mA</text>
+            <text x="435" y="197" text-anchor="middle" fill="#bfd1e5" font-size="15">No se abre el lazo</text>
+
+            <rect x="650" y="138" width="95" height="32" rx="8" fill="#10283d" stroke="#fbbf24" stroke-width="3" />
+            <text x="697" y="160" text-anchor="middle" fill="#eef6ff" font-size="18" font-weight="700">250 Ω</text>
+
+            <circle cx="820" cy="154" r="38" fill="#10283d" stroke="#7dd3fc" stroke-width="3" />
+            <text x="820" y="148" text-anchor="middle" fill="#eef6ff" font-size="20" font-weight="800">V</text>
+            <text x="820" y="170" text-anchor="middle" fill="#bfd1e5" font-size="13">Multímetro</text>
+
+            <line x1="220" y1="170" x2="340" y2="170" stroke="#4fd1c5" stroke-width="6" />
+            <line x1="530" y1="170" x2="650" y2="170" stroke="#4fd1c5" stroke-width="6" />
+            <line x1="745" y1="170" x2="900" y2="170" stroke="#4fd1c5" stroke-width="6" />
+            <line x1="900" y1="170" x2="900" y2="260" stroke="#4fd1c5" stroke-width="6" />
+            <line x1="900" y1="260" x2="145" y2="260" stroke="#4fd1c5" stroke-width="6" />
+            <line x1="145" y1="260" x2="145" y2="215" stroke="#4fd1c5" stroke-width="6" />
+
+            <line x1="782" y1="154" x2="745" y2="154" stroke="#7dd3fc" stroke-width="4" />
+            <line x1="858" y1="154" x2="650" y2="154" stroke="#7dd3fc" stroke-width="4" />
+
+            <text x="820" y="105" text-anchor="middle" fill="#7dd3fc" font-size="16" font-weight="700">Mide caída de tensión</text>
+            <text x="490" y="295" text-anchor="middle" fill="#bfd1e5" font-size="16">Luego calculas corriente con I = V / R</text>
+          </svg>
+        </div>
+        <p class="diagram-caption">Aquí no mides la corriente directamente. Mides voltaje sobre una resistencia conocida y luego calculas la corriente. Ejemplo: si mides 5 V sobre 250 Ω, entonces I = 5 / 250 = 0.02 A = 20 mA.</p>
+
+        <div class="alert success">
+          <h4>Lectura rápida de 250 Ω</h4>
+          <ul>
+            <li><code>1.0 V</code> ≈ <strong>4 mA</strong></li>
+            <li><code>3.0 V</code> ≈ <strong>12 mA</strong></li>
+            <li><code>5.0 V</code> ≈ <strong>20 mA</strong></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="multimetros">
+        <div class="section-heading">
+          <h2>6. Tipos de multímetros y qué revisar antes de medir</h2>
+          <p class="lead">No basta con tener “un multímetro”. Para señales de proceso, hay funciones y rangos que importan mucho.</p>
+        </div>
+
+        <div class="comparison-grid">
+          <article class="card">
+            <h3>Multímetro digital</h3>
+            <ul class="check-list">
+              <li>Lectura clara y precisa</li>
+              <li>Rango de <code>20 mA</code> muy recomendable</li>
+              <li>Ideal para lazos de corriente</li>
+              <li>Mejor si incluye frecuencia, HOLD y MIN/MAX</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Multímetro analógico</h3>
+            <ul class="check-list">
+              <li>Puede mostrar tendencias rápidas visuales</li>
+              <li>Menos preciso para 4-20 mA</li>
+              <li>Más útil para comprobación básica</li>
+              <li>No es la mejor opción para ajuste fino</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="alert info">
+          <h4>Checklist mínimo del multímetro</h4>
+          <ul>
+            <li>Modo <code>DC mA</code> con rango <code>20 mA</code></li>
+            <li>Modo <code>DC V</code> confiable para alimentación y caída de tensión</li>
+            <li>Modo <code>Hz</code> o frecuencia para señales de pulso</li>
+            <li>Fusible interno y protección básica</li>
+            <li>Puntas en buen estado y conectadas al borne correcto</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="procedimiento">
+        <div class="section-heading">
+          <h2>7. Procedimiento detallado paso a paso</h2>
+          <p class="lead">Secuencia recomendada para no caer en errores típicos.</p>
+        </div>
+
+        <div class="procedure-block">
+          <h4>Paso 1. Identifica la señal y el tipo de instrumento</h4>
+          <ol>
+            <li>Consulta etiqueta, plano o datasheet.</li>
+            <li>Verifica si la salida es 4-20 mA, pulso, voltaje o comunicación digital.</li>
+            <li>Confirma si el instrumento es de 2, 3 o 4 hilos.</li>
+          </ol>
+        </div>
+
+        <div class="procedure-block">
+          <h4>Paso 2. Verifica alimentación antes de tocar la señal</h4>
+          <ol>
+            <li>Pon el multímetro en <code>DC V</code>.</li>
+            <li>Mide entre positivo y retorno de alimentación.</li>
+            <li>Confirma que el transmisor tiene la tensión esperada.</li>
+          </ol>
+        </div>
+
+        <div class="procedure-block">
+          <h4>Paso 3. Decide si medirás en serie o en paralelo</h4>
+          <ol>
+            <li>Si necesitas corriente real del lazo, mide en serie.</li>
+            <li>Si no puedes abrir el lazo, mide en paralelo sobre una resistencia conocida.</li>
+            <li>Si el instrumento entrega pulso, cambia a frecuencia o al modo adecuado.</li>
+          </ol>
+        </div>
+
+        <div class="procedure-block">
+          <h4>Paso 4. Mide y luego interpreta</h4>
+          <ol>
+            <li>No basta con leer un número.</li>
+            <li>Relaciona la lectura con el rango de proceso.</li>
+            <li>Comprueba si el receptor ve el mismo valor que estás midiendo.</li>
+          </ol>
+        </div>
+
+        <div class="procedure-block">
+          <h4>Paso 5. Documenta</h4>
+          <ol>
+            <li>Anota ubicación, instrumento, valor medido, modo de multímetro y condiciones de proceso.</li>
+            <li>Guarda foto si hay hallazgo importante.</li>
+            <li>Evita conclusiones vagas como “no sirve” sin datos.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="resumen-tabla">
+        <div class="section-heading">
+          <h2>8. Tabla resumen rápida</h2>
+          <p class="lead">Úsala como referencia operativa de campo.</p>
+        </div>
+        <div class="reference-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Aspecto</th>
+                <th>4-20 mA</th>
+                <th>Pulso</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tipo de señal</strong></td>
+                <td>Corriente analógica</td>
+                <td>Digital / frecuencia</td>
+              </tr>
+              <tr>
+                <td><strong>Modo típico de multímetro</strong></td>
+                <td><code>DC mA</code> o <code>DC V</code> sobre resistencia</td>
+                <td><code>Hz</code>, frecuencia, o medición de pulso</td>
+              </tr>
+              <tr>
+                <td><strong>Forma correcta de medición</strong></td>
+                <td>Serie o cálculo por caída en resistencia</td>
+                <td>Conteo de pulsos o frecuencia</td>
+              </tr>
+              <tr>
+                <td><strong>Lectura típica</strong></td>
+                <td>Valor estable entre 4 y 20 mA</td>
+                <td>Frecuencia o señal intermitente</td>
+              </tr>
+              <tr>
+                <td><strong>Error común</strong></td>
+                <td>Medir voltaje y creer que ya se midió la corriente</td>
+                <td>Intentar leerla como corriente continua estable</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="troubleshooting">
+        <div class="section-heading">
+          <h2>9. Troubleshooting práctico</h2>
+          <p class="lead">Problemas frecuentes y cómo pensarlos mejor.</p>
+        </div>
+
+        <div class="alert danger">
+          <h4>La pantalla muestra 0.0 mA</h4>
+          <ul>
+            <li>Verifica primero alimentación del transmisor.</li>
+            <li>Revisa si abriste mal el lazo.</li>
+            <li>Confirma bornes y polaridad del multímetro.</li>
+            <li>No descartes fallo del receptor o cableado.</li>
+          </ul>
+        </div>
+
+        <div class="alert warning">
+          <h4>La lectura fluctúa</h4>
+          <ul>
+            <li>Puede haber contacto deficiente, ruido EMI o proceso inestable.</li>
+            <li>Revisa apantallamiento, terminales y estabilidad del proceso.</li>
+            <li>Usa HOLD, MIN/MAX o toma varias lecturas.</li>
+          </ul>
+        </div>
+
+        <div class="alert info">
+          <h4>El transmisor parece bien, pero el PLC no ve señal</h4>
+          <ul>
+            <li>Si mediste corriente real correcta en el lazo, revisa tarjeta AI/DI, configuración, escalado, barrera o contador.</li>
+            <li>El problema puede estar aguas abajo del transmisor.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section-card sticky-anchor" id="casos">
+        <div class="section-heading">
+          <h2>10. Casos reales de campo</h2>
+          <p class="lead">Ejemplos de cómo cambia el diagnóstico cuando se mide con criterio.</p>
+        </div>
+
+        <div class="card">
+          <h3>Caso 1. EDAR con transmisor de presión</h3>
+          <p>El PLC mostraba 0 bar. Se midió en serie y el lazo entregaba 4.1 mA estables. El transmisor estaba correcto. La falla era un borne flojo en la entrada analógica del PLC.</p>
+        </div>
+
+        <div class="card">
+          <h3>Caso 2. Refinería con señal aparentemente inestable</h3>
+          <p>La corriente fluctuaba ligeramente. Se comprobó que el transmisor HART estaba modulando sobre la señal. No era una falla del instrumento, sino comportamiento normal del protocolo.</p>
+        </div>
+
+        <div class="card">
+          <h3>Caso 3. Caudalímetro de pulso en planta RO</h3>
+          <p>En <code>DC mA</code> no aparecía una señal útil. Al cambiar a frecuencia, se detectaron pulsos correctos. El problema real era la configuración del PLC, que esperaba una entrada analógica.</p>
+        </div>
+      </section>
+
+      <section class="footer-card section-card">
+        <h2>Conclusión técnica</h2>
+        <p class="lead">Medir bien no es solo conectar el multímetro. Implica entender qué variable estás midiendo, en qué tipo de lazo, con qué objetivo y qué conclusiones puedes sacar de esa lectura. Si un técnico entiende bien corriente vs voltaje y serie vs paralelo, mejora radicalmente su capacidad de diagnóstico en campo.</p>
+        <div class="badge-row" style="justify-content:center; margin-top:1.2rem;">
+          <span>4-20 mA</span>
+          <span>Pulso</span>
+          <span>Lazos de control</span>
+          <span>Troubleshooting</span>
+          <span>WaterTools</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-meta">
+      <div>
+        <strong>WaterTools</strong> · Guía profesional de medición de señales
+      </div>
+      <div>
+        © 2026 Gustavo Blanco Walter · watertools.es
+      </div>
+    </div>
+  </footer>
+
+  <button class="btn btn-primary back-top hidden-print" id="backTop" type="button">↑ Volver arriba</button>
+
+  <script>
+    function descargarPDF() {
+      const elemento = document.querySelector('main');
+      const opciones = {
+        margin: 10,
+        filename: 'Guia_Profesional_Medicion_Senales_4-20mA_vs_Pulso.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
+        pagebreak: { mode: ['css', 'legacy'] }
+      };
+      html2pdf().set(opciones).from(elemento).save();
+    }
+
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backTop.classList.add('visible');
+      } else {
+        backTop.classList.remove('visible');
+      }
+    });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>

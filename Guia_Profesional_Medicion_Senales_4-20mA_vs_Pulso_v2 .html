@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Profesional: Medición de Señales 4-20 mA vs Pulso | WaterTools</title>
+    <meta name="description" content="Guía técnica completa: cómo medir señales analógicas (4-20 mA) y pulso con multímetro. Incluye lazos de control, serie vs paralelo, tipos de multímetros, troubleshooting.">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #00d4ff;
+            --color-secondary: #ff006e;
+            --color-accent: #8338ec;
+            --color-dark: #0a0e27;
+            --color-darker: #050810;
+            --color-light: #f8f9fa;
+            --color-text: #e0e0e0;
+            --color-border: #1a1f3a;
+            --color-success: #06ffa5;
+            --color-warning: #ffb703;
+            --color-error: #ff006e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--color-darker) 0%, #1a1f3a 100%);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ====== HEADER ====== */
+        header {
+            background: linear-gradient(180deg, rgba(10, 14, 39, 0.95) 0%, rgba(26, 31, 58, 0.8) 100%);
+            border-bottom: 2px solid var(--color-primary);
+            padding: 3rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #a0aec0;
+        }
+
+        .btn-download-pdf {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-darker);
+            padding: 0.8rem 1.6rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .btn-download-pdf:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.4);
+        }
+
+        /* ====== MAIN CONTAINER ====== */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ====== TYPOGRAPHY ====== */
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-primary);
+            border-left: 4px solid var(--color-secondary);
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: var(--color-success);
+        }
+
+        /* ====== RESUMEN EJECUTIVO ====== */
+        .executive-summary {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(131, 56, 236, 0.1) 100%);
+            border: 2px solid var(--color-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .executive-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .summary-card {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.2);
+        }
+
+        .summary-card h4 {
+            color: var(--color-secondary);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+
+        .summary-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* ====== SECUENCIA RAPIDA ====== */
+        .quick-sequence {
+            background: linear-gradient(135deg, rgba(6, 255, 165, 0.08) 0%, rgba(255, 182, 3, 0.08) 100%);
+            border-left: 4px solid var(--color-success);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .sequence-steps {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, var(--color-success), var(--color-primary));
+            color: var(--color-darker);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .step-content h4 {
+            color: var(--color-success);
+            margin-bottom: 0.3rem;
+            margin-top: 0;
+        }
+
+        .step-content p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* ====== COMPARATIVAS ====== */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-box {
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.8) 0%, rgba(26, 31, 58, 0.8) 100%);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comparison-box.analog {
+            border-color: var(--color-primary);
+        }
+
+        .comparison-box.pulse {
+            border-color: var(--color-secondary);
+        }
+
+        .comparison-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .comparison-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-primary), transparent);
+        }
+
+        .comparison-box.pulse::before {
+            background: linear-gradient(90deg, var(--color-secondary), transparent);
+        }
+
+        .box-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .box-header .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .comparison-box.pulse .box-header .icon {
+            background: rgba(255, 0, 110, 0.1);
+        }
+
+        .box-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li::before {
+            content: '→';
+            color: var(--color-primary);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .comparison-box.pulse .features-list li::before {
+            color: var(--color-secondary);
+        }
+
+        .features-list li span {
+            color: var(--color-light);
+        }
+
+        /* ====== INFOGRAFIAS Y DIAGRAMAS ====== */
+        .diagram-section {
+            margin: 3rem 0;
+        }
+
+        .diagram-container {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ====== TABLAS ====== */
+        .reference-table {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            color: var(--color-darker);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        tr:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        /* ====== ALERTAS ====== */
+        .alert {
+            border-left: 4px solid;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(255, 182, 3, 0.08);
+            border-left-color: var(--color-warning);
+        }
+
+        .alert.danger {
+            background: rgba(255, 0, 110, 0.08);
+            border-left-color: var(--color-error);
+        }
+
+        .alert.success {
+            background: rgba(6, 255, 165, 0.08);
+            border-left-color: var(--color-success);
+        }
+
+        .alert.info {
+            background: rgba(0, 212, 255, 0.08);
+            border-left-color: var(--color-primary);
+        }
+
+        .alert h4 {
+            margin-top: 0;
+            color: var(--color-warning);
+        }
+
+        .alert.danger h4 {
+            color: var(--color-error);
+        }
+
+        .alert.success h4 {
+            color: var(--color-success);
+        }
+
+        .alert.info h4 {
+            color: var(--color-primary);
+        }
+
+        .alert ul {
+            margin: 0.5rem 0 0 1.5rem;
+            padding: 0;
+        }
+
+        .alert li {
+            margin: 0.5rem 0;
+        }
+
+        /* ====== CARDS Y CAJAS ====== */
+        .card {
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.8) 0%, rgba(26, 31, 58, 0.8) 100%);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        /* ====== LISTAS ====== */
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            background: var(--color-darker);
+            border-top: 2px solid var(--color-border);
+            padding: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            main {
+                padding: 1.5rem 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            td, th {
+                padding: 0.75rem;
+            }
+        }
+
+        /* ====== PRINT STYLES ====== */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            header {
+                background: white;
+                border-bottom: 1px solid #ccc;
+            }
+
+            h1, h2, h3 {
+                color: #000;
+            }
+
+            .btn-download-pdf {
+                display: none;
+            }
+
+            a {
+                color: blue;
+                text-decoration: underline;
+            }
+        }
+
+        /* ====== UTILITY CLASSES ====== */
+        .hidden-print {
+            display: block;
+        }
+
+        @media print {
+            .hidden-print {
+                display: none !important;
+            }
+        }
+
+        .value-primary {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .value-secondary {
+            color: var(--color-secondary);
+            font-weight: 600;
+        }
+
+        .value-success {
+            color: var(--color-success);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="header-content">
+        <div>
+            <h1>🔌 Guía Profesional: Medición de Señales</h1>
+            <p>4-20 mA vs Pulso con Multímetro | Técnica, Teoría & Troubleshooting</p>
+        </div>
+        <button class="btn-download-pdf hidden-print" onclick="descargarPDF()">📥 Descargar PDF</button>
+    </div>
+</header>
+
+<main id="contenidoPDF">
+
+    <!-- RESUMEN EJECUTIVO -->
+    <section class="executive-summary">
+        <h2 style="border-left: none; padding-left: 0; margin-bottom: 1.5rem;">⚡ Resumen Ejecutivo</h2>
+        <p>Esta guía profesional proporciona conocimiento técnico profundo sobre cómo medir, identificar y diagnosticar señales analógicas (4-20 mA) y digitales (Pulso) usando multímetros. Incluye teoría de lazos de control, análisis serie vs paralelo, tipos de multímetros, ventajas/desventajas y troubleshooting avanzado.</p>
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h4>Señal 4-20 mA</h4>
+                <p>Estándar industrial analógico. 4 mA = mínimo, 20 mA = máximo. Aplicable en control de procesos, EDAR, ETAP, instrumentación de agua.</p>
+            </div>
+            <div class="summary-card">
+                <h4>Señal de Pulso</h4>
+                <p>Estándar digital/frecuencia. Oscilaciones entre 0 y nivel máximo. Usado en contadores, turbinas, medidores de velocidad.</p>
+            </div>
+            <div class="summary-card">
+                <h4>Medición Correcta</h4>
+                <p>Entender serie vs paralelo, rango de multímetro, impedancia de entrada y lazos de control (3/4 hilos) es crítico.</p>
+            </div>
+            <div class="summary-card">
+                <h4>Aplicación Práctica</h4>
+                <p>Procedimientos verificados en campo para EDAR, refinería, plantas de tratamiento con transmisores de presión, pH, caudal.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCION 1: CONCEPTOS FUNDAMENTALES ====== -->
+    <section>
+        <h2>1️⃣ Conceptos Fundamentales de Medición</h2>
+
+        <h3>1.1 ¿Por qué Medir en Serie vs Paralelo?</h3>
+
+        <div class="comparison-grid">
+            <div class="card">
+                <h4>⚡ Medición EN SERIE</h4>
+                <p><strong>Definición:</strong> El multímetro se coloca "dentro" del circuito, interrumpiendo el flujo. La corriente fluye a través del multímetro.</p>
+                <ul>
+                    <li><strong>Ventajas:</strong>
+                        <ul>
+                            <li>Mide corriente directamente (mA, A)</li>
+                            <li>Muy precisa para rangos de corriente</li>
+                            <li>Ideal para circuitos de baja tensión (0-30V)</li>
+                            <li>La caída de voltaje es mínima (típicamente &lt;1V)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Desventajas:</strong>
+                        <ul>
+                            <li>Requiere desconectar el circuito</li>
+                            <li>Si hay error de rango, puede dañar el multímetro</li>
+                            <li>Tiempo de montaje más largo</li>
+                            <li>Riesgo si el circuito está bajo carga</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><strong>Cuándo usar:</strong> Mediciones de 4-20 mA, diagnóstico de fallos en lazo de corriente, verificación de funcionamiento de transmisores.</p>
+            </div>
+
+            <div class="card">
+                <h4>🔌 Medición EN PARALELO</h4>
+                <p><strong>Definición:</strong> El multímetro se coloca "en paralelo" con el componente. No interrumpe el flujo; mide voltaje.</p>
+                <ul>
+                    <li><strong>Ventajas:</strong>
+                        <ul>
+                            <li>No requiere desconectar el circuito</li>
+                            <li>Más rápido de conectar</li>
+                            <li>Seguro para circuitos activos</li>
+                            <li>Menor riesgo de error (impedancia alta)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Desventajas:</strong>
+                        <ul>
+                            <li>No mide corriente directamente</li>
+                            <li>Requiere resistencia de referencia conocida</li>
+                            <li>Mide voltaje, no corriente</li>
+                            <li>Menos precisa para algunas aplicaciones</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><strong>Cuándo usar:</strong> Diagnóstico rápido, medición de caídas de voltaje, circuitos que no pueden ser interrumpidos.</p>
+            </div>
+        </div>
+
+        <div class="alert info">
+            <h4>💡 Aplicación en 4-20 mA</h4>
+            <p>Para medir una señal de 4-20 mA real:</p>
+            <ul>
+                <li><strong>SERIE:</strong> Conecta el multímetro (DC mA) directamente en el lazo. Rojo en (+), Negro en (-). Lee el valor en mA directamente.</li>
+                <li><strong>PARALELO:</strong> Mide voltaje en una resistencia de referencia (típicamente 250 Ω) en serie con el lazo. Usa Ley de Ohm: I = V/R.</li>
+            </ul>
+        </div>
+
+        <h3>1.2 Impedancia de Entrada del Multímetro</h3>
+        <p>Característica crítica que afecta la precisión de la medición:</p>
+        <ul>
+            <li><strong>Modo DC mA (corriente):</strong> Impedancia muy BAJA (típicamente &lt;1 Ω). No interfiere con el circuito.</li>
+            <li><strong>Modo DC V (voltaje):</strong> Impedancia muy ALTA (típicamente 10 MΩ). Casi no consume corriente.</li>
+            <li><strong>Consecuencia:</strong> No confundas los modos. Un multímetro en DC V en un lazo de corriente dará lecturas imprecisas.</li>
+        </ul>
+
+        <h3>1.3 Rango de Medición del Multímetro</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rango</th>
+                    <th>Resolución Típica</th>
+                    <th>Precisión ±</th>
+                    <th>Mejor Uso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>20 mA</code></td>
+                    <td>0.01 mA</td>
+                    <td>1-3%</td>
+                    <td>Señales 4-20 mA (MEJOR)</td>
+                </tr>
+                <tr>
+                    <td><code>200 mA</code></td>
+                    <td>0.1 mA</td>
+                    <td>1.5-3%</td>
+                    <td>Señales mayores, pulse corto</td>
+                </tr>
+                <tr>
+                    <td><code>2 A</code></td>
+                    <td>1 mA</td>
+                    <td>2-4%</td>
+                    <td>Mediciones de alto amperaje</td>
+                </tr>
+                <tr>
+                    <td><code>10 A</code></td>
+                    <td>10 mA</td>
+                    <td>2-5%</td>
+                    <td>Corrientes muy altas</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>⚠️ Importante:</strong> Para 4-20 mA, usa rango <code>20 mA</code> para máxima resolución. Usar <code>200 mA</code> reduce precisión a 0.1 mA.</p>
+    </section>
+
+    <!-- ====== SECCION 2: LAZOS DE CONTROL ====== -->
+    <section>
+        <h2>2️⃣ Lazos de Control: 3 Hilos vs 4 Hilos</h2>
+
+        <p>La mayoría de transmisores de 4-20 mA funcionan en configuración de lazo de corriente. Existen dos principales:</p>
+
+        <h3>2.1 Lazo de 3 Hilos (Dos Hilos + Tierra/GND)</h3>
+
+        <div class="card">
+            <h4>Configuración Típica</h4>
+            <ul>
+                <li><strong>Hilo 1 (Rojo/+):</strong> Voltaje de alimentación positivo (típicamente 24V DC desde PLC o fuente)</li>
+                <li><strong>Hilo 2 (Azul/-):</strong> Retorno/Tierra (GND común)</li>
+                <li><strong>Tierra Apantallada:</strong> Cable de apantallamiento (opcional pero recomendado)</li>
+            </ul>
+            <p><strong>¿Cómo funciona?</strong> El transmisor regula la corriente entre 4-20 mA en el mismo lazo. No hay separación de circuitos de poder y señal.</p>
+            
+            <h4>Ventajas</h4>
+            <ul>
+                <li>Configuración simple (solo 2 hilos)</li>
+                <li>Costo menor</li>
+                <li>Fácil instalación en campo</li>
+            </ul>
+
+            <h4>Desventajas</h4>
+            <ul>
+                <li>Mayor caída de voltaje en los cables (problemático si cables largos &gt;500m)</li>
+                <li>Ruido electromagnético puede afectar la medición</li>
+                <li>No hay aislamiento entre tierra local y remota</li>
+            </ul>
+
+            <h4>Cómo Medir (3 Hilos)</h4>
+            <div class="alert success" style="margin-top: 1rem;">
+                <h4 style="margin-top: 0;">✅ Procedimiento Correcto</h4>
+                <ol>
+                    <li>Localiza los tres puntos de conexión en el sensor/transmisor</li>
+                    <li>Configura multímetro: <code>DC mA</code>, rango <code>20 mA</code></li>
+                    <li>Conecta punta ROJA (multímetro) → Terminal (+24V o Salida+ del transmisor)</li>
+                    <li>Conecta punta NEGRA (multímetro) → Terminal (-/GND/Retorno)</li>
+                    <li>Lee pantalla: valor estable entre 4-20 mA indica funcionamiento correcto</li>
+                </ol>
+            </div>
+        </div>
+
+        <h3>2.2 Lazo de 4 Hilos (Transmisión Separada de Poder y Señal)</h3>
+
+        <div class="card">
+            <h4>Configuración Típica</h4>
+            <ul>
+                <li><strong>Hilo 1 (+24V):</strong> Alimentación positiva del transmisor</li>
+                <li><strong>Hilo 2 (GND):</strong> Retorno de alimentación</li>
+                <li><strong>Hilo 3 (Señal +):</strong> Salida de corriente positiva (4-20 mA)</li>
+                <li><strong>Hilo 4 (Señal -):</strong> Retorno de señal</li>
+            </ul>
+            <p><strong>¿Cómo funciona?</strong> Los circuitos de poder y señal están completamente separados. El transmisor produce una corriente de 4-20 mA controlada en el circuito de señal, independientemente del voltaje de alimentación.</p>
+
+            <h4>Ventajas</h4>
+            <ul>
+                <li>Aislamiento completo entre poder y señal</li>
+                <li>Mejor inmunidad a ruido electromagnético (EMI)</li>
+                <li>Ideal para cables muy largos (&gt;500m) con baja impedancia</li>
+                <li>Permite uso de aisladores galvánicos</li>
+            </ul>
+
+            <h4>Desventajas</h4>
+            <ul>
+                <li>Requiere 4 hilos (más caro, más complejo)</li>
+                <li>Necesita configuración adicional en PLC/receptor</li>
+                <li>Mayor consumo de recursos en distribución de cables</li>
+            </ul>
+
+            <h4>Cómo Medir (4 Hilos)</h4>
+            <div class="alert success" style="margin-top: 1rem;">
+                <h4 style="margin-top: 0;">✅ Procedimiento Correcto</h4>
+                <ol>
+                    <li>Identifica los 4 terminales: +24V, GND, Señal+, Señal-</li>
+                    <li>Configura multímetro: <code>DC mA</code>, rango <code>20 mA</code></li>
+                    <li>Conecta punta ROJA → Terminal Señal+ (salida de corriente)</li>
+                    <li>Conecta punta NEGRA → Terminal Señal- (retorno de señal)</li>
+                    <li>Lee pantalla: valor entre 4-20 mA. Verifica alimentación (+24V) por separado si es necesario</li>
+                </ol>
+            </div>
+        </div>
+
+        <h3>2.3 Comparativa: 3 Hilos vs 4 Hilos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th class="value-primary">Lazo 3 Hilos</th>
+                    <th class="value-secondary">Lazo 4 Hilos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Número de Cables</strong></td>
+                    <td class="value-primary">3 (Rojo, Azul, Apantallamiento)</td>
+                    <td class="value-secondary">4 (Rojo, Azul, Verde, Amarillo típico)</td>
+                </tr>
+                <tr>
+                    <td><strong>Separación Poder/Señal</strong></td>
+                    <td class="value-primary">No (compartido)</td>
+                    <td class="value-secondary">Sí (completamente separado)</td>
+                </tr>
+                <tr>
+                    <td><strong>Caída de Voltaje</strong></td>
+                    <td class="value-primary">Crítica en cables largos</td>
+                    <td class="value-secondary">Mínima (circuito de señal)</td>
+                </tr>
+                <tr>
+                    <td><strong>Resistencia a EMI</strong></td>
+                    <td class="value-primary">Baja-Media</td>
+                    <td class="value-secondary">Alta</td>
+                </tr>
+                <tr>
+                    <td><strong>Rango de Distancia</strong></td>
+                    <td class="value-primary">Hasta ~500m</td>
+                    <td class="value-secondary">Más de 500m (hasta 1km+)</td>
+                </tr>
+                <tr>
+                    <td><strong>Costo</strong></td>
+                    <td class="value-primary">Bajo</td>
+                    <td class="value-secondary">Medio-Alto</td>
+                </tr>
+                <tr>
+                    <td><strong>Aplicación Típica</strong></td>
+                    <td class="value-primary">EDAR pequeña, procesos locales</td>
+                    <td class="value-secondary">Industria pesada, plantas grandes, refinería</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ====== SECCION 3: TIPOS DE MULTIMETROS ====== -->
+    <section>
+        <h2>3️⃣ Tipos de Multímetros y Características</h2>
+
+        <h3>3.1 Multímetro Digital vs Analógico</h3>
+
+        <div class="comparison-grid">
+            <div class="card">
+                <h4>🔢 Multímetro Digital</h4>
+                <p><strong>Descripción:</strong> Pantalla LCD/LED con valores numéricos. Conversión A/D interna.</p>
+                <ul>
+                    <li><strong>Ventajas:</strong>
+                        <ul>
+                            <li>Lectura precisa y clara</li>
+                            <li>Menor consumo de batería</li>
+                            <li>Rango automático (muchos modelos)</li>
+                            <li>Funciones múltiples (mA, V, Ω, Hz, Temp)</li>
+                            <li>Ideal para 4-20 mA</li>
+                        </ul>
+                    </li>
+                    <li><strong>Desventajas:</strong>
+                        <ul>
+                            <li>Más costoso</li>
+                            <li>Pantalla puede ser difícil de leer en sunlight</li>
+                            <li>Requiere calibración periódica</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><strong>Mejor para:</strong> Mediciones de 4-20 mA, diagnóstico, trabajo profesional en campo.</p>
+            </div>
+
+            <div class="card">
+                <h4>📌 Multímetro Analógico</h4>
+                <p><strong>Descripción:</strong> Aguja/aguja en escala física. Sin conversión digital.</p>
+                <ul>
+                    <li><strong>Ventajas:</strong>
+                        <ul>
+                            <li>Bajo costo</li>
+                            <li>Sin batería (algunos modelos)</li>
+                            <li>Bueno para detectar cambios rápidos (pulso visual)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Desventajas:</strong>
+                        <ul>
+                            <li>Lectura menos precisa</li>
+                            <li>Difícil de leer el valor exacto</li>
+                            <li>Susceptible a vibración</li>
+                            <li>No ideal para 4-20 mA preciso</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><strong>Mejor para:</strong> Uso básico, troubleshooting rápido, verificación "está o no está".</p>
+            </div>
+        </div>
+
+        <h3>3.2 Especificaciones Importantes a Verificar</h3>
+
+        <div class="alert info">
+            <h4>🎯 Antes de Comprar un Multímetro para Mediciones de 4-20 mA</h4>
+            <ul>
+                <li><strong>Rango DC mA:</strong> Debe incluir "20 mA" como rango (resolución &gt;0.01 mA)</li>
+                <li><strong>Modo AC/Frequency:</strong> Para detectar pulsos (función Hz si es posible)</li>
+                <li><strong>Impedancia de entrada:</strong> DC mA debe tener Z &lt;1 Ω (para no afectar lazo)</li>
+                <li><strong>Precisión:</strong> ±2% o mejor en rango 20 mA</li>
+                <li><strong>Pantalla:</strong> LCD de al menos 3.5 dígitos (para leer 4-20 con decimales)</li>
+                <li><strong>Protección Overload:</strong> Fusible protege si conectas mal (importante para seguridad)</li>
+                <li><strong>Función HOLD:</strong> Congela la lectura para anotar valores</li>
+                <li><strong>Función MIN/MAX:</strong> Registra valores mínimo y máximo (útil para diagnóstico)</li>
+            </ul>
+        </div>
+
+        <h3>3.3 Multímetros Recomendados (Ejemplos)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Marca/Modelo</th>
+                    <th>Precio Aproximado</th>
+                    <th>Características Principales</th>
+                    <th>Recomendación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fluke 115</td>
+                    <td>€200-250</td>
+                    <td>Digital, 20 mA, Protección, Función HOLD</td>
+                    <td class="value-success">Excelente para 4-20 mA</td>
+                </tr>
+                <tr>
+                    <td>Fluke 87V</td>
+                    <td>€300-350</td>
+                    <td>Digital, 20 mA, TrueRMS, Frecuencia, HVAC</td>
+                    <td class="value-success">Profesional</td>
+                </tr>
+                <tr>
+                    <td>Mastech MS8217</td>
+                    <td>€50-80</td>
+                    <td>Digital, 20 mA, Auto-range, Función HOLD</td>
+                    <td class="value-primary">Buena relación precio-calidad</td>
+                </tr>
+                <tr>
+                    <td>Victor VC99S</td>
+                    <td>€60-100</td>
+                    <td>Digital, 20 mA, Capacitancia, Temperatura</td>
+                    <td class="value-primary">Versátil</td>
+                </tr>
+                <tr>
+                    <td>Uni-T UT61E</td>
+                    <td>€100-150</td>
+                    <td>Digital, 20 mA, TrueRMS, Registro PC</td>
+                    <td class="value-primary">Buena para campo</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ====== SECCION 4: TIPOS DE MULTIMETROS AVANZADOS ====== -->
+    <section>
+        <h2>4️⃣ Medidores Especializados para Señales de Proceso</h2>
+
+        <h3>4.1 Medidor de Lazo de Corriente (Loop Tester)</h3>
+        <p>Dispositivo especializado para medir y generar señales 4-20 mA.</p>
+        <ul>
+            <li><strong>¿Qué mide?</strong> Corriente de lazo, voltaje, porcentaje (0-100%), resistencia</li>
+            <li><strong>Función especial:</strong> Puede GENERAR 4-20 mA (para calibrar receptores)</li>
+            <li><strong>Ventajas:</strong> Muy precisa, función de sourcing, interfaz clara para procesos</li>
+            <li><strong>Ejemplo:</strong> Fluke 773 Loop Tester (~€400)</li>
+        </ul>
+
+        <h3>4.2 Procesadores de Señal con Registrador</h3>
+        <p>Equipos que capturan variaciones de señal en tiempo real.</p>
+        <ul>
+            <li><strong>¿Qué capturan?</strong> Historial de corriente, alarmas de fuera de rango</li>
+            <li><strong>Ideal para:</strong> Diagnóstico de problemas intermitentes, validación de proceso</li>
+            <li><strong>Ejemplo:</strong> Fluke 381 Remote Display (~€300)</li>
+        </ul>
+
+        <h3>4.3 Osciloscopio (Para Análisis de Pulso Avanzado)</h3>
+        <p>Para visualizar la forma exacta de onda de señales de pulso.</p>
+        <ul>
+            <li><strong>Ventaja:</strong> Ver si el pulso es cuadrado, sinusoidal, con ruido, etc.</li>
+            <li><strong>Desventaja:</strong> Más caro, requiere experiencia para interpretar</li>
+            <li><strong>Mejor para:</strong> Troubleshooting avanzado, validación de señal digital</li>
+        </ul>
+    </section>
+
+    <!-- ====== SECCION 5: PROCEDIMIENTO DETALLADO ====== -->
+    <section>
+        <h2>5️⃣ Procedimiento Detallado Paso a Paso</h2>
+
+        <div class="alert success">
+            <h4 style="margin-top: 0;">✅ PROCEDIMIENTO COMPLETO: Medir Señal 4-20 mA en Transmisor</h4>
+            
+            <h4>PASO 1: DOCUMENTACIÓN Y PREPARACIÓN (5 minutos)</h4>
+            <ol>
+                <li>Localiza el datasheet del transmisor (p. ej., E+H Deltabar, Siemens SITRANS)</li>
+                <li>Identifica:
+                    <ul>
+                        <li>Tipo de lazo (3 o 4 hilos)</li>
+                        <li>Rango de proceso (p. ej., 0-10 bar)</li>
+                        <li>Equivalencia 4-20 mA (p. ej., 4 mA = 0 bar, 20 mA = 10 bar)</li>
+                        <li>Voltaje de alimentación requerido (típicamente 12-30V DC)</li>
+                    </ul>
+                </li>
+                <li>Toma foto del datasheet para referencia en campo</li>
+            </ol>
+
+            <h4>PASO 2: INSPECCIÓN VISUAL (3 minutos)</h4>
+            <ol>
+                <li>Busca el transmisor en el campo (gabinete ITC, cabezal de sensor, etc.)</li>
+                <li>Verifica estado: ¿Está mojado, oxidado, con grietas? Anota observaciones</li>
+                <li>Localiza los terminales de conexión (busca números: 1, 2, 3, 4 o +, -, etc.)</li>
+                <li>Si hay conector (M12, DIN), fotografía para referencia</li>
+            </ol>
+
+            <h4>PASO 3: PREPARACIÓN DEL MULTIMETRO (2 minutos)</h4>
+            <ol>
+                <li>Enciende el multímetro (usualmente giro del selector enciende automáticamente)</li>
+                <li>Verifica batería: Observa pantalla, no debe mostrar símbolo de batería baja</li>
+                <li>Limpia las puntas (roja y negra) con un paño seco</li>
+                <li>Inserta puntas firmemente en los conectores del multímetro (tipicamente COM y mA)</li>
+            </ol>
+
+            <h4>PASO 4: SELECCIÓN DE RANGO (1 minuto)</h4>
+            <ol>
+                <li>Gira el selector a <span class="value-primary"><strong>DC mA</strong></span> (corriente continua, miliamperios)</li>
+                <li>Dentro de DC mA, selecciona rango <span class="value-primary"><strong>20 mA</strong></span> si existe</li>
+                <li>Si no existe "20 mA", usa "200 mA" (menos preciso pero funciona)</li>
+                <li>Verifica visualmente que el selector está bien posicionado</li>
+            </ol>
+
+            <h4>PASO 5: IDENTIFICACIÓN DE PUNTOS DE CONEXIÓN (2-3 minutos)</h4>
+            <ol>
+                <li><strong>Para lazo de 3 HILOS:</strong>
+                    <ul>
+                        <li>Terminal Rojo (+24V o Señal+) → Punta ROJA multímetro</li>
+                        <li>Terminal Azul/Negro (GND o Retorno) → Punta NEGRA multímetro</li>
+                    </ul>
+                </li>
+                <li><strong>Para lazo de 4 HILOS:</strong>
+                    <ul>
+                        <li>Terminal Señal+ (verde típico) → Punta ROJA multímetro</li>
+                        <li>Terminal Señal- (amarillo típico) → Punta NEGRA multímetro</li>
+                        <li>NO conectes en los terminales +24V/GND de alimentación</li>
+                    </ul>
+                </li>
+                <li><strong>REGLA CRÍTICA:</strong> ROJO siempre en positivo/salida, NEGRO siempre en negativo/retorno</li>
+            </ol>
+
+            <h4>PASO 6: CONEXIÓN DEL MULTIMETRO (1 minuto)</h4>
+            <ol>
+                <li>Primero inserta la punta ROJA en el punto de conexión correcto</li>
+                <li>Luego inserta la punta NEGRA en el retorno/GND</li>
+                <li>Asegura que ambas están firmemente insertadas (no sueltas)</li>
+                <li>Si usas cocodrilos, ajusta bien para evitar contacto intermitente</li>
+            </ol>
+
+            <h4>PASO 7: LECTURA Y ANÁLISIS (1 minuto)</h4>
+            <ol>
+                <li>Observa la pantalla del multímetro</li>
+                <li><span class="value-success"><strong>SI MUESTRA VALOR ESTABLE (p. ej., 12.5 mA):</strong></span>
+                    <ul>
+                        <li>✅ Transmisor funciona correctamente</li>
+                        <li>Calcula porcentaje: %  = (mA - 4) / 16 × 100</li>
+                        <li>Ej: 12.5 mA = (12.5-4)/16 × 100 = 53% (aprox 5.3 bar si rango es 0-10 bar)</li>
+                    </ul>
+                </li>
+                <li><span class="value-secondary"><strong>SI PARPADEA O MUESTRA 0 mA:</strong></span>
+                    <ul>
+                        <li>⚠️ Posible transmisor sin potencia o conexión rota</li>
+                        <li>Verifica línea +24V por separado</li>
+                        <li>Revisa conectores para oxidación</li>
+                    </ul>
+                </li>
+                <li><span class="value-error"><strong>SI MUESTRA "OL" o INFINITO:</strong></span>
+                    <ul>
+                        <li>❌ Circuito abierto (rotura en cable)</li>
+                        <li>Revisa físicamente los cables buscando daños visibles</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>PASO 8: VERIFICACION CON RESISTENCIA (OPCIONAL, 2 minutos)</h4>
+            <ol>
+                <li>Si la lectura fue dudosa, puedes verificar resistencia de lazo</li>
+                <li><span class="value-error"><strong>DESCONECTA PRIMERO</strong></span> el multímetro de la medición de corriente</li>
+                <li>Gira selector a modo <strong>Resistencia (Ω)</strong>, rango 20k o 200k</li>
+                <li>Vuelve a conectar puntas en los mismos puntos</li>
+                <li>Lectura esperada: 250-1000 Ω típico para 4-20 mA (transmisor 2-hilos)</li>
+                <li>Si muestra OL o &gt;10k, hay corte en el lazo</li>
+            </ol>
+
+            <h4>PASO 9: REGISTRO Y DOCUMENTACION (2 minutos)</h4>
+            <ol>
+                <li>Anota en tu libreta:
+                    <ul>
+                        <li>Fecha y hora</li>
+                        <li>Ubicación del transmisor (p. ej., "ITC-03, Entrada linea 2")</li>
+                        <li>Tipo de transmisor (p. ej., "E+H Deltabar S")</li>
+                        <li>Lectura en mA (p. ej., "12.5 mA")</li>
+                        <li>Porcentaje calculado</li>
+                        <li>Estado: OK / ALARMA / SIN SEÑAL</li>
+                        <li>Observaciones (p. ej., "Conector oxidado")</li>
+                    </ul>
+                </li>
+                <li>Toma foto de la pantalla del multímetro si es posible</li>
+                <li>Registra en base de datos o hoja de mantenimiento</li>
+            </ol>
+
+            <h4>PASO 10: DESCONEXIÓN SEGURA (1 minuto)</h4>
+            <ol>
+                <li>Primero retira la punta NEGRA</li>
+                <li>Luego retira la punta ROJA</li>
+                <li>Apaga el multímetro (algunos se apagan automáticamente)</li>
+                <li>Guarda multímetro en funda protectora</li>
+            </ol>
+        </div>
+
+        <div class="alert info" style="margin-top: 2rem;">
+            <h4 style="margin-top: 0;">💡 TIEMPO TOTAL ESPERADO: 15-20 minutos (incluyendo documentación)</h4>
+            <p>Con experiencia, el procedimiento real de medición es 2-3 minutos. El resto es preparación, verificación y documentación (muy importante).</p>
+        </div>
+    </section>
+
+    <!-- ====== SECCION 6: TABLA RESUMEN ====== -->
+    <section>
+        <h2>6️⃣ Tabla Resumen Rápida: 4-20 mA vs Pulso</h2>
+        <div class="reference-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th class="value-primary">4-20 mA (Analógica)</th>
+                        <th class="value-secondary">Pulso (Digital)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tipo de Señal</strong></td>
+                        <td class="value-primary">Corriente continua variable</td>
+                        <td class="value-secondary">Intermitente/Oscilante</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rango Típico</strong></td>
+                        <td class="value-primary">4 mA (mín) - 20 mA (máx)</td>
+                        <td class="value-secondary">0-5V o 0-10V (variable)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modo Multímetro</strong></td>
+                        <td class="value-primary">DC mA, Rango 20 mA</td>
+                        <td class="value-secondary">AC mA o Frequency (Hz)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pantalla Multímetro</strong></td>
+                        <td class="value-primary">Valor estable (12.3 mA)</td>
+                        <td class="value-secondary">Parpadeante (50 Hz)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Resolución Esperada</strong></td>
+                        <td class="value-primary">0.01 mA (con rango 20mA)</td>
+                        <td class="value-secondary">Variable (Hz)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tipo de Conexión</strong></td>
+                        <td class="value-primary">Lazo de 3 ó 4 hilos</td>
+                        <td class="value-secondary">Típicamente 2 hilos + GND</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Resistencia Típica</strong></td>
+                        <td class="value-primary">250-1000 Ω</td>
+                        <td class="value-secondary">Variable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Impedancia Mult.</strong></td>
+                        <td class="value-primary">&lt; 1 Ω (DC mA)</td>
+                        <td class="value-secondary">&gt; 1 MΩ (AC)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Aplicación Típica</strong></td>
+                        <td class="value-primary">EDAR, ETAP, Industria, Transmisores</td>
+                        <td class="value-secondary">Contadores, Turbinas, Encoders</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Precisión ±</strong></td>
+                        <td class="value-primary">1-3% (rango 20 mA)</td>
+                        <td class="value-secondary">1-5% (depende equipo)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cálculo Porcentaje</strong></td>
+                        <td class="value-primary">% = (mA - 4) / 16 × 100</td>
+                        <td class="value-secondary">Hz → Pulsos/s (proporcional)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ====== SECCION 7: TROUBLESHOOTING ====== -->
+    <section>
+        <h2>7️⃣ Troubleshooting: Problemas Comunes y Soluciones</h2>
+
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <h4>❌ Problema: Pantalla muestra "OL" (OPEN LOOP)</h4>
+            <p><strong>Significa:</strong> Circuito abierto (circuito roto, sin continuidad)</p>
+            <p><strong>Causas posibles:</strong></p>
+            <ul>
+                <li>Cable desconectado o roto</li>
+                <li>Transmisor sin alimentación (+24V no llega)</li>
+                <li>Fusible quemado en circuito</li>
+                <li>Conector suelto u oxidado</li>
+            </ul>
+            <p><strong>Soluciones a intentar (en orden):</strong></p>
+            <ol>
+                <li>Verifica visualmente el cable (busca roturas, aplastamientos)</li>
+                <li>Mide voltaje de alimentación (+24V) en la fuente</li>
+                <li>Limpia conectores con alcohol isopropílico + cepillo suave</li>
+                <li>Reemplaza cable de prueba si sospechas está dañado</li>
+                <li>Desconecta transmisor y mide resistencia en lazo (debe ser ~250-1000 Ω)</li>
+                <li>Si aún muestra OL, el transmisor puede estar quemado</li>
+            </ol>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <h4>❌ Problema: Pantalla muestra "0.0 mA"</h4>
+            <p><strong>Significa:</strong> Sin corriente en el lazo (pero circuito está cerrado)</p>
+            <p><strong>Causas posibles:</strong></p>
+            <ul>
+                <li>Transmisor sin alimentación (pero línea está intacta)</li>
+                <li>Regulador de corriente del transmisor falla</li>
+                <li>Sensor (entrada del transmisor) sin estimulo (p. ej., sin presión)</li>
+                <li>Inversa de polaridad al conectar multímetro</li>
+            </ul>
+            <p><strong>Soluciones:</strong></p>
+            <ol>
+                <li>Verifica LED indicador en transmisor (¿está verde/rojo?)</li>
+                <li>Mide +24V directamente en terminales de transmisor con modo Voltios</li>
+                <li>Invierte las puntas roja/negra y reintenta (¿aparece valor negativo?)</li>
+                <li>Verifica que el sensor tiene estimulo (ej: presión real en proceso)</li>
+                <li>Si +24V está presente pero aún 0 mA, transmisor puede estar dañado</li>
+            </ol>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <h4>❌ Problema: Valor anormalmente alto (p. ej., 250 mA en rango 20 mA)</h4>
+            <p><strong>Causas posibles:</strong></p>
+            <ul>
+                <li>Rango de multímetro es muy bajo (elegiste 20 mA pero debería ser 200 mA)</li>
+                <li>Cortocircuito en el sensor (resistencia muy baja)</li>
+                <li>Falla en el regulador del transmisor</li>
+            </ul>
+            <p><strong>Soluciones:</strong></p>
+            <ol>
+                <li>Cambia a rango 200 mA y reintenta</li>
+                <li>Desconecta el multímetro inmediatamente (evita dañarlo)</li>
+                <li>Mide resistencia de lazo (si es &lt;10 Ω, hay cortocircuito)</li>
+                <li>Reemplaza el transmisor si las mediciones de resistencia son anormales</li>
+            </ol>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <h4>❌ Problema: Valor fluctúa continuamente</h4>
+            <p><strong>Causas posibles:</strong></p>
+            <ul>
+                <li>Contacto intermitente en conector (punta suelta)</li>
+                <li>Cable dañado o con interferencia EMI</li>
+                <li>Proceso está realmente fluctuando (p. ej., presión inestable)</li>
+            </ul>
+            <p><strong>Soluciones:</strong></p>
+            <ol>
+                <li>Presiona firmemente las puntas en los contactos</li>
+                <li>Aleja el multímetro de fuentes de ruido (motores, líneas de alto voltaje)</li>
+                <li>Usa modo "HOLD" del multímetro para capturar valor (si tiene)</li>
+                <li>Toma múltiples lecturas y calcula promedio</li>
+                <li>Si fluctúa ±1 mA, puede ser normal (ruido de proceso)</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h4>❌ Problema: ¿Es 4-20 mA o Pulso?</h4>
+            <p><strong>Situación:</strong> No estoy seguro del tipo de señal</p>
+            <p><strong>Diagnóstico rápido:</strong></p>
+            <ol>
+                <li><strong>Paso 1:</strong> Mide en modo DC mA (rango 20 mA). ¿Ves un valor ESTABLE (p. ej., 12 mA)?
+                    <ul>
+                        <li>SÍ → Es <span class="value-primary">4-20 mA</span>. Fin.</li>
+                        <li>NO → Continúa paso 2</li>
+                    </ul>
+                </li>
+                <li><strong>Paso 2:</strong> Cambia a modo AC o Frequency. ¿Ves un valor PARPADEANTE (p. ej., 50 Hz)?
+                    <ul>
+                        <li>SÍ → Es <span class="value-secondary">Pulso</span>. Fin.</li>
+                        <li>NO → Problema desconocido. Ver manual del sensor.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- ====== SECCION 8: CASOS REALES ====== -->
+    <section>
+        <h2>8️⃣ Casos Reales de Campo</h2>
+
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <h4>📍 Caso 1: EDAR - Sensor de Presión en Entrada Linea</h4>
+            <p><strong>Situación:</strong> Transmisor de presión E+H Deltabar M montado en cabezal de filtro. Debe medir 0-2.5 bar = 4-20 mA.</p>
+            <p><strong>Síntoma:</strong> PLC muestra presión = 0 bar (como si no hubiera señal).</p>
+            <p><strong>Diagnóstico:</strong></p>
+            <ol>
+                <li>Configuro multímetro: DC mA, rango 20 mA</li>
+                <li>Conecto en los terminales del transmisor (3 hilos: +24V, GND, Salida)</li>
+                <li>Lectura: <strong>4.1 mA</strong> (estable)</li>
+            </ol>
+            <p><strong>Conclusión:</strong> Transmisor está OK, emitiendo 4.1 mA ≈ 0.006 bar (válido, presión está en mínimo). El problema debe estar en el receptor (tarjeta E/S del PLC o cable roto).</p>
+            <p><strong>Acción Tomada:</strong> Revisé línea de comunicación PLC ↔ Sensor. Encontré conector suelto. Una vez apretado, PLC comienza a leer correctamente.</p>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <h4>📍 Caso 2: Refinería - Transmisor HART en Lazo de 4 Hilos</h4>
+            <p><strong>Situación:</strong> Sistema de control de desalador con transmisor HART Yokogawa en lazo 4 hilos. Debe medir 0-1000 ppm = 4-20 mA.</p>
+            <p><strong>Síntoma:</strong> Pantalla muestra valor oscilante: "18, 18.5, 17.8, 19.2 mA" cada segundo.</p>
+            <p><strong>Diagnóstico:</strong></p>
+            <ol>
+                <li>Multímetro: DC mA, rango 20 mA</li>
+                <li>Conecto en Señal+ y Señal- (no en +24V/GND de alimentación)</li>
+                <li>Lectura: <strong>18.5 mA promedio</strong> (con pequeñas oscilaciones ±0.5 mA)</li>
+            </ol>
+            <p><strong>Conclusión:</strong> Las oscilaciones son NORMALES. Esto es el protocolo HART superpuesto en la corriente analógica. Transmisor está funcionando correctamente, modulando a ~3600 bps.</p>
+            <p><strong>Acción Tomada:</strong> Usé modem HART (no disponible en campo) para leer valores HART. Confirmé que transmisor está comunicando correctamente. El receptor PLC está procesando promedio de corriente, ignorando ruido HART (correcto).</p>
+        </div>
+
+        <div class="card">
+            <h4>📍 Caso 3: Planta de RO - Caudalímetro de Turbina</h4>
+            <p><strong>Situación:</strong> Medidor de caudal turbina Siemens SITRANS F M800 en línea de agua producto. Salida = pulso (0.1 L/pulso).</p>
+            <p><strong>Síntoma:</strong> Contador en PLC está congelado (no incrementa).</p>
+            <p><strong>Diagnóstico:</strong></p>
+            <ol>
+                <li>Multímetro: primero pruebo DC mA, rango 20 mA → Muestra 0.0 mA (sin señal analógica)</li>
+                <li>Cambio a modo Frequency (Hz) o AC → Lectura: <strong>250 Hz</strong> (parpadeante)</li>
+            </ol>
+            <p><strong>Conclusión:</strong> Sensor está emitiendo pulsos correctamente (250 Hz = 250 pulsos/seg = 25 L/s aprox.). El problema está en la línea de entrada del contador del PLC (no está configurada como entrada digital/contador).</p>
+            <p><strong>Acción Tomada:</strong> Revisé configuración de entrada del PLC. Estaba en modo "Entrada Analógica 4-20 mA" en lugar de "Entrada Digital Pulso". Una vez cambiado a modo pulso, contador comenzó a incrementar correctamente.</p>
+        </div>
+    </section>
+
+    <!-- ====== SECCION 9: REFERENCIAS Y NORMATIVAS ====== -->
+    <section>
+        <h2>9️⃣ Referencias, Normativas e Historial</h2>
+
+        <h3>Normativas Aplicables</h3>
+        <ul>
+            <li><strong>IEC 61131-2:</strong> Entrada/salida analógicas en controladores programables (4-20 mA)</li>
+            <li><strong>ISA SP50.02:</strong> Transmisores de 4-20 mA (rango, precisión, especificaciones)</li>
+            <li><strong>HART 7.0:</strong> Protocolo de comunicación HART sobre 4-20 mA</li>
+            <li><strong>EN 60959:</strong> Transmisores inteligentes para sistemas de medición</li>
+        </ul>
+
+        <h3>Fabricantes de Transmisores 4-20 mA (Referencia)</h3>
+        <ul>
+            <li><strong>Presión:</strong> E+H (Deltabar), Siemens (SITRANS P), KROHNE (IFC 050), Yokogawa</li>
+            <li><strong>Temperatura:</strong> E+H (TMT, TMT80), Siemens, ABB</li>
+            <li><strong>Caudal:</strong> E+H (Promag, Mag 8), Siemens (SITRANS F M), KROHNE</li>
+            <li><strong>pH:</strong> Hach, Analytik Jena, Metrohm</li>
+            <li><strong>Conductividad:</strong> Hach, WTW, Analytik</li>
+        </ul>
+
+        <h3>Historial de Cambios</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Versión</th>
+                    <th>Fecha</th>
+                    <th>Cambios Principales</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.0</td>
+                    <td>Abril 2026</td>
+                    <td>Versión inicial. Secuencia rápida, comparativas, diagramas básicos</td>
+                </tr>
+                <tr>
+                    <td>2.0 (ACTUAL)</td>
+                    <td>Abril 2026</td>
+                    <td>+ Lazos 3/4 hilos, + Tipos de multímetros, + Serie vs Paralelo, + Casos reales, + PDF descargable, + Troubleshooting avanzado</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ====== SECCION 10: FOOTER ====== -->
+    <section>
+        <h2>🔗 Contacto y Más Recursos</h2>
+        <p><strong>Autor:</strong> Ing. Gustavo Blanco Walter</p>
+        <p><strong>Especialidad:</strong> Instrumentación Industrial de Agua & Proceso (30+ años)</p>
+        <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/gustavo-blanco-walter" style="color: #00d4ff;">linkedin.com/in/gustavo-blanco-walter</a></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/gjosebwes-sketch" style="color: #00d4ff;">github.com/gjosebwes-sketch</a></p>
+        <p><strong>Web:</strong> <a href="https://watertools.es" style="color: #00d4ff;">watertools.es</a></p>
+        <p style="margin-top: 2rem; font-size: 0.9rem; color: #a0aec0; border-top: 1px solid #1a1f3a; padding-top: 2rem;">
+            <strong>DESCARGO DE RESPONSABILIDAD:</strong> Esta guía es de carácter educativo. Siempre consulta la documentación técnica original del fabricante antes de realizar mediciones. El usuario es responsable de tomar todas las precauciones de seguridad necesarias al trabajar con equipos eléctricos. Gustavo Blanco Walter y watertools.es no asumen responsabilidad por daños derivados del uso incorrecto de esta información.
+        </p>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <p style="margin-bottom: 1rem;">
+            <strong>WaterTools</strong> - Herramientas para Profesionales del Tratamiento de Agua
+        </p>
+        <p style="color: #a0aec0; font-size: 0.9rem;">
+            Guía Profesional: Medición de Señales 4-20 mA vs Pulso con Multímetro | 
+            © 2026 Gustavo Blanco Walter | 
+            <a href="https://watertools.es" style="color: #00d4ff; text-decoration: none;">watertools.es</a>
+        </p>
+        <p style="color: #6b7280; font-size: 0.85rem; margin-top: 1rem;">
+            Versión 2.0 | Abril 2026 | Contenido profesional verificado en campo
+        </p>
+    </div>
+</footer>
+
+<script>
+    function descargarPDF() {
+        const elemento = document.getElementById('contenidoPDF');
+        const opciones = {
+            margin: 10,
+            filename: 'Guia_Profesional_Medicion_Senales_4-20mA_vs_Pulso.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+        };
+
+        // Crear PDF
+        html2pdf().set(opciones).from(elemento).save();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDAR · Calculador mA ↔ Proceso</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #07090f;
+  --surface:  #0d1117;
+  --panel:    #111822;
+  --border:   #1a2a3a;
+  --border2:  #243547;
+  --text:     #b8ccd8;
+  --dim:      #4a6070;
+  --bright:   #e8f4ff;
+
+  /* parameter colors */
+  --c-flow:   #00b4d8;
+  --c-turb:   #7b61ff;
+  --c-ph:     #00c896;
+  --c-temp:   #ff6b35;
+  --c-cond:   #f7c325;
+  --c-do:     #3dd9eb;
+
+  --ok:    #00e676;
+  --warn:  #ffc107;
+  --alarm: #ff3d71;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+body {
+  font-family: 'Exo 2', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === ANIMATED BG === */
+.bg-grid {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(0,180,216,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,180,216,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.bg-orb1 {
+  position: fixed; width: 600px; height: 600px;
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(0,180,216,0.06) 0%, transparent 70%);
+  top: -200px; left: -100px; animation: orbFloat 18s ease-in-out infinite;
+}
+.bg-orb2 {
+  position: fixed; width: 500px; height: 500px;
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(123,97,255,0.05) 0%, transparent 70%);
+  bottom: -150px; right: -100px; animation: orbFloat 22s ease-in-out infinite reverse;
+}
+@keyframes orbFloat {
+  0%,100%{transform:translate(0,0);}
+  50%{transform:translate(30px,20px);}
+}
+
+/* === LAYOUT === */
+.app {position:relative;z-index:1;padding:20px;max-width:1400px;margin:0 auto;}
+
+/* === HEADER === */
+.header {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 24px; margin-bottom: 20px;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  position: relative; overflow: hidden;
+}
+.header::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--c-flow), var(--c-ph), var(--c-temp), var(--c-cond), var(--c-turb));
+}
+.header-icon {
+  font-size: 2rem; line-height: 1;
+}
+.header-text h1 {
+  font-size: 1.5rem; font-weight: 900; letter-spacing: 0.08em;
+  color: var(--bright); text-transform: uppercase;
+}
+.header-text p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem; color: var(--dim); letter-spacing: 0.2em; margin-top: 2px;
+}
+.header-badges {
+  margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.badge {
+  font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+  padding: 3px 10px; border-radius: 20px; letter-spacing: 0.1em;
+  border: 1px solid; opacity: 0.8;
+}
+.badge-norm { border-color: var(--ok); color: var(--ok); background: rgba(0,230,118,0.08); }
+.badge-eu   { border-color: var(--c-flow); color: var(--c-flow); background: rgba(0,180,216,0.08); }
+
+/* === PARAM TABS === */
+.param-nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px; margin-bottom: 20px;
+}
+.pnav-btn {
+  padding: 10px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.25s;
+  font-family: 'Exo 2', sans-serif;
+}
+.pnav-btn .pnav-icon { font-size: 1.3rem; display: block; }
+.pnav-btn .pnav-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; margin-top: 4px; color: var(--dim);
+  font-family: 'Share Tech Mono', monospace;
+}
+.pnav-btn.active,
+.pnav-btn:hover { transform: translateY(-2px); }
+.pnav-btn[data-p="flow"].active  { border-color:var(--c-flow);  background:rgba(0,180,216,0.1);  }
+.pnav-btn[data-p="turb"].active  { border-color:var(--c-turb);  background:rgba(123,97,255,0.1); }
+.pnav-btn[data-p="ph"].active    { border-color:var(--c-ph);    background:rgba(0,200,150,0.1);  }
+.pnav-btn[data-p="temp"].active  { border-color:var(--c-temp);  background:rgba(255,107,53,0.1); }
+.pnav-btn[data-p="cond"].active  { border-color:var(--c-cond);  background:rgba(247,195,37,0.1); }
+.pnav-btn[data-p="flow"].active .pnav-label  { color:var(--c-flow); }
+.pnav-btn[data-p="turb"].active .pnav-label  { color:var(--c-turb); }
+.pnav-btn[data-p="ph"].active .pnav-label    { color:var(--c-ph); }
+.pnav-btn[data-p="temp"].active .pnav-label  { color:var(--c-temp); }
+.pnav-btn[data-p="cond"].active .pnav-label  { color:var(--c-cond); }
+
+/* === CONTENT === */
+.tab-content { display:none; animation: fadeIn 0.3s ease; }
+.tab-content.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+/* === GRID === */
+.calc-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 16px;
+}
+
+/* === CARDS === */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  position: relative; overflow: hidden;
+}
+.card-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--dim);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background: currentColor; display:block;
+}
+
+/* === FORM === */
+label {
+  display:block; font-size:0.8rem; font-weight:600;
+  color: var(--dim); margin-top:12px; margin-bottom:4px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+input, select {
+  width:100%; padding:9px 12px;
+  border-radius:6px; border:1px solid var(--border2);
+  background:#050810; color:var(--bright);
+  font-family:'Share Tech Mono',monospace; font-size:0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus {
+  outline:none;
+  box-shadow: 0 0 0 2px currentColor;
+}
+
+/* focus colors per param */
+.tab-flow   input:focus, .tab-flow   select:focus { border-color:var(--c-flow);  box-shadow:0 0 0 2px rgba(0,180,216,0.2); }
+.tab-turb   input:focus, .tab-turb   select:focus { border-color:var(--c-turb);  box-shadow:0 0 0 2px rgba(123,97,255,0.2); }
+.tab-ph     input:focus, .tab-ph     select:focus { border-color:var(--c-ph);    box-shadow:0 0 0 2px rgba(0,200,150,0.2); }
+.tab-temp   input:focus, .tab-temp   select:focus { border-color:var(--c-temp);  box-shadow:0 0 0 2px rgba(255,107,53,0.2); }
+.tab-cond   input:focus, .tab-cond   select:focus { border-color:var(--c-cond);  box-shadow:0 0 0 2px rgba(247,195,37,0.2); }
+
+/* === PRESET PILLS === */
+.presets { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+.pill {
+  padding:4px 11px; border-radius:20px; cursor:pointer;
+  font-family:'Share Tech Mono',monospace; font-size:0.7rem;
+  border:1px solid var(--border2); background:transparent; color:var(--dim);
+  transition:all 0.2s; width:auto;
+}
+.pill:hover, .pill.active { color:var(--bright); }
+
+/* === CALC BUTTON === */
+.btn-calc {
+  width:100%; margin-top:16px; padding:13px;
+  border-radius:8px; border:none;
+  font-family:'Exo 2',sans-serif; font-size:1.1rem;
+  font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+  cursor:pointer; transition:all 0.2s;
+  position:relative; overflow:hidden;
+}
+.btn-calc::after {
+  content:''; position:absolute; inset:0;
+  background:rgba(255,255,255,0.1);
+  opacity:0; transition:opacity 0.2s;
+}
+.btn-calc:hover::after { opacity:1; }
+.btn-calc:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.4); }
+.btn-flow { background:var(--c-flow); color:#000; }
+.btn-turb { background:var(--c-turb); color:#fff; }
+.btn-ph   { background:var(--c-ph);   color:#000; }
+.btn-temp { background:var(--c-temp); color:#000; }
+.btn-cond { background:var(--c-cond); color:#000; }
+
+/* === STATUS === */
+.status-wrap {
+  font-family:'Share Tech Mono',monospace; font-size:0.9rem;
+  padding:10px 14px; border-radius:6px;
+  background:#050810; border:1px solid var(--border);
+  min-height: 40px; display:flex; align-items:center;
+}
+.s-ok    { color:var(--ok);    }
+.s-warn  { color:var(--warn);  }
+.s-alarm { color:var(--alarm); }
+
+/* === BIG VALUE === */
+.big-value-wrap {
+  text-align:center; padding:16px;
+  background:#050810; border-radius:8px; border:1px solid var(--border);
+}
+.big-value {
+  font-family:'Share Tech Mono',monospace;
+  font-size:3rem; font-weight:400; color:var(--bright);
+  line-height:1; transition: color 0.4s;
+}
+.big-unit {
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.85rem; color:var(--dim); margin-top:4px;
+}
+.big-ma {
+  font-family:'Share Tech Mono',monospace;
+  font-size:1rem; margin-top:8px;
+}
+
+/* === RESULT GRID === */
+.r-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.r-cell {
+  background:#050810; border:1px solid var(--border);
+  border-radius:6px; padding:10px 12px;
+}
+.r-cell .rl { font-size:0.65rem; font-family:'Share Tech Mono',monospace; color:var(--dim); letter-spacing:0.12em; text-transform:uppercase; }
+.r-cell .rv { font-family:'Share Tech Mono',monospace; font-size:1.2rem; color:var(--bright); margin-top:2px; font-weight:700; }
+.r-cell .ru { font-size:0.7rem; color:var(--dim); }
+
+/* === SPAN BAR === */
+.span-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+.span-num { font-family:'Share Tech Mono',monospace; font-size:1.3rem; color:var(--bright); min-width:60px; }
+.span-bar-bg { flex:1; height:8px; border-radius:4px; background:var(--border); overflow:hidden; }
+.span-bar-fill { height:100%; border-radius:4px; transition:width 0.5s cubic-bezier(.4,0,.2,1); }
+
+/* === FORMULA BOX === */
+.formula {
+  background:#030608; border:1px dashed var(--border2);
+  border-radius:6px; padding:12px 14px;
+  font-family:'Share Tech Mono',monospace; font-size:0.75rem;
+  color:#4a9aba; line-height:1.9; white-space:pre-wrap; word-break:break-all;
+}
+
+/* === NORM TABLE === */
+.norm-table { width:100%; border-collapse:collapse; font-size:0.8rem; }
+.norm-table th {
+  font-family:'Share Tech Mono',monospace; font-size:0.65rem;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--dim);
+  padding:6px 10px; border-bottom:1px solid var(--border2);
+  text-align:left;
+}
+.norm-table td { padding:6px 10px; border-bottom:1px solid var(--border); }
+.norm-table tr:last-child td { border-bottom:none; }
+.norm-table .hl { font-weight:700; color:var(--bright); }
+.norm-tag {
+  display:inline-block; font-size:0.6rem; padding:1px 6px;
+  border-radius:3px; font-family:'Share Tech Mono',monospace;
+  letter-spacing:0.05em;
+}
+.tag-entrada { background:rgba(255,107,53,0.15); color:var(--c-temp); border:1px solid var(--c-temp); }
+.tag-salida  { background:rgba(0,200,150,0.15);  color:var(--c-ph);   border:1px solid var(--c-ph); }
+.tag-limite  { background:rgba(247,195,37,0.15); color:var(--c-cond); border:1px solid var(--c-cond); }
+
+/* === GAUGE === */
+.gauge-wrap { display:flex; justify-content:center; margin:8px 0; }
+canvas.gauge { display:block; }
+
+/* === CHART === */
+canvas.linechart {
+  width:100%; border-radius:6px;
+  background:#030608; border:1px solid var(--border);
+  display:block;
+}
+
+/* === PH SCALE BAR === */
+.ph-scale {
+  display:flex; height:20px; border-radius:6px; overflow:hidden;
+  margin:8px 0; position:relative;
+}
+.ph-marker {
+  position:absolute; top:-4px; width:2px; height:28px;
+  background:white; border-radius:1px;
+  box-shadow: 0 0 8px white;
+  transition: left 0.4s;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb1"></div>
+<div class="bg-orb2"></div>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-icon">🏭</div>
+    <div class="header-text">
+      <h1>EDAR · Calculador mA ↔ Proceso</h1>
+      <p>ESTACIÓN DEPURADORA DE AGUAS RESIDUALES · INSTRUMENTACIÓN 4–20 mA</p>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-eu">Dir. 91/271/CEE</span>
+      <span class="badge badge-norm">RD 509/1996</span>
+      <span class="badge badge-norm">ISO 7027</span>
+      <span class="badge badge-eu">MSAN Informe 2019</span>
+    </div>
+  </div>
+
+  <!-- PARAM NAV -->
+  <div class="param-nav">
+    <button class="pnav-btn active" data-p="flow" onclick="switchParam('flow',this)">
+      <span class="pnav-icon">💧</span>
+      <span class="pnav-label">Caudal</span>
+    </button>
+    <button class="pnav-btn" data-p="turb" onclick="switchParam('turb',this)">
+      <span class="pnav-icon">🌫️</span>
+      <span class="pnav-label">Turbidez</span>
+    </button>
+    <button class="pnav-btn" data-p="ph" onclick="switchParam('ph',this)">
+      <span class="pnav-icon">⚗️</span>
+      <span class="pnav-label">pH</span>
+    </button>
+    <button class="pnav-btn" data-p="temp" onclick="switchParam('temp',this)">
+      <span class="pnav-icon">🌡️</span>
+      <span class="pnav-label">Temperatura</span>
+    </button>
+    <button class="pnav-btn" data-p="cond" onclick="switchParam('cond',this)">
+      <span class="pnav-icon">⚡</span>
+      <span class="pnav-label">Conductividad</span>
+    </button>
+  </div>
+
+  <!-- ============================== CAUDAL ============================== -->
+  <div class="tab-content tab-flow active" id="tab-flow">
+    <div class="calc-grid">
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-flow)">⚙ Configuración · Caudal</div>
+          <label>Tipo de señal</label>
+          <select id="f-sig"><option value="4-20">4–20 mA</option><option value="0-20">0–20 mA</option></select>
+          <label>Caudal mínimo (LRV)</label>
+          <input id="f-min" value="0">
+          <label>Caudal máximo (URV)</label>
+          <input id="f-max" value="500">
+          <label>Unidad</label>
+          <select id="f-unit">
+            <option value="ls">L/s</option>
+            <option value="m3h">m³/h</option>
+            <option value="m3d">m³/día</option>
+          </select>
+          <label>Dirección</label>
+          <select id="f-dir">
+            <option value="toVal">mA → Caudal</option>
+            <option value="toMA">Caudal → mA</option>
+          </select>
+          <label>Valor a convertir</label>
+          <input id="f-val" value="12">
+          <button class="btn-calc btn-flow" onclick="calcFlow()">CALCULAR CAUDAL</button>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-flow)">▶ Estado</div>
+          <div class="status-wrap" id="f-status">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-flow)">▶ Resultado</div>
+          <div class="big-value-wrap">
+            <div class="big-value" id="f-big" style="color:var(--c-flow)">—</div>
+            <div class="big-unit" id="f-big-unit">—</div>
+            <div class="big-ma" id="f-big-ma" style="color:var(--dim)">—</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-flow)">▶ Conversiones</div>
+          <div class="r-grid">
+            <div class="r-cell"><div class="rl">L/s</div><div class="rv" id="f-ls">—</div></div>
+            <div class="r-cell"><div class="rl">m³/h</div><div class="rv" id="f-m3h">—</div></div>
+            <div class="r-cell"><div class="rl">m³/día</div><div class="rv" id="f-m3d">—</div></div>
+            <div class="r-cell"><div class="rl">% Span</div><div class="rv" id="f-pct">—</div><div class="ru">%</div></div>
+          </div>
+          <div class="span-row" style="margin-top:14px;">
+            <div class="span-num" id="f-span-num">—</div>
+            <div class="span-bar-bg"><div class="span-bar-fill" id="f-bar" style="width:0%;background:var(--c-flow)"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-flow)">▶ Curva 4–20 mA</div>
+          <canvas class="linechart" id="f-chart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== TURBIDEZ ============================== -->
+  <div class="tab-content tab-turb" id="tab-turb">
+    <div class="calc-grid">
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-turb)">⚙ Configuración · Turbidez</div>
+          <label>Tipo de señal</label>
+          <select id="t-sig"><option value="4-20">4–20 mA</option><option value="0-20">0–20 mA</option></select>
+          <label>Unidad</label>
+          <select id="t-unit-sel">
+            <option value="FNU">FNU (ISO 7027)</option>
+            <option value="NTU">NTU (EPA)</option>
+            <option value="FAU">FAU</option>
+          </select>
+          <label>LRV</label><input id="t-min" value="0">
+          <label>URV</label><input id="t-max" value="100">
+          <label>Rangos típicos EDAR</label>
+          <div class="presets">
+            <button class="pill" onclick="tSetRange(0,40,this)" style="border-color:var(--c-turb);color:var(--c-turb)">0–40</button>
+            <button class="pill active" onclick="tSetRange(0,100,this)" style="border-color:var(--c-turb);color:var(--c-turb)">0–100</button>
+            <button class="pill" onclick="tSetRange(0,500,this)" style="border-color:var(--c-turb);color:var(--c-turb)">0–500</button>
+            <button class="pill" onclick="tSetRange(0,1000,this)" style="border-color:var(--c-turb);color:var(--c-turb)">0–1000</button>
+            <button class="pill" onclick="tSetRange(0,4000,this)" style="border-color:var(--c-turb);color:var(--c-turb)">0–4000</button>
+          </div>
+          <label>Dirección</label>
+          <select id="t-dir"><option value="toVal">mA → Turbidez</option><option value="toMA">Turbidez → mA</option></select>
+          <label>Valor</label><input id="t-val" value="5.9">
+          <button class="btn-calc btn-turb" onclick="calcTurb()">CALCULAR TURBIDEZ</button>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-turb)">📋 Turbidez · Valores de referencia</div>
+          <table class="norm-table">
+            <tr><th>Punto</th><th>Valor</th><th>Fuente</th></tr>
+            <tr><td>Agua consumo — valor paramétrico legal</td><td class="hl">≤ 5 UNF</td><td><span class="norm-tag tag-limite">RD 3/2023</span></td></tr>
+            <tr><td>Agua consumo — media real España 2019</td><td class="hl">0,37 UNF</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Agua consumo — 66,8% muestras</td><td class="hl">≤ 0,1 UNF</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Conformidad nacional 2019</td><td class="hl">99,21% · 635.326 determ.</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Efluente EDAR — vertido</td><td class="hl">según autorización</td><td><span class="norm-tag tag-limite">Org. Cuenca</span></td></tr>
+            <tr><td>Agua influente EDAR (orientativo)</td><td class="hl">50 – 500 UNF</td><td><span class="norm-tag tag-entrada">campo</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-turb)">▶ Estado</div>
+          <div class="status-wrap" id="t-status">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-turb)">▶ Resultado</div>
+          <div class="big-value-wrap">
+            <div class="big-value" id="t-big" style="color:var(--c-turb)">—</div>
+            <div class="big-unit" id="t-big-unit">FNU</div>
+            <div class="big-ma" id="t-big-ma" style="color:var(--dim)">—</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-turb)">▶ % Span</div>
+          <div class="span-row">
+            <div class="span-num" id="t-span-num">—</div>
+            <div class="span-bar-bg"><div class="span-bar-fill" id="t-bar" style="width:0%;background:var(--c-turb)"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-turb)">▶ Fórmula</div>
+          <div class="formula" id="t-formula">Ingrese un valor y calcule.</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-turb)">▶ Curva</div>
+          <canvas class="linechart" id="t-chart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== pH ============================== -->
+  <div class="tab-content tab-ph" id="tab-ph">
+    <div class="calc-grid">
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-ph)">⚙ Configuración · pH</div>
+          <label>Tipo de señal</label>
+          <select id="ph-sig"><option value="4-20">4–20 mA</option><option value="0-20">0–20 mA</option></select>
+          <label>LRV (pH mínimo)</label><input id="ph-min" value="0">
+          <label>URV (pH máximo)</label><input id="ph-max" value="14">
+          <label>Rangos típicos EDAR</label>
+          <div class="presets">
+            <button class="pill active" onclick="phSetRange(0,14,this)" style="border-color:var(--c-ph);color:var(--c-ph)">0–14</button>
+            <button class="pill" onclick="phSetRange(2,12,this)" style="border-color:var(--c-ph);color:var(--c-ph)">2–12</button>
+            <button class="pill" onclick="phSetRange(4,10,this)" style="border-color:var(--c-ph);color:var(--c-ph)">4–10</button>
+            <button class="pill" onclick="phSetRange(0,10,this)" style="border-color:var(--c-ph);color:var(--c-ph)">0–10</button>
+          </div>
+          <label>Dirección</label>
+          <select id="ph-dir"><option value="toVal">mA → pH</option><option value="toMA">pH → mA</option></select>
+          <label>Valor</label><input id="ph-val" value="12">
+          <button class="btn-calc btn-ph" onclick="calcPH()">CALCULAR pH</button>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-ph)">📋 Límites EDAR · pH</div>
+          <table class="norm-table">
+            <tr><th>Punto</th><th>Rango</th><th>Fuente</th></tr>
+            <tr><td>Agua consumo — valor paramétrico legal</td><td class="hl">6,5 – 9,5</td><td><span class="norm-tag tag-limite">RD 3/2023</span></td></tr>
+            <tr><td>Agua consumo — media real España 2019</td><td class="hl">7,8 unidades pH</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Agua consumo — tendencia 2014–2019</td><td class="hl">7,74 – 7,80</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Conformidad nacional 2019</td><td class="hl">98,98% · 495.055 determ.</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Reactor biológico EDAR (óptimo)</td><td class="hl">6,8 – 7,5</td><td><span class="norm-tag tag-entrada">campo</span></td></tr>
+            <tr><td>Vertido a cauce (Dir.91/271)</td><td class="hl">6,0 – 9,0</td><td><span class="norm-tag tag-limite">Dir.91/271</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-ph)">▶ Estado</div>
+          <div class="status-wrap" id="ph-status">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-ph)">▶ Resultado</div>
+          <div class="big-value-wrap">
+            <div class="big-value" id="ph-big" style="color:var(--c-ph)">—</div>
+            <div class="big-unit">pH</div>
+            <div class="big-ma" id="ph-big-ma" style="color:var(--dim)">—</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-ph)">▶ Escala de pH visual</div>
+          <div class="ph-scale" id="ph-scale-bar"></div>
+          <div class="ph-marker" id="ph-marker" style="left:0%;"></div>
+          <div style="display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--dim);margin-top:4px;">
+            <span>0 Ácido</span><span>7 Neutro</span><span>14 Alcalino</span>
+          </div>
+          <div style="margin-top:8px;font-family:'Share Tech Mono',monospace;font-size:0.8rem;text-align:center;" id="ph-zone">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-ph)">▶ % Span</div>
+          <div class="span-row">
+            <div class="span-num" id="ph-span-num">—</div>
+            <div class="span-bar-bg"><div class="span-bar-fill" id="ph-bar" style="width:0%;background:var(--c-ph)"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-ph)">▶ Curva</div>
+          <canvas class="linechart" id="ph-chart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== TEMPERATURA ============================== -->
+  <div class="tab-content tab-temp" id="tab-temp">
+    <div class="calc-grid">
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-temp)">⚙ Configuración · Temperatura</div>
+          <label>Tipo de señal</label>
+          <select id="te-sig"><option value="4-20">4–20 mA</option><option value="0-20">0–20 mA</option></select>
+          <label>Unidad</label>
+          <select id="te-unit-sel">
+            <option value="°C">°C (Celsius)</option>
+            <option value="°F">°F (Fahrenheit)</option>
+          </select>
+          <label>LRV (Tmin)</label><input id="te-min" value="0">
+          <label>URV (Tmax)</label><input id="te-max" value="50">
+          <label>Rangos típicos EDAR</label>
+          <div class="presets">
+            <button class="pill active" onclick="teSetRange(0,50,this)" style="border-color:var(--c-temp);color:var(--c-temp)">0–50°C</button>
+            <button class="pill" onclick="teSetRange(0,100,this)" style="border-color:var(--c-temp);color:var(--c-temp)">0–100°C</button>
+            <button class="pill" onclick="teSetRange(-10,60,this)" style="border-color:var(--c-temp);color:var(--c-temp)">-10–60°C</button>
+          </div>
+          <label>Dirección</label>
+          <select id="te-dir"><option value="toVal">mA → Temperatura</option><option value="toMA">Temperatura → mA</option></select>
+          <label>Valor</label><input id="te-val" value="12">
+          <button class="btn-calc btn-temp" onclick="calcTemp()">CALCULAR TEMPERATURA</button>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-temp)">📋 Límites EDAR · Temperatura</div>
+          <table class="norm-table">
+            <tr><th>Punto</th><th>Límite</th><th>Norma</th></tr>
+            <tr><td>Vertido a cauce</td><td class="hl">&lt; 3°C sobre T°río</td><td><span class="norm-tag tag-limite">Dir.91/271</span></td></tr>
+            <tr><td>Reactor biológico</td><td class="hl">10 – 35°C</td><td><span class="norm-tag tag-salida">óptimo</span></td></tr>
+            <tr><td>Digestión anaerobia</td><td class="hl">35 – 55°C</td><td><span class="norm-tag tag-entrada">mesófilo</span></td></tr>
+            <tr><td>Agua influente</td><td class="hl">10 – 25°C</td><td><span class="norm-tag tag-entrada">típico</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-temp)">▶ Estado</div>
+          <div class="status-wrap" id="te-status">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-temp)">▶ Resultado</div>
+          <div class="big-value-wrap">
+            <div class="big-value" id="te-big" style="color:var(--c-temp)">—</div>
+            <div class="big-unit" id="te-big-unit">°C</div>
+            <div class="big-ma" id="te-big-ma" style="color:var(--dim)">—</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-temp)">▶ Equivalencia °C / °F / K</div>
+          <div class="r-grid">
+            <div class="r-cell"><div class="rl">Celsius</div><div class="rv" id="te-c">—</div><div class="ru">°C</div></div>
+            <div class="r-cell"><div class="rl">Fahrenheit</div><div class="rv" id="te-f">—</div><div class="ru">°F</div></div>
+            <div class="r-cell"><div class="rl">Kelvin</div><div class="rv" id="te-k">—</div><div class="ru">K</div></div>
+            <div class="r-cell"><div class="rl">% Span</div><div class="rv" id="te-pct">—</div><div class="ru">%</div></div>
+          </div>
+          <div class="span-row" style="margin-top:14px;">
+            <div class="span-num" id="te-span-num">—</div>
+            <div class="span-bar-bg"><div class="span-bar-fill" id="te-bar" style="width:0%;background:linear-gradient(90deg,#1e90ff,#ff6b35)"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-temp)">▶ Curva</div>
+          <canvas class="linechart" id="te-chart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== CONDUCTIVIDAD ============================== -->
+  <div class="tab-content tab-cond" id="tab-cond">
+    <div class="calc-grid">
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-cond)">⚙ Configuración · Conductividad</div>
+          <label>Tipo de señal</label>
+          <select id="co-sig"><option value="4-20">4–20 mA</option><option value="0-20">0–20 mA</option></select>
+          <label>Unidad</label>
+          <select id="co-unit-sel" onchange="coUnitChange()">
+            <option value="uS">µS/cm</option>
+            <option value="mS">mS/cm</option>
+          </select>
+          <label>LRV</label><input id="co-min" value="0">
+          <label>URV</label><input id="co-max" value="2000">
+          <label>Rangos típicos EDAR</label>
+          <div class="presets">
+            <button class="pill active" onclick="coSetRange(0,2000,this)" style="border-color:var(--c-cond);color:var(--c-cond)">0–2000 µS</button>
+            <button class="pill" onclick="coSetRange(0,5000,this)" style="border-color:var(--c-cond);color:var(--c-cond)">0–5000 µS</button>
+            <button class="pill" onclick="coSetRange(0,10000,this)" style="border-color:var(--c-cond);color:var(--c-cond)">0–10000 µS</button>
+            <button class="pill" onclick="coSetRange(0,20,this)" style="border-color:var(--c-cond);color:var(--c-cond)">0–20 mS</button>
+          </div>
+          <label>Dirección</label>
+          <select id="co-dir"><option value="toVal">mA → Conductividad</option><option value="toMA">Conductividad → mA</option></select>
+          <label>Valor</label><input id="co-val" value="12">
+          <button class="btn-calc btn-cond" onclick="calcCond()">CALCULAR CONDUCTIVIDAD</button>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-cond)">📋 Conductividad · Valores de referencia</div>
+          <table class="norm-table">
+            <tr><th>Punto / Uso</th><th>Valor</th><th>Fuente</th></tr>
+            <tr><td>Agua consumo — valor paramétrico legal</td><td class="hl">≤ 2.500 µS/cm a 20°C</td><td><span class="norm-tag tag-limite">RD 3/2023</span></td></tr>
+            <tr><td>Agua consumo — media real España 2019</td><td class="hl">491,57 µS/cm a 20°C</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Agua consumo — rango habitual red</td><td class="hl">≤ 500 µS/cm (58,7% muestras)</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Conformidad nacional 2019</td><td class="hl">99,82% (421.254 determ.)</td><td><span class="norm-tag tag-salida">MSAN 2019</span></td></tr>
+            <tr><td>Efluente EDAR — límite vertido</td><td class="hl">No regulado genéricamente</td><td><span class="norm-tag tag-limite">Org. Cuenca</span></td></tr>
+            <tr><td>Vertido red saneamiento (industrial)</td><td class="hl">&lt; 5.000 µS/cm (orientativo)</td><td><span class="norm-tag tag-entrada">Ley 5/2002</span></td></tr>
+          </table>
+          <div style="margin-top:10px;padding:8px 12px;background:#0a1520;border-left:3px solid var(--warn);border-radius:0 6px 6px 0;font-size:0.75rem;line-height:1.6;color:#94a3b8;font-family:'Share Tech Mono',monospace;">
+            ⚠ La conductividad <strong style="color:var(--c-cond)">no es parámetro regulado</strong> en Dir.91/271/CEE ni RD 509/1996 para EDAR urbana. El límite de vertido lo fija el Organismo de Cuenca. La media real de la red española es <strong style="color:var(--c-cond)">~492 µS/cm</strong> — muy lejos del límite legal de 2.500. Datos: Informe Técnico MSAN 2019 (p.147–148).
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-cond)">▶ Estado</div>
+          <div class="status-wrap" id="co-status">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-cond)">▶ Resultado</div>
+          <div class="big-value-wrap">
+            <div class="big-value" id="co-big" style="color:var(--c-cond)">—</div>
+            <div class="big-unit" id="co-big-unit">µS/cm</div>
+            <div class="big-ma" id="co-big-ma" style="color:var(--dim)">—</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-cond)">▶ Equivalencias</div>
+          <div class="r-grid">
+            <div class="r-cell"><div class="rl">µS/cm</div><div class="rv" id="co-us">—</div></div>
+            <div class="r-cell"><div class="rl">mS/cm</div><div class="rv" id="co-ms">—</div></div>
+            <div class="r-cell"><div class="rl">Resistividad</div><div class="rv" id="co-res">—</div><div class="ru">kΩ·cm</div></div>
+            <div class="r-cell"><div class="rl">TDS aprox.</div><div class="rv" id="co-tds">—</div><div class="ru">mg/L</div></div>
+          </div>
+          <div class="span-row" style="margin-top:14px;">
+            <div class="span-num" id="co-span-num">—</div>
+            <div class="span-bar-bg"><div class="span-bar-fill" id="co-bar" style="width:0%;background:var(--c-cond)"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-cond)">▶ Fórmula</div>
+          <div class="formula" id="co-formula">Ingrese un valor y calcule.</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--c-cond)">▶ Curva</div>
+          <canvas class="linechart" id="co-chart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+// ===== HELPERS =====
+const p = v => Number(String(v).replace(",","."));
+const fmt = (v,d=2) => isNaN(v)||v===null ? "—" : v.toLocaleString("es-ES",{maximumFractionDigits:d});
+
+function switchParam(id, btn){
+  document.querySelectorAll('.pnav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+function baseCalc(sig, minV, maxV, dir, val){
+  const minMA = sig==='0-20'?0:4;
+  const spanMA= sig==='0-20'?20:16;
+  let pv, mA, pct;
+  if(dir==='toVal'){
+    pct=(val-minMA)/spanMA;
+    pv = minV+(maxV-minV)*pct;
+    mA=val;
+  } else {
+    pct=(val-minV)/(maxV-minV);
+    mA = minMA+pct*spanMA;
+    pv=val;
+  }
+  return {pv, mA, pct, minMA, spanMA};
+}
+
+function signalStatus(sig, mA, id){
+  const el=document.getElementById(id);
+  if(sig==='4-20'){
+    if(mA<3.6){el.innerHTML="<span class='s-alarm'>⚠ ALARMA — Señal &lt; 3.6 mA · Cable roto o fallo alimentación</span>";return false;}
+    if(mA>20.5){el.innerHTML="<span class='s-alarm'>⚠ ALARMA — Overrange &gt; 20.5 mA</span>";return false;}
+    if(mA>=19.5){el.innerHTML="<span class='s-warn'>⚡ AVISO — Señal cercana a Overrange ("+fmt(mA,2)+" mA)</span>";return true;}
+    if(mA<=4.1){el.innerHTML="<span class='s-warn'>⚡ AVISO — Señal cerca de cero span ("+fmt(mA,2)+" mA)</span>";return true;}
+  }
+  el.innerHTML="<span class='s-ok'>✔ NORMAL · "+fmt(mA,3)+" mA</span>";
+  return true;
+}
+
+// ===== CHART =====
+function drawLine(canvasId, mAval, minV, maxV, sig, color, unitY){
+  const canvas=document.getElementById(canvasId);
+  if(!canvas) return;
+  const W=canvas.offsetWidth||520, H=canvas.height||180;
+  canvas.width=W;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  const mx=52,my=14,pw=W-mx-16,ph=H-my-32;
+  const minMA=sig==='0-20'?0:4, spanMA=sig==='0-20'?20:16;
+
+  // Grid
+  for(let i=0;i<=4;i++){
+    const y=my+ph*(1-i/4);
+    ctx.strokeStyle='#1a2a3a'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(mx,y); ctx.lineTo(mx+pw,y); ctx.stroke();
+    const v=minV+(maxV-minV)*(i/4);
+    ctx.fillStyle='#4a6070'; ctx.font='10px Share Tech Mono';
+    ctx.fillText(fmt(v,1),2,y+4);
+  }
+  // X ticks
+  const maTicks=sig==='0-20'?[0,5,10,15,20]:[4,8,12,16,20];
+  maTicks.forEach(m=>{
+    const x=mx+pw*(m-minMA)/spanMA;
+    ctx.fillStyle='#4a6070'; ctx.font='10px Share Tech Mono';
+    ctx.fillText(m,x-6,H-6);
+  });
+  // Axes
+  ctx.strokeStyle='#243547'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(mx,my); ctx.lineTo(mx,my+ph); ctx.lineTo(mx+pw,my+ph); ctx.stroke();
+  // Line
+  const grad=ctx.createLinearGradient(mx,my+ph,mx+pw,my);
+  grad.addColorStop(0,color+'60'); grad.addColorStop(1,color);
+  ctx.strokeStyle=grad; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(mx,my+ph); ctx.lineTo(mx+pw,my); ctx.stroke();
+  // Point
+  const px=mx+pw*(mAval-minMA)/spanMA;
+  const pct=(mAval-minMA)/spanMA;
+  const py=my+ph*(1-pct);
+  ctx.fillStyle=color+'25'; ctx.beginPath(); ctx.arc(px,py,14,0,2*Math.PI); ctx.fill();
+  ctx.fillStyle=color+'55'; ctx.beginPath(); ctx.arc(px,py,8,0,2*Math.PI); ctx.fill();
+  ctx.fillStyle=color;      ctx.beginPath(); ctx.arc(px,py,4,0,2*Math.PI); ctx.fill();
+  ctx.setLineDash([3,4]); ctx.strokeStyle=color+'60'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(px,my+ph); ctx.lineTo(px,py); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(mx,py); ctx.lineTo(px,py); ctx.stroke();
+  ctx.setLineDash([]);
+  // Labels
+  ctx.fillStyle='#4a6070'; ctx.font='bold 10px Share Tech Mono';
+  ctx.fillText('mA →',mx+pw/2-16,H-1);
+  ctx.save(); ctx.translate(10,my+ph/2+20); ctx.rotate(-Math.PI/2);
+  ctx.fillText(unitY,0,0); ctx.restore();
+}
+
+function setSpan(numId, barId, pct){
+  const p100=Math.max(0,Math.min(100,pct*100));
+  document.getElementById(numId).textContent=fmt(p100,1)+" %";
+  document.getElementById(barId).style.width=p100+"%";
+}
+
+// ===== FLOW =====
+const convF={ls:1, m3h:1000/3600, m3d:1000/86400};
+function calcFlow(){
+  const sig=document.getElementById('f-sig').value;
+  const unit=document.getElementById('f-unit').value;
+  const minV=p(document.getElementById('f-min').value);
+  const maxV=p(document.getElementById('f-max').value);
+  const dir=document.getElementById('f-dir').value;
+  const val=p(document.getElementById('f-val').value);
+  if([minV,maxV,val].some(isNaN)||maxV<=minV) return;
+  const minLS=minV*convF[unit], maxLS=maxV*convF[unit];
+  let {pv:fLS, mA, pct} = baseCalc(sig, minLS, maxLS, dir, dir==='toVal'?val:val*convF[unit]);
+  if(!signalStatus(sig,mA,'f-status')) return;
+  document.getElementById('f-big').textContent=fmt(fLS/convF[unit],3);
+  document.getElementById('f-big-unit').textContent=unit==='ls'?'L/s':unit==='m3h'?'m³/h':'m³/día';
+  document.getElementById('f-big-ma').textContent=fmt(mA,3)+" mA";
+  document.getElementById('f-ls').textContent=fmt(fLS,4);
+  document.getElementById('f-m3h').textContent=fmt(fLS*3.6,3);
+  document.getElementById('f-m3d').textContent=fmt(fLS*86.4,1);
+  document.getElementById('f-pct').textContent=fmt(pct*100,2);
+  document.getElementById('f-span-num').textContent=fmt(pct*100,1)+" %";
+  document.getElementById('f-bar').style.width=Math.max(0,Math.min(100,pct*100))+"%";
+  drawLine('f-chart',mA,minLS,maxLS,sig,'var(--c-flow)','L/s');
+}
+
+// ===== TURBIDITY =====
+function tSetRange(a,b,btn){
+  document.getElementById('t-min').value=a;
+  document.getElementById('t-max').value=b;
+  document.querySelectorAll('.tab-turb .pill').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function calcTurb(){
+  const sig=document.getElementById('t-sig').value;
+  const unit=document.getElementById('t-unit-sel').value;
+  const minV=p(document.getElementById('t-min').value);
+  const maxV=p(document.getElementById('t-max').value);
+  const dir=document.getElementById('t-dir').value;
+  const val=p(document.getElementById('t-val').value);
+  if([minV,maxV,val].some(isNaN)||maxV<=minV) return;
+  const {pv:tv, mA, pct, minMA, spanMA}=baseCalc(sig,minV,maxV,dir,val);
+  if(!signalStatus(sig,mA,'t-status')) return;
+  document.getElementById('t-big').textContent=fmt(tv,3);
+  document.getElementById('t-big-unit').textContent=unit;
+  document.getElementById('t-big-ma').textContent=fmt(mA,3)+" mA";
+  setSpan('t-span-num','t-bar',pct);
+  const fDir=dir==='toVal';
+  document.getElementById('t-formula').textContent=fDir
+    ?`Turbidez = LRV + (URV − LRV) × (mA − ${minMA}) / ${spanMA}
+           = ${fmt(minV,1)} + (${fmt(maxV,1)} − ${fmt(minV,1)}) × (${fmt(val,3)} − ${minMA}) / ${spanMA}
+           = ${fmt(tv,4)} ${unit}
+% Span = (${fmt(val,3)} − ${minMA}) / ${spanMA} × 100 = ${fmt(pct*100,2)} %`
+    :`mA = ${minMA} + (val − LRV) / (URV − LRV) × ${spanMA}
+     = ${minMA} + (${fmt(val,3)} − ${fmt(minV,1)}) / (${fmt(maxV,1)} − ${fmt(minV,1)}) × ${spanMA}
+     = ${fmt(mA,4)} mA
+% Span = ${fmt(pct*100,2)} %`;
+  drawLine('t-chart',mA,minV,maxV,sig,'var(--c-turb)',unit);
+}
+
+// ===== pH =====
+function phSetRange(a,b,btn){
+  document.getElementById('ph-min').value=a;
+  document.getElementById('ph-max').value=b;
+  document.querySelectorAll('.tab-ph .pill').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function buildPhScale(){
+  const scale=document.getElementById('ph-scale-bar');
+  const colors=[
+    {c:'#d32f2f',w:7},{c:'#f57c00',w:7},{c:'#fbc02d',w:7},
+    {c:'#689f38',w:7},{c:'#388e3c',w:14},{c:'#0288d1',w:21},
+    {c:'#1565c0',w:21},{c:'#4a148c',w:16}
+  ];
+  scale.innerHTML=colors.map(z=>`<div style="flex:${z.w};background:${z.c}40;border-right:1px solid ${z.c}30"></div>`).join('');
+}
+buildPhScale();
+
+function calcPH(){
+  const sig=document.getElementById('ph-sig').value;
+  const minV=p(document.getElementById('ph-min').value);
+  const maxV=p(document.getElementById('ph-max').value);
+  const dir=document.getElementById('ph-dir').value;
+  const val=p(document.getElementById('ph-val').value);
+  if([minV,maxV,val].some(isNaN)||maxV<=minV) return;
+  const {pv:phv, mA, pct}=baseCalc(sig,minV,maxV,dir,val);
+  if(!signalStatus(sig,mA,'ph-status')) return;
+  document.getElementById('ph-big').textContent=fmt(phv,2);
+  document.getElementById('ph-big-ma').textContent=fmt(mA,3)+" mA";
+  setSpan('ph-span-num','ph-bar',pct);
+  // pH marker (always on 0-14 scale)
+  const markerPct=Math.max(0,Math.min(100,(phv/14)*100));
+  document.getElementById('ph-marker').style.left=markerPct+"%";
+  // Zone
+  let zone,zcolor;
+  if(phv<3){zone="Muy ácido — Peligroso";zcolor='var(--alarm)';}
+  else if(phv<6){zone="Ácido — Fuera de rango EDAR";zcolor='var(--warn)';}
+  else if(phv<=9){zone="✔ Rango aceptable EDAR (6–9)";zcolor='var(--ok)';}
+  else if(phv<=11){zone="Básico — Vigilar";zcolor='var(--warn)';}
+  else{zone="Muy alcalino — Alarma";zcolor='var(--alarm)';}
+  document.getElementById('ph-zone').innerHTML=`<span style="color:${zcolor}">${zone}</span>`;
+  drawLine('ph-chart',mA,minV,maxV,sig,'var(--c-ph)','pH');
+}
+
+// ===== TEMPERATURE =====
+function teSetRange(a,b,btn){
+  document.getElementById('te-min').value=a;
+  document.getElementById('te-max').value=b;
+  document.querySelectorAll('.tab-temp .pill').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function calcTemp(){
+  const sig=document.getElementById('te-sig').value;
+  const unitIn=document.getElementById('te-unit-sel').value;
+  const minV=p(document.getElementById('te-min').value);
+  const maxV=p(document.getElementById('te-max').value);
+  const dir=document.getElementById('te-dir').value;
+  const val=p(document.getElementById('te-val').value);
+  if([minV,maxV,val].some(isNaN)||maxV<=minV) return;
+  const {pv:tv, mA, pct}=baseCalc(sig,minV,maxV,dir,val);
+  if(!signalStatus(sig,mA,'te-status')) return;
+  // Convert to °C regardless of input unit
+  const tC=unitIn==='°F'?(tv-32)*5/9:tv;
+  document.getElementById('te-big').textContent=fmt(tv,2);
+  document.getElementById('te-big-unit').textContent=unitIn;
+  document.getElementById('te-big-ma').textContent=fmt(mA,3)+" mA";
+  document.getElementById('te-c').textContent=fmt(tC,2);
+  document.getElementById('te-f').textContent=fmt(tC*9/5+32,2);
+  document.getElementById('te-k').textContent=fmt(tC+273.15,2);
+  document.getElementById('te-pct').textContent=fmt(pct*100,2);
+  document.getElementById('te-span-num').textContent=fmt(pct*100,1)+" %";
+  document.getElementById('te-bar').style.width=Math.max(0,Math.min(100,pct*100))+"%";
+  drawLine('te-chart',mA,minV,maxV,sig,'var(--c-temp)',unitIn);
+}
+
+// ===== CONDUCTIVITY =====
+function coSetRange(a,b,btn){
+  document.getElementById('co-min').value=a;
+  document.getElementById('co-max').value=b;
+  document.querySelectorAll('.tab-cond .pill').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function calcCond(){
+  const sig=document.getElementById('co-sig').value;
+  const unit=document.getElementById('co-unit-sel').value;
+  const minV=p(document.getElementById('co-min').value);
+  const maxV=p(document.getElementById('co-max').value);
+  const dir=document.getElementById('co-dir').value;
+  const val=p(document.getElementById('co-val').value);
+  if([minV,maxV,val].some(isNaN)||maxV<=minV) return;
+  const {pv:cv, mA, pct, minMA, spanMA}=baseCalc(sig,minV,maxV,dir,val);
+  if(!signalStatus(sig,mA,'co-status')) return;
+  // To µS/cm
+  const us=unit==='mS'?cv*1000:cv;
+  document.getElementById('co-big').textContent=fmt(cv,2);
+  document.getElementById('co-big-unit').textContent=unit==='mS'?'mS/cm':'µS/cm';
+  document.getElementById('co-big-ma').textContent=fmt(mA,3)+" mA";
+  document.getElementById('co-us').textContent=fmt(us,1);
+  document.getElementById('co-ms').textContent=fmt(us/1000,4);
+  document.getElementById('co-res').textContent=us>0?fmt(1000/us,3):"∞";
+  document.getElementById('co-tds').textContent=fmt(us*0.65,1); // TDS ≈ 0.65 × µS/cm (factor NaCl)
+  setSpan('co-span-num','co-bar',pct);
+  const fDir=dir==='toVal';
+  document.getElementById('co-formula').textContent=fDir
+    ?`Conductividad = LRV + (URV − LRV) × (mA − ${minMA}) / ${spanMA}
+               = ${fmt(minV,1)} + (${fmt(maxV,1)} − ${fmt(minV,1)}) × (${fmt(val,3)} − ${minMA}) / ${spanMA}
+               = ${fmt(cv,3)} ${unit==='mS'?'mS/cm':'µS/cm'}
+
+TDS aprox. = Cond[µS/cm] × 0.65 = ${fmt(us*0.65,1)} mg/L
+Resistividad = 1000 / Cond[µS/cm] = ${us>0?fmt(1000/us,3):"∞"} kΩ·cm`
+    :`mA = ${minMA} + (val − LRV) / (URV − LRV) × ${spanMA}
+     = ${fmt(mA,4)} mA
+% Span = ${fmt(pct*100,2)} %`;
+  drawLine('co-chart',mA,minV,maxV,sig,'var(--c-cond)',unit==='mS'?'mS/cm':'µS/cm');
+}
+</script>
+</body>
+</html>

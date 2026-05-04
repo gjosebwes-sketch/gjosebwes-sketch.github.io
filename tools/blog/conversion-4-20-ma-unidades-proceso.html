@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cómo convertir 4-20 mA a unidades de proceso — Calculadora gratuita | WaterTools.es</title>
-    <meta name="description" content="Fórmula y ejemplos para convertir señales 4-20 mA a unidades de proceso (caudal, presión, nivel, temperatura). Calculadora gratuita online para EDAR e instrumentación.">
+    <meta name="description" content="Fórmula y ejemplos para convertir señales 4-20 mA y 0-20 mA a unidades de proceso (caudal, presión, nivel, temperatura). Calculadora gratuita online para EDAR e instrumentación.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://watertools.es/tools/blog/conversion-4-20-ma-unidades-proceso.html">
 
@@ -15,7 +15,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Cómo convertir 4-20 mA a unidades de proceso — WaterTools.es">
-    <meta property="og:description" content="Fórmula, ejemplos reales y calculadora gratuita para convertir señales 4-20 mA a caudal, presión, nivel y temperatura en EDAR y plantas de tratamiento.">
+    <meta property="og:description" content="Fórmula, ejemplos reales y calculadora gratuita para convertir señales 4-20 mA y 0-20 mA a caudal, presión, nivel y temperatura en EDAR y plantas de tratamiento.">
     <meta property="og:url" content="https://watertools.es/tools/blog/conversion-4-20-ma-unidades-proceso.html">
     <meta property="og:site_name" content="WaterTools.es">
     <meta property="og:locale" content="es_ES">
@@ -23,20 +23,20 @@
     <meta property="article:author" content="Gustavo Blanco Walter">
     <meta property="article:section" content="Instrumentación">
     <meta property="article:tag" content="4-20 mA">
+    <meta property="article:tag" content="0-20 mA">
     <meta property="article:tag" content="instrumentación">
     <meta property="article:tag" content="EDAR">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Cómo convertir 4-20 mA a unidades de proceso">
-    <meta name="twitter:description" content="Fórmula, ejemplos y calculadora gratuita para señales 4-20 mA en EDAR.">
+    <meta name="twitter:description" content="Fórmula, ejemplos y calculadora gratuita para señales 4-20 mA y 0-20 mA en EDAR.">
 
-    <!-- Schema.org: Article -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "Cómo convertir una señal 4-20 mA a unidades de proceso",
-        "description": "Guía técnica con fórmula, ejemplos prácticos y calculadora gratuita para convertir señales 4-20 mA a unidades de proceso en EDAR e instrumentación industrial.",
+        "description": "Guía técnica con fórmula, ejemplos prácticos y calculadora gratuita para convertir señales 4-20 mA y 0-20 mA a unidades de proceso en EDAR e instrumentación industrial.",
         "author": {
             "@type": "Person",
             "name": "Gustavo Blanco Walter",
@@ -55,7 +55,6 @@
     }
     </script>
 
-    <!-- Schema.org: FAQ -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -100,12 +99,19 @@
                     "@type": "Answer",
                     "text": "Sí, los receptores se conectan en serie dentro del bucle. La suma de todas las resistencias de entrada no debe superar el máximo permitido por la tensión de alimentación. Típicamente se conectan 2-3 receptores (PLC + indicador local + registrador) sin problema si la resistencia total es inferior a 500-600 ohmios con alimentación de 24 V."
                 }
+            },
+            {
+                "@type": "Question",
+                "name": "¿Cuál es la diferencia entre señal 4-20 mA y 0-20 mA?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "En 4-20 mA, 4 mA equivale al 0% del rango y 20 mA al 100%. Esto permite detectar fallos de cable (0 mA = fallo) y alimentar el transmisor desde el bucle. En 0-20 mA, 0 mA = 0% y no se puede distinguir un cable cortado de cero de proceso. Son incompatibles: configurar mal el tipo da lecturas erróneas."
+                }
             }
         ]
     }
     </script>
 
-    <!-- Breadcrumb Schema -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -152,8 +158,6 @@
         }
         a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
         a:hover { color: var(--accent-dark); }
-
-        /* NAVBAR */
         .topbar {
             position: sticky; top: 0; z-index: 100; background: var(--bg-card);
             border-bottom: 1px solid var(--border); padding: 0 24px;
@@ -180,8 +184,6 @@
         .theme-btn .icon-sun { display: none; }
         [data-theme="dark"] .theme-btn .icon-moon { display: none; }
         [data-theme="dark"] .theme-btn .icon-sun { display: block; }
-
-        /* BREADCRUMB */
         .breadcrumb {
             max-width: var(--max-w); margin: 0 auto; padding: 20px 24px 0;
             font-size: 0.82rem; color: var(--text-secondary);
@@ -189,8 +191,6 @@
         .breadcrumb a { color: var(--text-secondary); }
         .breadcrumb a:hover { color: var(--accent); }
         .breadcrumb span { margin: 0 6px; opacity: 0.4; }
-
-        /* ARTICLE */
         .article-wrap {
             max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 80px;
         }
@@ -203,29 +203,21 @@
             border-radius: 6px; font-weight: 600; font-size: 0.75rem;
         }
         .article-meta .tag.warm { background: var(--warm-light); color: var(--warm); }
-
         .article-wrap h1 {
             font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem);
             font-weight: 700; line-height: 1.2; margin-bottom: 20px;
         }
         .article-wrap h1 em { color: var(--accent); font-style: italic; }
-
         .article-intro {
             font-size: 1.08rem; color: var(--text-secondary); line-height: 1.8;
             margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border);
         }
-
-        /* SECTIONS */
         .article-wrap h2 {
             font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
             margin: 48px 0 16px; line-height: 1.3;
         }
         .article-wrap h2 em { color: var(--accent); font-style: italic; }
-
-        .article-wrap h3 {
-            font-size: 1.1rem; font-weight: 700; margin: 32px 0 12px;
-        }
-
+        .article-wrap h3 { font-size: 1.1rem; font-weight: 700; margin: 32px 0 12px; }
         .article-wrap p { margin-bottom: 16px; line-height: 1.8; }
         .article-wrap ul, .article-wrap ol {
             margin: 0 0 20px 0; padding-left: 0; list-style: none;
@@ -245,8 +237,6 @@
             border-radius: 6px; font-size: 0.72rem; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
         }
-
-        /* CODE / FORMULA BOXES */
         .formula-box {
             background: var(--accent-light); border: 1px solid var(--accent);
             border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0;
@@ -260,15 +250,18 @@
             font-size: 0.78rem; font-weight: 600; color: var(--accent);
             text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;
         }
-
+        .formula-box.warn {
+            background: var(--warm-light); border-color: var(--warm);
+            border-left-color: var(--warm);
+        }
+        .formula-box.warn code { color: var(--warm-dark); }
+        .formula-box.warn .formula-label { color: var(--warm-dark); }
         .code-block {
             background: var(--code-bg); border: 1px solid var(--code-border);
             border-radius: 10px; padding: 20px 24px; margin: 20px 0;
             overflow-x: auto; font-family: 'Courier New', monospace;
             font-size: 0.88rem; line-height: 1.7; color: var(--text);
         }
-
-        /* EXAMPLE TABLES */
         .example-table {
             width: 100%; border-collapse: collapse; margin: 20px 0;
             font-size: 0.9rem; border-radius: 10px; overflow: hidden;
@@ -287,11 +280,7 @@
         .example-table td.mono {
             font-family: 'Courier New', monospace; font-weight: 600; color: var(--accent);
         }
-        .example-table td.result {
-            font-weight: 700; color: var(--text);
-        }
-
-        /* CALCULATOR CTA */
+        .example-table td.result { font-weight: 700; color: var(--text); }
         .calc-cta {
             background: var(--bg-card); border: 2px solid var(--accent);
             border-radius: 16px; padding: 32px; margin: 40px 0;
@@ -317,11 +306,7 @@
         }
         .calc-cta-btn:hover { background: var(--accent-dark); transform: translateY(-1px); color: #fff; }
         .calc-cta-btn svg { width: 16px; height: 16px; }
-        @media (max-width: 600px) {
-            .calc-cta { flex-direction: column; text-align: center; }
-        }
-
-        /* TIP / NOTE BOXES */
+        @media (max-width: 600px) { .calc-cta { flex-direction: column; text-align: center; } }
         .tip-box {
             background: var(--green-light); border: 1px solid var(--green);
             border-left: 4px solid var(--green); border-radius: 0 10px 10px 0;
@@ -329,7 +314,6 @@
         }
         .tip-box strong { color: var(--green); }
         .tip-box p { margin: 0; font-size: 0.92rem; }
-
         .warn-box {
             background: var(--warm-light); border: 1px solid var(--warm);
             border-left: 4px solid var(--warm); border-radius: 0 10px 10px 0;
@@ -337,7 +321,6 @@
         }
         .warn-box strong { color: var(--warm-dark); }
         .warn-box p { margin: 0; font-size: 0.92rem; }
-
         .error-box {
             background: var(--red-light); border: 1px solid var(--red);
             border-left: 4px solid var(--red); border-radius: 0 10px 10px 0;
@@ -345,12 +328,9 @@
         }
         .error-box strong { color: var(--red); }
         .error-box p { margin: 0; font-size: 0.92rem; }
-
-        /* INTERACTIVE CALCULATOR INLINE */
         .inline-calc {
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 14px; padding: 28px; margin: 32px 0;
-            box-shadow: var(--shadow);
+            border-radius: 14px; padding: 28px; margin: 32px 0; box-shadow: var(--shadow);
         }
         .inline-calc h4 {
             font-size: 1rem; font-weight: 700; margin-bottom: 20px;
@@ -362,9 +342,7 @@
             border-radius: 7px; display: flex; align-items: center; justify-content: center;
             font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
         }
-        .calc-fields {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;
-        }
+        .calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
         .calc-field label {
             display: block; font-size: 0.8rem; font-weight: 600;
             margin-bottom: 5px; color: var(--text-secondary);
@@ -374,6 +352,12 @@
             font-family: var(--font-body); color: var(--text);
             background: var(--bg); border: 1.5px solid var(--border);
             border-radius: 8px; outline: none; transition: all 0.2s;
+        }
+        .calc-field select {
+            appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a7080' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 12px center;
+            padding-right: 32px;
         }
         .calc-field input:focus, .calc-field select:focus {
             border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow);
@@ -397,8 +381,6 @@
         }
         .calc-btn:hover { background: var(--accent-dark); }
         @media (max-width: 500px) { .calc-fields { grid-template-columns: 1fr; } }
-
-        /* FAQ SECTION */
         .faq-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
         .faq-section h2 { margin-bottom: 24px; }
         .faq-item {
@@ -419,15 +401,9 @@
             transition: transform 0.3s var(--ease);
         }
         .faq-item.open .faq-question svg { transform: rotate(180deg); color: var(--accent); }
-        .faq-answer {
-            max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease);
-        }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease); }
         .faq-item.open .faq-answer { max-height: 300px; }
-        .faq-answer-inner {
-            padding: 0 20px 16px; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7;
-        }
-
-        /* AUTHOR BOX */
+        .faq-answer-inner { padding: 0 20px 16px; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; }
         .author-box {
             margin-top: 48px; padding: 24px; background: var(--bg-card);
             border: 1px solid var(--border); border-radius: 14px;
@@ -441,8 +417,6 @@
         }
         .author-box h4 { font-size: 0.95rem; margin-bottom: 4px; }
         .author-box p { font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.6; }
-
-        /* BOTTOM NAV */
         .bottom-nav {
             margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);
             display: flex; gap: 16px; flex-wrap: wrap;
@@ -455,26 +429,18 @@
         .bottom-nav a:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
         .bottom-nav .nav-label { font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
         .bottom-nav .nav-title { font-size: 0.92rem; font-weight: 700; color: var(--text); }
-
-        /* FOOTER */
         .article-footer {
             max-width: var(--max-w); margin: 0 auto; padding: 32px 24px;
             border-top: 1px solid var(--border); text-align: center;
             font-size: 0.82rem; color: var(--text-secondary);
         }
         .article-footer a { color: var(--accent); }
-
-        @media (max-width: 768px) {
-            .article-wrap { padding: 24px 16px 60px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { transition-duration: 0.01ms !important; }
-        }
+        @media (max-width: 768px) { .article-wrap { padding: 24px 16px 60px; } }
+        @media (prefers-reduced-motion: reduce) { *,*::before,*::after { transition-duration: 0.01ms !important; } }
     </style>
 </head>
 <body>
 
-    <!-- TOPBAR -->
     <nav class="topbar">
         <div class="topbar-inner">
             <a href="/" class="topbar-logo">
@@ -494,14 +460,12 @@
         </div>
     </nav>
 
-    <!-- BREADCRUMB -->
     <div class="breadcrumb">
         <a href="/">Inicio</a><span>›</span>
         <a href="/#tools">Herramientas</a><span>›</span>
         Convertir 4-20 mA a unidades de proceso
     </div>
 
-    <!-- ARTICLE -->
     <article class="article-wrap">
 
         <div class="article-meta">
@@ -509,21 +473,20 @@
             <span class="tag warm">EDAR</span>
             <span>15 enero 2025</span>
             <span>·</span>
-            <span>8 min lectura</span>
+            <span>10 min lectura</span>
         </div>
 
         <h1>Cómo convertir una señal <em>4-20 mA</em> a unidades de proceso</h1>
 
         <p class="article-intro">
-            La señal 4-20 mA es el estándar de comunicación en la inmensa mayoría de transmisores de campo en EDAR, ETAP, desaladores y plantas industriales. Pero el valor en miliamperios que ves en el PLC o en el indicador local no te dice directamente cuántos m³/h pasan por la tubería ni qué presión hay en el conducto. Aquí explico la fórmula, con ejemplos reales de plantas de tratamiento de agua, y una calculadora que puedes usar al instante.
+            La señal 4-20 mA es el estándar de comunicación en la inmensa mayoría de transmisores de campo en EDAR, ETAP, desaladores y plantas industriales. Pero el valor en miliamperios que ves en el PLC o en el indicador local no te dice directamente cuántos m³/h pasan por la tubería ni qué presión hay en el conducto. Aquí explico la fórmula —tanto para 4-20 mA como para 0-20 mA— con ejemplos reales de plantas de tratamiento de agua, y una calculadora que puedes usar al instante.
         </p>
 
-        <!-- CALCULATOR CTA -->
         <div class="calc-cta">
             <div class="calc-cta-icon">mA</div>
             <div class="calc-cta-text">
                 <h3>Calculadora 4-20 mA gratuita</h3>
-                <p>Convierte señales a unidades de proceso en segundos. Incluye todos los rangos típicos de EDAR e instrumentación.</p>
+                <p>Convierte señales a unidades de proceso en segundos. Incluye 4-20 mA y 0-20 mA, con todos los rangos típicos de EDAR.</p>
                 <a href="/tools/edar-ma-calculator.html" class="calc-cta-btn">
                     Abrir calculadora
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -545,7 +508,73 @@
             <p><strong>¿Por qué 4 mA y no 0 mA?</strong> Porque 4 mA permite alimentar el circuito electrónico del transmisor directamente desde el bucle (sin alimentación separada) y, lo más importante: si el cable se rompe, la corriente cae a 0 mA y el PLC detecta el fallo inmediatamente. A esto se le llama <em>live zero</em>.</p>
         </div>
 
-        <h2>La fórmula de conversión</h2>
+        <h2>¿Y la señal 0-20 mA?</h2>
+
+        <p>Existe, es legal, y todavía se usa en ciertos equipos. La diferencia fundamental es que <strong>0 mA equivale al 0% del rango</strong> y <strong>20 mA al 100%</strong>. No hay "live zero". La fórmula cambia:</p>
+
+        <div class="formula-box warn">
+            <div class="formula-label">Fórmula para 0-20 mA</div>
+            <code>Valor = (mA / 20) × (Rango máx − Rango mín) + Rango mín</code>
+        </div>
+
+        <p>Comparación directa entre ambos estándares:</p>
+
+        <table class="example-table">
+            <thead>
+                <tr>
+                    <th>Señal (mA)</th>
+                    <th>4-20 mA → %</th>
+                    <th>0-20 mA → %</th>
+                    <th>Diferencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="mono">0</td>
+                    <td style="color:var(--red);font-weight:700">FALLO DE CABLE</td>
+                    <td class="result">0%</td>
+                    <td style="font-size:0.85rem;color:var(--text-secondary)">Aquí está el problema</td>
+                </tr>
+                <tr>
+                    <td class="mono">4</td>
+                    <td class="result">0%</td>
+                    <td class="result">20%</td>
+                    <td style="font-size:0.85rem;color:var(--red)">4 mA = 20% en 0-20 mA</td>
+                </tr>
+                <tr>
+                    <td class="mono">12</td>
+                    <td class="result">50%</td>
+                    <td class="result">60%</td>
+                    <td style="font-size:0.85rem;color:var(--text-secondary)">Siempre 10% de diferencia</td>
+                </tr>
+                <tr>
+                    <td class="mono">20</td>
+                    <td class="result">100%</td>
+                    <td class="result">100%</td>
+                    <td style="font-size:0.85rem;color:var(--text-secondary)">Solo coinciden en el tope</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="error-box">
+            <p><strong>Error crítico de aprendices:</strong> Configurar un transmisor de 4-20 mA en el PLC como si fuera 0-20 mA (o viceversa) da lecturas erróneas en toda la escala. Si el transmisor envía 4 mA y el PLC espera 0-20 mA, interpretará que estás al 20% cuando en realidad estás al 0%. Antes de calibrar, <strong>verifica siempre qué tipo de señal entrega el transmisor</strong> (lo dice en la placa de características o en el manual).</p>
+        </div>
+
+        <h3>¿Dónde se encuentra 0-20 mA todavía?</h3>
+
+        <ul>
+            <li><strong>Equipos antiguos</strong> — Algunos transmisores de los años 80-90 usaban 0-20 mA como estándar propio del fabricante</li>
+            <li><strong>Convertidores I/P</strong> — Ciertos convertidores corriente-presión para válvulas de control trabajan en 0-20 mA</li>
+            <li><strong>Salidas de algunos PLCs</strong> — Salidas analógicas configurables que por defecto pueden venir en 0-20 mA</li>
+            <li><strong>Instrumentos de gama baja</strong> — Algunos analizadores de cloro, pH o turbidez de bajo costo</li>
+            <li><strong>Países con normativa histórica</strong> — En algunos países de Sudamérica y Asia se usó 0-20 mA como estándar nacional</li>
+        </ul>
+
+        <div class="tip-box">
+            <p><strong>Regla práctica:</strong> Si ves un transmisor con solo dos hilos (sin alimentación separada), es casi seguro que es 4-20 mA (necesita los 4 mA mínimos para alimentarse). Si tiene 4 hilos (dos de alimentación + dos de señal), podría ser 0-20 mA. Siempre verifica la placa del instrumento.</p>
+        </div>
+
+        <h2>La fórmula de conversión (4-20 mA)</h2>
 
         <p>La conversión de miliamperios a unidades de proceso se hace en dos pasos: primero pasas de mA a porcentaje de rango, luego de porcentaje a unidades reales.</p>
 
@@ -562,7 +591,7 @@
         <p>Combinadas en una sola expresión:</p>
 
         <div class="formula-box">
-            <div class="formula-label">Fórmula completa</div>
+            <div class="formula-label">Fórmula completa — 4-20 mA</div>
             <code>Valor = ((mA − 4) / 16) × (Rango máx − Rango mín) + Rango mín</code>
         </div>
 
@@ -573,12 +602,13 @@
             <li><strong>Rango máx</strong> = valor de proceso correspondiente a 20 mA (tope de escala)</li>
         </ul>
 
-        <h2>Ejemplo 1: Caudalímetro en una EDAR</h2>
+        <h2>Ejemplo 1: Caudalímetro en una EDAR (4-20 mA)</h2>
 
         <p>Tienes un caudalímetro electromagnético instalado a la entrada de la EDAR con las siguientes características:</p>
 
         <ul>
             <li>Rango: <strong>0 a 500 m³/h</strong></li>
+            <li>Tipo de señal: <strong>4-20 mA</strong></li>
             <li>Señal actual del PLC: <strong>12 mA</strong></li>
         </ul>
 
@@ -591,7 +621,21 @@ Valor = 0.5 × 500
 
         <p>La planta está recibiendo exactamente 250 m³/h, que es el 50% del rango del instrumento. Esto coincide con lo esperado: 12 mA es justo la mitad del rango 4-20 mA.</p>
 
-        <h2>Ejemplo 2: Presión en una planta de ósmosis inversa</h2>
+        <h2>Ejemplo 2: Misma señal con 0-20 mA (para ver la diferencia)</h2>
+
+        <p>Imagina que el mismo caudalímetro fuera <strong>0-20 mA</strong> en vez de 4-20 mA. Con la misma señal de 12 mA:</p>
+
+        <div class="code-block">
+Valor = (12 / 20) × (500 − 0) + 0
+Valor = 0.6 × 500
+<strong>Valor = 300 m³/h</strong>
+        </div>
+
+        <div class="warn-box">
+            <p><strong>Mismo cable, misma señal, resultado distinto:</strong> 12 mA da 250 m³/h en 4-20 mA pero 300 m³/h en 0-20 mA. Una diferencia de 50 m³/h que puede provocar decisiones operativas equivocadas. Por eso es fundamental verificar el tipo de señal antes de interpretar cualquier lectura.</p>
+        </div>
+
+        <h2>Ejemplo 3: Presión en una planta de ósmosis inversa</h2>
 
         <p>Transmisor de presión a la entrada de los módulos OI:</p>
 
@@ -608,10 +652,10 @@ Valor = 0.65 × 16
         </div>
 
         <div class="warn-box">
-            <p><strong>En planta real:</strong> Si el manómetro local marca 10.4 bar y el PLC indica lo mismo, el transmisor está bien calibrado. Si hay diferencia, el problema puede ser en el calibrador, en la configuración del rango del bloque analógico del PLC, o en el propio transmisor.</p>
+            <p><strong>En planta real:</strong> Si el manómetro local marca 10.4 bar y el PLC indica lo mismo, el transmisor está bien calibrado. Si hay diferencia, el problema puede estar en el calibrador, en la configuración del rango del bloque analógico del PLC, o en el propio transmisor.</p>
         </div>
 
-        <h2>Ejemplo 3: Nivel con rango desplazado (no empieza en cero)</h2>
+        <h2>Ejemplo 4: Nivel con rango desplazado (no empieza en cero)</h2>
 
         <p>Este es el caso que más errores causa. Un transmisor de nivel en un tanque de decantación con rango desplazado:</p>
 
@@ -629,10 +673,10 @@ Valor = 0.5 + 1.5
         </div>
 
         <div class="error-box">
-            <p><strong>Error frecuente:</strong> Muchos técnicos calculan solo el porcentaje (20%) y lo aplican al rango máximo: 20% × 4.0 = 0.8 m. <strong> Eso es incorrecto.</strong> Hay que sumar siempre el valor mínimo del rango (1.5 m en este caso). Ignorar el rango desplazado es una de las causas más comunes de lecturas erróneas en EDAR.</p>
+            <p><strong>Error frecuente:</strong> Muchos técnicos calculan solo el porcentaje (20%) y lo aplican al rango máximo: 20% × 4.0 = 0.8 m. <strong>Eso es incorrecto.</strong> Hay que sumar siempre el valor mínimo del rango (1.5 m en este caso). Ignorar el rango desplazado es una de las causas más comunes de lecturas erróneas en EDAR. Este error ocurre igual con 0-20 mA — la fórmula del rango desplazado es la misma para ambos tipos de señal.</p>
         </div>
 
-        <h2>Ejemplo 4: Temperatura en una torre de enfriamiento</h2>
+        <h2>Ejemplo 5: Temperatura en una torre de enfriamiento</h2>
 
         <ul>
             <li>Rango: <strong>15 a 45 °C</strong></li>
@@ -649,56 +693,69 @@ Valor = 25.5 + 15
 
         <h2>Tabla de referencia rápida</h2>
 
-        <p>Para un rango genérico de 0 a 100% (sin unidades), estos son los valores de correspondencia:</p>
+        <p>Para un rango genérico de 0 a 100%, estos son los valores de correspondencia de ambos estándares:</p>
 
         <table class="example-table">
             <thead>
                 <tr>
                     <th>Señal (mA)</th>
-                    <th>Porcentaje (%)</th>
-                    <th>Ejemplo 0-500 m³/h</th>
-                    <th>Ejemplo 1.5-4.0 m</th>
+                    <th>4-20 mA → %</th>
+                    <th>0-20 mA → %</th>
+                    <th>Ej: 0-500 m³/h (4-20)</th>
+                    <th>Ej: 0-500 m³/h (0-20)</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td class="mono">4.0</td><td>0%</td><td class="result">0</td><td class="result">1.50</td></tr>
-                <tr><td class="mono">8.0</td><td>25%</td><td class="result">125</td><td class="result">2.13</td></tr>
-                <tr><td class="mono">12.0</td><td>50%</td><td class="result">250</td><td class="result">2.75</td></tr>
-                <tr><td class="mono">16.0</td><td>75%</td><td class="result">375</td><td class="result">3.38</td></tr>
-                <tr><td class="mono">20.0</td><td>100%</td><td class="result">500</td><td class="result">4.00</td></tr>
+                <tr><td class="mono">0</td><td style="color:var(--red)">FALLO</td><td class="result">0%</td><td style="color:var(--red)">—</td><td class="result">0</td></tr>
+                <tr><td class="mono">4</td><td class="result">0%</td><td class="result">20%</td><td class="result">0</td><td class="result">100</td></tr>
+                <tr><td class="mono">8</td><td class="result">25%</td><td class="result">40%</td><td class="result">125</td><td class="result">200</td></tr>
+                <tr><td class="mono">12</td><td class="result">50%</td><td class="result">60%</td><td class="result">250</td><td class="result">300</td></tr>
+                <tr><td class="mono">16</td><td class="result">75%</td><td class="result">80%</td><td class="result">375</td><td class="result">400</td></tr>
+                <tr><td class="mono">20</td><td class="result">100%</td><td class="result">100%</td><td class="result">500</td><td class="result">500</td></tr>
             </tbody>
         </table>
 
         <h2>Inversa: de unidades a mA</h2>
 
-        <p>A veces necesitas saber qué señal deberías leer para un valor dado de proceso (por ejemplo, para verificar una calibración). La fórmula inversa es:</p>
+        <p>A veces necesitas saber qué señal deberías leer para un valor dado de proceso (por ejemplo, para verificar una calibración). Las fórmulas inversas son:</p>
 
         <div class="formula-box">
-            <div class="formula-label">Conversión inversa</div>
+            <div class="formula-label">Inversa — 4-20 mA</div>
             <code>mA = ((Valor − Rango mín) / (Rango máx − Rango mín)) × 16 + 4</code>
+        </div>
+
+        <div class="formula-box warn">
+            <div class="formula-label">Inversa — 0-20 mA</div>
+            <code>mA = ((Valor − Rango mín) / (Rango máx − Rango mín)) × 20</code>
         </div>
 
         <p>Ejemplo: ¿qué mA debería dar un caudalímetro de 0-500 m³/h midiendo 200 m³/h?</p>
 
         <div class="code-block">
+<strong>Si es 4-20 mA:</strong>
 mA = ((200 − 0) / (500 − 0)) × 16 + 4
-mA = (200 / 500) × 16 + 4
-mA = 0.4 × 16 + 4
-<strong>mA = 10.4</strong>
+mA = 0.4 × 16 + 4 = <strong>10.4 mA</strong>
+
+<strong>Si es 0-20 mA:</strong>
+mA = ((200 − 0) / (500 − 0)) × 20
+mA = 0.4 × 20 = <strong>8.0 mA</strong>
         </div>
 
-        <p>Si tu calibrador inyecta 10.4 mA y el PLC muestra 200 m³/h, la calibración es correcta.</p>
+        <p>Misma lectura de proceso, señales completamente distintas. Verifica siempre qué tipo de señal espera el PLC.</p>
 
         <h2>Calculadora interactiva</h2>
 
-        <p>Prueba aquí mismo con tus valores reales de planta:</p>
+        <p>Prueba aquí mismo con tus valores reales de planta. Selecciona el tipo de señal (4-20 mA o 0-20 mA) y compara los resultados:</p>
 
         <div class="inline-calc">
-            <h4><span>mA</span> Convertir señal 4-20 mA</h4>
+            <h4><span>mA</span> Convertir señal a unidades de proceso</h4>
             <div class="calc-fields">
                 <div class="calc-field">
-                    <label>Señal (mA)</label>
-                    <input type="number" id="calcMA" value="12" min="0" max="22" step="0.1">
+                    <label>Tipo de señal</label>
+                    <select id="calcType">
+                        <option value="420">4-20 mA (estándar)</option>
+                        <option value="020">0-20 mA</option>
+                    </select>
                 </div>
                 <div class="calc-field">
                     <label>Unidad</label>
@@ -713,27 +770,33 @@ mA = 0.4 × 16 + 4
                     </select>
                 </div>
                 <div class="calc-field">
-                    <label>Rango mínimo (4 mA)</label>
+                    <label>Señal (mA)</label>
+                    <input type="number" id="calcMA" value="12" min="0" max="22" step="0.1">
+                </div>
+                <div class="calc-field">
+                    <label>Rango mínimo</label>
                     <input type="number" id="calcMin" value="0" step="any">
                 </div>
                 <div class="calc-field">
-                    <label>Rango máximo (20 mA)</label>
+                    <label>Rango máximo</label>
                     <input type="number" id="calcMax" value="500" step="any">
                 </div>
+                <div class="calc-field">
+                    <label style="opacity:0;pointer-events:none">Espacio</label>
+                    <button class="calc-btn" onclick="doCalc()">Calcular</button>
+                </div>
             </div>
-            <button class="calc-btn" onclick="doCalc()">Calcular</button>
             <div class="calc-result" id="calcResult">
-                <div class="result-value" id="resultValue">250.0</div>
-                <div class="result-label" id="resultLabel">m³/h — 50.0% del rango</div>
+                <div class="result-value" id="resultValue">250.0 m³/h</div>
+                <div class="result-label" id="resultLabel">50.0% del rango (4-20 mA)</div>
             </div>
         </div>
 
-        <!-- SECOND CALCULATOR CTA -->
         <div class="calc-cta">
             <div class="calc-cta-icon">4-20</div>
             <div class="calc-cta-text">
                 <h3>Comparativa 4-20 mA vs Pulso</h3>
-                <p>¿Cuándo usar cada tipo de señal? Descúbrelo con nuestra guía interactiva de análisis comparativo.</p>
+                <p>¿Cuándo usar señal analógica y cuándo pulso en caudalímetros? Descúbrelo con nuestra guía interactiva.</p>
                 <a href="/tools/signal-analysis.html" class="calc-cta-btn">
                     Ver análisis comparativo
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -761,10 +824,9 @@ mA = 0.4 × 16 + 4
         </table>
 
         <div class="warn-box">
-            <p><strong>En plantas EDAR existentes:</strong> Es frecuente encontrar bucles con más de 1 km de cable hasta el transmisor de campo. Si la resistencia total supera el máximo, la señal no llegará a 20 mA con carga completa. Verifica siempre la sección del cable y la longitud.</p>
+            <p><strong>En plantas EDAR existentes:</strong> Es frecuente encontrar bucles con más de 1 km de cable hasta el transmisor de campo. Si la resistencia total supera el máximo, la señal no llegará a 20 mA con carga completa. Verifica siempre la sección del cable y la longitud total del bucle.</p>
         </div>
 
-        <!-- FAQ -->
         <div class="faq-section">
             <h2>Preguntas frecuentes</h2>
 
@@ -807,9 +869,16 @@ mA = 0.4 × 16 + 4
                 </button>
                 <div class="faq-answer"><div class="faq-answer-inner">Sí, los receptores se conectan en serie dentro del bucle. La suma de todas las resistencias de entrada no debe superar el máximo permitido por la tensión de alimentación. Típicamente se conectan 2-3 receptores (PLC + indicador local + registrador) sin problema si la resistencia total es inferior a 500-600 Ω con alimentación de 24 V.</div></div>
             </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    ¿Cuál es la diferencia entre señal 4-20 mA y 0-20 mA?
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+                </button>
+                <div class="faq-answer"><div class="faq-answer-inner">En 4-20 mA, 4 mA equivale al 0% del rango y 20 mA al 100%. Esto permite detectar fallos de cable (0 mA = fallo) y alimentar el transmisor desde el bucle. En 0-20 mA, 0 mA = 0% y no se puede distinguir un cable cortado de cero de proceso. Son incompatibles: configurar mal el tipo da lecturas erróneas en toda la escala.</div></div>
+            </div>
         </div>
 
-        <!-- AUTHOR -->
         <div class="author-box">
             <div class="author-avatar">GBW</div>
             <div>
@@ -818,7 +887,6 @@ mA = 0.4 × 16 + 4
             </div>
         </div>
 
-        <!-- BOTTOM NAV -->
         <div class="bottom-nav">
             <a href="/">
                 <div class="nav-label">← Volver</div>
@@ -837,43 +905,53 @@ mA = 0.4 × 16 + 4
     </footer>
 
     <script>
-        // Tema guardado
         if (localStorage.getItem('theme') === 'dark' ||
             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.setAttribute('data-theme', 'dark');
         }
 
-        // Calculadora
         function doCalc() {
             const mA = parseFloat(document.getElementById('calcMA').value);
             const min = parseFloat(document.getElementById('calcMin').value);
             const max = parseFloat(document.getElementById('calcMax').value);
             const unit = document.getElementById('calcUnit').value;
+            const type = document.getElementById('calcType').value;
 
             if (isNaN(mA) || isNaN(min) || isNaN(max)) return;
 
-            let pct = ((mA - 4) / 16) * 100;
-            let value = pct / 100 * (max - min) + min;
+            let pct, value;
 
-            // Verificar fuera de rango
+            if (type === '420') {
+                pct = ((mA - 4) / 16) * 100;
+                value = pct / 100 * (max - min) + min;
+            } else {
+                pct = (mA / 20) * 100;
+                value = pct / 100 * (max - min) + min;
+            }
+
             const resultDiv = document.getElementById('calcResult');
-            if (mA < 4) {
+            const label = document.getElementById('resultLabel');
+            const typeLabel = type === '420' ? '4-20 mA' : '0-20 mA';
+
+            if (type === '420' && mA < 4) {
                 resultDiv.style.borderColor = 'var(--red)';
-                document.getElementById('resultLabel').textContent = '⚠ FUERA DE RANGO — Posible fallo de cable o transmisor';
+                label.textContent = '⚠ FUERA DE RANGO — Posible fallo de cable o transmisor';
+            } else if (type === '020' && mA < 0) {
+                resultDiv.style.borderColor = 'var(--red)';
+                label.textContent = '⚠ FUERA DE RANGO — Señal negativa imposible';
             } else if (mA > 20) {
                 resultDiv.style.borderColor = 'var(--warm)';
-                document.getElementById('resultLabel').textContent = '⚠ SOBRE-RANGO — Señal por encima del 100%';
+                label.textContent = '⚠ SOBRE-RANGO — Señal por encima del 100%';
             } else {
                 resultDiv.style.borderColor = 'var(--accent)';
-                document.getElementById('resultLabel').textContent = unit + ' — ' + pct.toFixed(1) + '% del rango';
+                label.textContent = pct.toFixed(1) + '% del rango (' + typeLabel + ')';
             }
 
             document.getElementById('resultValue').textContent = value.toFixed(1) + ' ' + unit;
         }
 
-        // Calcular al cargar y al cambiar inputs
         doCalc();
-        document.querySelectorAll('#calcMA, #calcMin, #calcMax, #calcUnit').forEach(el => {
+        document.querySelectorAll('#calcMA, #calcMin, #calcMax, #calcUnit, #calcType').forEach(el => {
             el.addEventListener('input', doCalc);
         });
     </script>

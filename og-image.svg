@@ -1,42 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
-  <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0%" stop-color="#08131f"/>
-      <stop offset="100%" stop-color="#123044"/>
-    </linearGradient>
-    <linearGradient id="brand" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0%" stop-color="#8cf8ef"/>
-      <stop offset="55%" stop-color="#38d7ca"/>
-      <stop offset="100%" stop-color="#117a95"/>
-    </linearGradient>
-  </defs>
-
-  <rect width="1200" height="630" fill="url(#bg)"/>
-
-  <circle cx="1050" cy="120" r="180" fill="rgba(79,209,197,0.08)"/>
-  <circle cx="180" cy="520" r="220" fill="rgba(125,211,252,0.08)"/>
-
-  <rect x="80" y="90" width="110" height="110" rx="28" fill="url(#brand)"/>
-  <path d="M108 121h14l7 29 11-20 11 20 7-29h14l-12 40h-15l-6-13-6 13h-15z" fill="#052531"/>
-  <path d="M157 173c8-2 14-7 17-14-1 9-7 17-17 20z" fill="rgba(255,255,255,0.22)"/>
-
-  <text x="225" y="155" fill="#EFF6FF" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.5">
-    WaterTools.es
-  </text>
-
-  <text x="80" y="285" fill="#EFF6FF" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="800" letter-spacing="-2">
-    Calculadoras, guías y recursos
-  </text>
-  <text x="80" y="360" fill="#EFF6FF" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="800" letter-spacing="-2">
-    técnicos para tratamiento de agua
-  </text>
-
-  <text x="80" y="445" fill="#BFD2E7" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500">
-    Instrumentación · Ósmosis inversa · Dosificación química · Diagnóstico de campo
-  </text>
-
-  <rect x="80" y="500" width="255" height="56" rx="28" fill="rgba(79,209,197,0.14)" stroke="rgba(79,209,197,0.28)"/>
-  <text x="112" y="537" fill="#D7FFF8" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">
-    watertools.es
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#0b1923"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#0e9aa7"/>
+  <rect x="0" y="626" width="1200" height="4" fill="#0e9aa7"/>
+  <!-- Decorative circles -->
+  <circle cx="150" cy="315" r="200" fill="#0e9aa7" opacity="0.04"/>
+  <circle cx="1050" cy="200" r="150" fill="#0e9aa7" opacity="0.05"/>
+  <circle cx="900" cy="500" r="120" fill="#0e9aa7" opacity="0.03"/>
+  <!-- Water drop icon -->
+  <path d="M160 260C160 260 120 310 120 340C120 375 160 395 160 395C160 395 200 375 200 340C200 310 160 260 160 260Z" fill="#0e9aa7" opacity="0.8"/>
+  <path d="M150 340C150 340 150 350 160 355" stroke="#0b1923" stroke-width="3" stroke-linecap="round"/>
+  <!-- Text -->
+  <text x="600" y="280" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#e4ecf2" text-anchor="middle">WaterTools.es</text>
+  <text x="600" y="330" font-family="Arial, sans-serif" font-size="22" fill="#7d99ad" text-anchor="middle">Herramientas Profesionales para Ingeniería de Agua</text>
+  <!-- Tags -->
+  <rect x="340" y="380" width="120" height="32" rx="6" fill="#0e9aa7" opacity="0.15"/>
+  <text x="400" y="401" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#26d0d9" text-anchor="middle">EDAR</text>
+  <rect x="475" y="380" width="120" height="32" rx="6" fill="#0e9aa7" opacity="0.15"/>
+  <text x="535" y="401" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#26d0d9" text-anchor="middle">Ósmosis Inversa</text>
+  <rect x="610" y="380" width="120" height="32" rx="6" fill="#0e9aa7" opacity="0.15"/>
+  <text x="670" y="401" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#26d0d9" text-anchor="middle">Desaladores</text>
+  <rect x="745" y="380" width="120" height="32" rx="6" fill="#0e9aa7" opacity="0.15"/>
+  <text x="805" y="401" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#26d0d9" text-anchor="middle">4-20 mA</text>
+  <!-- Bottom line -->
+  <line x1="400" y1="470" x2="800" y2="470" stroke="#1e3a4c" stroke-width="1"/>
+  <text x="600" y="510" font-family="Arial, sans-serif" font-size="15" fill="#5a7080" text-anchor="middle">Calculadoras interactivas · Guías técnicas · Consultoría</text>
+  <text x="600" y="545" font-family="Arial, sans-serif" font-size="13" fill="#3d5565" text-anchor="middle">watertools.es</text>
 </svg>

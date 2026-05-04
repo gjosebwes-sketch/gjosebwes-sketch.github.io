@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,9 +21,6 @@
     <meta property="og:url" content="https://watertools.es">
 
     <style>
-        /* ══════════════════════════════════════════
-           TOKENS DE DISEÑO
-           ══════════════════════════════════════════ */
         :root {
             --bg: #f5f8fa;
             --bg-card: #ffffff;
@@ -42,6 +40,10 @@
             --max-w: 1200px;
             --ease: cubic-bezier(0.4, 0, 0.2, 1);
             --nav-h: 68px;
+            --warm: #e8930c;
+            --warm-light: #fef5e0;
+            --warm-dark: #c47a08;
+            --warm-glow: rgba(232,147,12,0.2);
         }
 
         [data-theme="dark"] {
@@ -57,11 +59,12 @@
             --shadow-sm: 0 1px 4px rgba(0,0,0,0.15);
             --shadow: 0 4px 20px rgba(0,0,0,0.18);
             --shadow-lg: 0 12px 40px rgba(0,0,0,0.28);
+            --warm: #f0a824;
+            --warm-light: #2a2210;
+            --warm-dark: #d49510;
+            --warm-glow: rgba(240,168,36,0.15);
         }
 
-        /* ══════════════════════════════════════════
-           RESET Y BASE
-           ══════════════════════════════════════════ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
         body {
@@ -75,17 +78,10 @@
         a { color: inherit; }
         img, iframe { display: block; max-width: 100%; }
 
-        /* ══════════════════════════════════════════
-           NAVBAR
-           ══════════════════════════════════════════ */
+        /* ═══ NAVBAR ═══ */
         .navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 200;
-            height: var(--nav-h);
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            height: var(--nav-h); display: flex; align-items: center; padding: 0 24px;
             backdrop-filter: blur(20px) saturate(1.4);
             -webkit-backdrop-filter: blur(20px) saturate(1.4);
             background: rgba(245,248,250,0.82);
@@ -94,70 +90,28 @@
         }
         [data-theme="dark"] .navbar { background: rgba(11,25,35,0.82); }
         .navbar.scrolled { box-shadow: var(--shadow); }
-
         .navbar-inner {
-            max-width: var(--max-w);
-            margin: 0 auto;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            max-width: var(--max-w); margin: 0 auto; width: 100%;
+            display: flex; align-items: center; justify-content: space-between;
         }
-
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-decoration: none;
-            flex-shrink: 0;
+            display: flex; align-items: center; gap: 11px;
+            font-size: 1.2rem; font-weight: 700; text-decoration: none; flex-shrink: 0;
         }
-
-        /* Logo SVG gota */
-        .logo-icon {
-            width: 36px; height: 36px;
-            flex-shrink: 0;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 8px;
-            list-style: none;
-        }
-
+        .logo-icon { width: 36px; height: 36px; flex-shrink: 0; }
+        .nav-menu { display: flex; gap: 4px; list-style: none; }
         .nav-menu a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.92rem;
-            padding: 8px 16px;
-            border-radius: 8px;
+            text-decoration: none; color: var(--text-secondary); font-weight: 500;
+            font-size: 0.92rem; padding: 8px 14px; border-radius: 8px;
             transition: color 0.25s var(--ease), background 0.25s var(--ease);
-            position: relative;
         }
         .nav-menu a:hover { color: var(--accent); background: var(--accent-light); }
         .nav-menu a.active { color: var(--accent); font-weight: 600; }
-
-        .nav-right {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        /* Toggle tema */
+        .nav-right { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
         .theme-toggle {
-            width: 40px; height: 40px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s var(--ease);
-            color: var(--text);
+            width: 40px; height: 40px; border: 1px solid var(--border); background: var(--bg-card);
+            border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s var(--ease); color: var(--text);
         }
         .theme-toggle:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
         .theme-toggle svg { width: 18px; height: 18px; transition: transform 0.4s var(--ease); }
@@ -165,654 +119,566 @@
         .theme-toggle .icon-sun { display: none; }
         [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
         [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
-
-        /* Hamburguesa */
         .hamburger {
-            display: none;
-            width: 40px; height: 40px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            border-radius: 10px;
-            cursor: pointer;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            display: none; width: 40px; height: 40px; border: 1px solid var(--border);
+            background: var(--bg-card); border-radius: 10px; cursor: pointer;
+            flex-direction: column; align-items: center; justify-content: center; gap: 5px;
             transition: all 0.3s var(--ease);
         }
         .hamburger span {
-            display: block;
-            width: 18px; height: 2px;
-            background: var(--text);
-            border-radius: 2px;
-            transition: all 0.3s var(--ease);
+            display: block; width: 18px; height: 2px; background: var(--text);
+            border-radius: 2px; transition: all 0.3s var(--ease);
         }
         .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.open span:nth-child(2) { opacity: 0; }
         .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-        /* Menú móvil */
         .mobile-menu {
-            display: none;
-            position: fixed;
-            top: var(--nav-h);
-            left: 0; right: 0; bottom: 0;
-            z-index: 150;
-            background: var(--bg);
-            padding: 32px 24px;
-            flex-direction: column;
-            gap: 8px;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+            display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; z-index: 150;
+            background: var(--bg); padding: 32px 24px; flex-direction: column; gap: 8px;
+            opacity: 0; transform: translateY(-10px); transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
         }
-        .mobile-menu.show {
-            display: flex;
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .mobile-menu.show { display: flex; opacity: 1; transform: translateY(0); }
         .mobile-menu a {
-            text-decoration: none;
-            color: var(--text);
-            font-size: 1.15rem;
-            font-weight: 600;
-            padding: 16px 20px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            transition: all 0.25s var(--ease);
+            text-decoration: none; color: var(--text); font-size: 1.15rem; font-weight: 600;
+            padding: 16px 20px; border-radius: 10px; border: 1px solid var(--border);
+            background: var(--bg-card); transition: all 0.25s var(--ease);
         }
-        .mobile-menu a:hover, .mobile-menu a.active {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-light);
-        }
+        .mobile-menu a:hover, .mobile-menu a.active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+        @media (max-width: 860px) { .nav-menu { display: none; } .hamburger { display: flex; } }
 
-        @media (max-width: 860px) {
-            .nav-menu { display: none; }
-            .hamburger { display: flex; }
-        }
-
-        /* ══════════════════════════════════════════
-           HERO
-           ══════════════════════════════════════════ */
+        /* ═══ HERO ═══ */
         .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: calc(var(--nav-h) + 60px) 24px 100px;
-            overflow: hidden;
+            position: relative; min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: calc(var(--nav-h) + 60px) 24px 100px; overflow: hidden;
         }
-
-        #hero-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 760px;
-        }
-
+        #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .hero-content { position: relative; z-index: 2; max-width: 760px; }
         .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 18px 6px 8px;
-            background: var(--accent-light);
-            border: 1px solid var(--accent);
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 28px;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 18px 6px 8px; background: var(--accent-light);
+            border: 1px solid var(--accent); border-radius: 40px;
+            font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 28px;
         }
         .hero-badge .dot {
-            width: 8px; height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
+            width: 8px; height: 8px; background: var(--accent); border-radius: 50%;
             animation: pulse-dot 2s ease-in-out infinite;
         }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.4); }
-        }
-
+        @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
         .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2.1rem, 5.5vw, 3.6rem);
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 20px;
+            font-family: var(--font-display); font-size: clamp(2.1rem,5.5vw,3.6rem);
+            font-weight: 700; line-height: 1.15; margin-bottom: 20px;
         }
-        .hero h1 em {
-            color: var(--accent);
-            font-style: italic;
-        }
-
+        .hero h1 em { color: var(--accent); font-style: italic; }
         .hero-sub {
-            font-size: 1.08rem;
-            color: var(--text-secondary);
-            max-width: 580px;
-            margin: 0 auto 12px;
-            line-height: 1.7;
+            font-size: 1.08rem; color: var(--text-secondary);
+            max-width: 580px; margin: 0 auto 12px; line-height: 1.7;
         }
-
-        .hero-meta {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            margin-bottom: 36px;
-            opacity: 0.8;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
+        .hero-meta { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 36px; opacity: 0.8; }
+        .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
         .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 15px 32px;
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.98rem;
-            transition: all 0.3s var(--ease);
-            box-shadow: 0 4px 20px rgba(14,154,167,0.3);
-            border: none;
-            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px; padding: 15px 32px;
+            background: var(--accent); color: #fff; text-decoration: none; border-radius: 10px;
+            font-weight: 600; font-size: 0.98rem; transition: all 0.3s var(--ease);
+            box-shadow: 0 4px 20px rgba(14,154,167,0.3); border: none; cursor: pointer;
+            font-family: var(--font-body);
         }
-        .cta-btn:hover {
-            background: var(--accent-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(14,154,167,0.4);
-        }
+        .cta-btn:hover { background: var(--accent-dark); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(14,154,167,0.4); }
         .cta-btn svg { width: 16px; height: 16px; transition: transform 0.3s var(--ease); }
         .cta-btn:hover svg { transform: translateX(3px); }
-
         .cta-ghost {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 15px 32px;
-            background: transparent;
-            color: var(--text);
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.98rem;
-            border: 1.5px solid var(--border);
+            display: inline-flex; align-items: center; gap: 8px; padding: 15px 32px;
+            background: transparent; color: var(--text); text-decoration: none; border-radius: 10px;
+            font-weight: 600; font-size: 0.98rem; border: 1.5px solid var(--border);
             transition: all 0.3s var(--ease);
         }
-        .cta-ghost:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-light);
-            transform: translateY(-2px);
-        }
+        .cta-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: translateY(-2px); }
+        .hero-wave { position: absolute; bottom: -2px; left: 0; right: 0; z-index: 1; line-height: 0; }
+        .hero-wave svg { width: 100%; height: 80px; display: block; }
 
-        /* Onda hero inferior */
-        .hero-wave {
-            position: absolute;
-            bottom: -2px; left: 0; right: 0;
-            z-index: 1;
-            line-height: 0;
-        }
-        .hero-wave svg {
-            width: 100%;
-            height: 80px;
-            display: block;
-        }
-
-        /* ══════════════════════════════════════════
-           STATS BAR
-           ══════════════════════════════════════════ */
+        /* ═══ STATS ═══ */
         .stats-bar {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 0 24px;
+            background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 0 24px;
             transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
         }
-        .stats-inner {
-            max-width: var(--max-w);
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0;
-        }
-        .stat-item {
-            padding: 28px 20px;
-            text-align: center;
-            border-right: 1px solid var(--border);
-            transition: border-color 0.4s var(--ease);
-        }
+        .stats-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+        .stat-item { padding: 28px 20px; text-align: center; border-right: 1px solid var(--border); transition: border-color 0.4s var(--ease); }
         .stat-item:last-child { border-right: none; }
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1.2;
-        }
-        .stat-label {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            margin-top: 4px;
-            font-weight: 500;
-        }
+        .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1.2; }
+        .stat-label { font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500; }
+        @media (max-width: 640px) { .stats-inner { grid-template-columns: repeat(2,1fr); } .stat-item:nth-child(2) { border-right: none; } }
 
-        @media (max-width: 640px) {
-            .stats-inner { grid-template-columns: repeat(2, 1fr); }
-            .stat-item:nth-child(2) { border-right: none; }
-        }
-
-        /* ══════════════════════════════════════════
-           SECCIONES GENERALES
-           ══════════════════════════════════════════ */
-        .section-wrap {
-            padding: 100px 24px;
-            max-width: var(--max-w);
-            margin: 0 auto;
-        }
-        .section-wrap.alt-bg {
-            max-width: 100%;
-            background: var(--bg-card);
-            transition: background 0.4s var(--ease);
-        }
-        .section-wrap.alt-bg > .section-inner {
-            max-width: var(--max-w);
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 56px;
-        }
-        .section-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2.5px;
-            margin-bottom: 14px;
-        }
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(1.7rem, 3.8vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
+        /* ═══ SECTIONS ═══ */
+        .section-wrap { padding: 100px 24px; max-width: var(--max-w); margin: 0 auto; }
+        .section-wrap.alt-bg { max-width: 100%; background: var(--bg-card); transition: background 0.4s var(--ease); }
+        .section-wrap.alt-bg > .section-inner { max-width: var(--max-w); margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 56px; }
+        .section-label { font-size: 0.78rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 14px; }
+        .section-title { font-family: var(--font-display); font-size: clamp(1.7rem,3.8vw,2.5rem); font-weight: 700; margin-bottom: 16px; line-height: 1.2; }
         .section-title em { color: var(--accent); font-style: italic; }
-        .section-desc {
-            color: var(--text-secondary);
-            font-size: 1.02rem;
-            max-width: 560px;
-            margin: 0 auto;
-        }
+        .section-desc { color: var(--text-secondary); font-size: 1.02rem; max-width: 560px; margin: 0 auto; }
 
-        /* ══════════════════════════════════════════
-           TOOLS GRID
-           ══════════════════════════════════════════ */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 24px;
-        }
-
+        /* ═══ TOOLS GRID ═══ */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(340px,1fr)); gap: 24px; }
         .tool-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: all 0.35s var(--ease);
-            position: relative;
+            background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+            overflow: hidden; transition: all 0.35s var(--ease); position: relative;
         }
         .tool-card::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: var(--radius);
-            padding: 1.5px;
+            content: ''; position: absolute; inset: -1px; border-radius: var(--radius); padding: 1.5px;
             background: linear-gradient(135deg, var(--accent), transparent 60%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.35s var(--ease);
-            pointer-events: none;
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0; transition: opacity 0.35s var(--ease); pointer-events: none;
         }
         .tool-card:hover::before { opacity: 1; }
-        .tool-card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-6px);
-        }
-
+        .tool-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-6px); }
         .tool-header {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex;
+            align-items: center; gap: 10px;
             background: linear-gradient(135deg, var(--accent-light) 0%, transparent 100%);
             transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
         }
-        .tool-header h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
-        }
+        .tool-header h3 { font-size: 1.05rem; font-weight: 700; }
         .tool-header .tool-icon {
-            font-size: 1.2rem;
-            flex-shrink: 0;
-            width: 32px; height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--accent);
-            color: #fff;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.72rem; font-weight: 700; flex-shrink: 0; width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--accent); color: #fff; border-radius: 8px;
         }
-
-        .tool-preview {
-            width: 100%;
-            height: 260px;
-            border: none;
-            background: var(--bg);
-        }
-
+        .tool-preview { width: 100%; height: 260px; border: none; background: var(--bg); }
         .tool-footer {
-            padding: 16px 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
+            padding: 16px 20px; border-top: 1px solid var(--border); display: flex;
+            align-items: center; justify-content: space-between; gap: 12px;
             transition: border-color 0.4s var(--ease);
         }
-        .tool-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            flex-grow: 1;
-        }
+        .tool-desc { font-size: 0.85rem; color: var(--text-secondary); flex-grow: 1; }
         .tool-actions { display: flex; gap: 8px; flex-shrink: 0; }
-
         .btn {
-            padding: 8px 14px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.82rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.25s var(--ease);
-            font-family: var(--font-body);
+            padding: 8px 14px; border: none; border-radius: 8px; font-weight: 600;
+            font-size: 0.82rem; cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 5px;
+            transition: all 0.25s var(--ease); font-family: var(--font-body);
         }
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-        }
+        .btn-primary { background: var(--accent); color: #fff; }
         .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
-        .btn-outline {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1.5px solid var(--border);
-        }
+        .btn-outline { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
         .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
         .btn svg { width: 14px; height: 14px; }
+        @media (max-width: 400px) { .tools-grid { grid-template-columns: 1fr; } .tool-preview { height: 200px; } }
 
-        @media (max-width: 400px) {
-            .tools-grid { grid-template-columns: 1fr; }
-            .tool-preview { height: 200px; }
-        }
-
-        /* ══════════════════════════════════════════
-           ANALYSIS GRID
-           ══════════════════════════════════════════ */
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 16px;
-        }
-
+        /* ═══ ANALYSIS ═══ */
+        .analysis-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 16px; }
         .method-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 22px;
-            transition: all 0.3s var(--ease);
-            position: relative;
-            overflow: hidden;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 22px; transition: all 0.3s var(--ease); position: relative; overflow: hidden;
         }
         .method-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px; height: 100%;
-            background: var(--accent);
-            transform: scaleY(0);
-            transform-origin: top;
+            content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+            background: var(--accent); transform: scaleY(0); transform-origin: top;
             transition: transform 0.3s var(--ease);
         }
         .method-card:hover::after { transform: scaleY(1); }
-        .method-card:hover {
-            box-shadow: var(--shadow);
-            border-color: var(--accent);
-            transform: translateY(-3px);
-        }
-        .method-card .method-icon {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-        .method-card h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .method-card p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
+        .method-card:hover { box-shadow: var(--shadow); border-color: var(--accent); transform: translateY(-3px); }
+        .method-card .method-icon { font-size: 1.4rem; margin-bottom: 10px; display: block; }
+        .method-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+        .method-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
 
-        /* ══════════════════════════════════════════
-           DOWNLOADS GRID
-           ══════════════════════════════════════════ */
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
+        /* ═══ DOWNLOADS ═══ */
+        .download-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 20px; }
         .download-card {
-            background: var(--bg);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            padding: 32px 24px 24px;
-            text-align: center;
-            transition: all 0.3s var(--ease);
-            position: relative;
+            background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius);
+            padding: 32px 24px 24px; text-align: center; transition: all 0.3s var(--ease); position: relative;
         }
-        .download-card:hover {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-5px);
-        }
+        .download-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-5px); }
         .download-icon-wrap {
-            width: 56px; height: 56px;
-            margin: 0 auto 18px;
-            background: var(--accent-light);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+            width: 56px; height: 56px; margin: 0 auto 18px; background: var(--accent-light);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; transition: transform 0.3s var(--ease), background 0.3s var(--ease);
         }
-        .download-card:hover .download-icon-wrap {
-            transform: scale(1.1) rotate(-3deg);
-            background: var(--accent);
-        }
+        .download-card:hover .download-icon-wrap { transform: scale(1.1) rotate(-3deg); background: var(--accent); }
         .download-card:hover .download-icon-wrap span { filter: brightness(10); }
-        .download-card h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .download-card p {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            min-height: 42px;
-            line-height: 1.5;
-        }
+        .download-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+        .download-card p { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 20px; min-height: 42px; line-height: 1.5; }
         .download-card .btn { width: 100%; justify-content: center; }
-
         .release-note {
-            text-align: center;
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-            transition: border-color 0.4s var(--ease);
+            text-align: center; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border);
+            color: var(--text-secondary); font-size: 0.92rem; transition: border-color 0.4s var(--ease);
         }
         .release-note strong { color: var(--text); }
 
-        /* ══════════════════════════════════════════
-           ABOUT
-           ══════════════════════════════════════════ */
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
+        /* ═══ ABOUT ═══ */
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 20px; }
         .about-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
-            transition: all 0.3s var(--ease);
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 28px; transition: all 0.3s var(--ease);
         }
-        .about-card:hover {
-            box-shadow: var(--shadow);
-            transform: translateY(-3px);
-        }
+        .about-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
         .about-card h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: var(--accent);
+            display: flex; align-items: center; gap: 8px;
         }
         .about-card h4 span { font-size: 1.15rem; }
-        .about-card p {
-            font-size: 0.92rem;
-            color: var(--text-secondary);
-            line-height: 1.75;
-        }
-
+        .about-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75; }
         .about-socials {
-            text-align: center;
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border);
-            transition: border-color 0.4s var(--ease);
+            text-align: center; margin-top: 48px; padding-top: 32px;
+            border-top: 1px solid var(--border); transition: border-color 0.4s var(--ease);
         }
-        .about-socials p {
-            color: var(--text-secondary);
-            margin-bottom: 18px;
-            font-size: 0.92rem;
-        }
-        .social-links {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .about-socials p { color: var(--text-secondary); margin-bottom: 18px; font-size: 0.92rem; }
+        .social-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .social-links a {
-            padding: 10px 22px;
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.88rem;
-            transition: all 0.3s var(--ease);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            padding: 10px 22px; background: var(--accent); color: #fff; text-decoration: none;
+            border-radius: 8px; font-weight: 600; font-size: 0.88rem;
+            transition: all 0.3s var(--ease); display: inline-flex; align-items: center; gap: 6px;
         }
-        .social-links a:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(14,154,167,0.3);
-        }
+        .social-links a:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(14,154,167,0.3); }
         .social-links a svg { width: 16px; height: 16px; }
 
         /* ══════════════════════════════════════════
-           FOOTER
+           DONATION SECTION
            ══════════════════════════════════════════ */
-        .footer-wave {
-            line-height: 0;
-            background: var(--bg-card);
-            transition: background 0.4s var(--ease);
+        .support-section {
+            padding: 80px 24px; max-width: var(--max-w); margin: 0 auto;
         }
-        .footer-wave svg {
-            width: 100%;
-            height: 50px;
-            display: block;
-        }
-
-        footer {
-            background: var(--bg-card);
-            border-top: none;
-            padding: 40px 24px 36px;
+        .support-card {
+            background: var(--warm-light);
+            border: 1.5px solid var(--warm);
+            border-radius: 18px;
+            padding: 48px 36px;
             text-align: center;
-            transition: background 0.4s var(--ease);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--ease);
         }
-        footer p {
+        .support-card::before {
+            content: '';
+            position: absolute; top: -60px; right: -60px;
+            width: 160px; height: 160px;
+            background: var(--warm-glow);
+            border-radius: 50%;
+            filter: blur(40px);
+            pointer-events: none;
+        }
+        .support-card::after {
+            content: '';
+            position: absolute; bottom: -40px; left: -40px;
+            width: 120px; height: 120px;
+            background: var(--warm-glow);
+            border-radius: 50%;
+            filter: blur(30px);
+            pointer-events: none;
+        }
+        .support-content { position: relative; z-index: 1; }
+        .support-icon {
+            width: 64px; height: 64px;
+            margin: 0 auto 20px;
+            background: var(--warm);
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px var(--warm-glow);
+            transition: transform 0.3s var(--ease);
+        }
+        .support-card:hover .support-icon { transform: scale(1.08) rotate(-4deg); }
+        .support-icon svg { width: 28px; height: 28px; color: #fff; }
+        .support-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem; font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .support-card p {
             color: var(--text-secondary);
-            font-size: 0.88rem;
-            margin-bottom: 6px;
+            font-size: 0.95rem;
+            max-width: 520px;
+            margin: 0 auto 28px;
+            line-height: 1.7;
         }
-        footer .footer-brand {
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
+        .support-buttons {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .btn-support {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px; border-radius: 10px;
+            font-weight: 600; font-size: 0.95rem;
+            text-decoration: none; cursor: pointer; border: none;
+            font-family: var(--font-body);
+            transition: all 0.3s var(--ease);
+        }
+        .btn-support svg { width: 18px; height: 18px; }
+        .btn-support-primary {
+            background: var(--warm); color: #fff;
+            box-shadow: 0 4px 16px var(--warm-glow);
+        }
+        .btn-support-primary:hover {
+            background: var(--warm-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px var(--warm-glow);
+        }
+        .btn-support-secondary {
+            background: var(--bg-card); color: var(--text);
+            border: 1.5px solid var(--border);
+        }
+        .btn-support-secondary:hover {
+            border-color: var(--warm); color: var(--warm);
+            transform: translateY(-2px);
+        }
+        .support-note {
+            margin-top: 20px; font-size: 0.82rem;
+            color: var(--text-secondary); opacity: 0.7;
         }
 
         /* ══════════════════════════════════════════
-           ANIMACIONES
+           CONSULTANCY SECTION
            ══════════════════════════════════════════ */
+        .consult-section {
+            padding: 100px 24px;
+            background: var(--bg-card);
+            transition: background 0.4s var(--ease);
+        }
+        .consult-inner {
+            max-width: var(--max-w); margin: 0 auto;
+        }
+        .consult-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .consult-info h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+            font-weight: 700; line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .consult-info h2 em { color: var(--accent); font-style: italic; }
+        .consult-info p {
+            color: var(--text-secondary); font-size: 0.98rem;
+            line-height: 1.75; margin-bottom: 24px;
+        }
+        .consult-features {
+            list-style: none; margin-bottom: 32px;
+        }
+        .consult-features li {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 10px 0; font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        .consult-features li .check {
+            width: 22px; height: 22px; flex-shrink: 0;
+            background: var(--accent-light); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 1px;
+        }
+        .consult-features li .check svg { width: 12px; height: 12px; color: var(--accent); }
+        .consult-features li strong { color: var(--text); }
+        .btn-consult {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 36px; background: var(--accent); color: #fff;
+            text-decoration: none; border-radius: 10px; font-weight: 700;
+            font-size: 1rem; border: none; cursor: pointer;
+            font-family: var(--font-body);
+            transition: all 0.3s var(--ease);
+            box-shadow: 0 4px 20px rgba(14,154,167,0.3);
+        }
+        .btn-consult:hover {
+            background: var(--accent-dark); transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(14,154,167,0.4);
+        }
+        .btn-consult svg { width: 18px; height: 18px; transition: transform 0.3s var(--ease); }
+        .btn-consult:hover svg { transform: translateX(3px); }
+        .consult-visual {
+            position: relative;
+        }
+        .consult-card-preview {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+        .consult-card-preview::before {
+            content: ''; position: absolute; top: -8px; left: 24px; right: 24px; height: 8px;
+            background: linear-gradient(90deg, var(--accent), var(--warm), var(--accent));
+            border-radius: 4px;
+        }
+        .preview-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+            padding-bottom: 16px; border-bottom: 1px solid var(--border);
+        }
+        .preview-avatar {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: var(--accent); display: flex; align-items: center;
+            justify-content: center; color: #fff; font-weight: 700; font-size: 0.85rem;
+        }
+        .preview-name { font-weight: 700; font-size: 0.95rem; }
+        .preview-role { font-size: 0.8rem; color: var(--text-secondary); }
+        .preview-lines { display: flex; flex-direction: column; gap: 10px; }
+        .preview-line {
+            height: 10px; border-radius: 5px; background: var(--border);
+            transition: background 0.4s var(--ease);
+        }
+        .preview-line:nth-child(1) { width: 90%; }
+        .preview-line:nth-child(2) { width: 75%; }
+        .preview-line:nth-child(3) { width: 60%; }
+        .preview-line:nth-child(4) { width: 85%; }
+        .preview-badge-row {
+            display: flex; gap: 8px; margin-top: 16px;
+        }
+        .preview-badge {
+            padding: 5px 12px; border-radius: 6px; font-size: 0.72rem;
+            font-weight: 600; background: var(--accent-light); color: var(--accent);
+        }
+        .preview-badge.warm { background: var(--warm-light); color: var(--warm); }
+
+        @media (max-width: 768px) {
+            .consult-grid { grid-template-columns: 1fr; gap: 40px; }
+            .support-card { padding: 36px 24px; }
+        }
+
+        /* ══════════════════════════════════════════
+           MODAL CONSULTANCY FORM
+           ══════════════════════════════════════════ */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 500;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s var(--ease);
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            width: 100%; max-width: 540px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.35s var(--ease);
+        }
+        .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 24px 28px 0;
+        }
+        .modal-header h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 700;
+        }
+        .modal-close {
+            width: 36px; height: 36px; border: 1px solid var(--border);
+            background: var(--bg); border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s var(--ease); color: var(--text-secondary);
+        }
+        .modal-close:hover { border-color: #e53e3e; color: #e53e3e; background: #fff5f5; }
+        [data-theme="dark"] .modal-close:hover { background: #2a1a1a; }
+        .modal-close svg { width: 16px; height: 16px; }
+        .modal-body { padding: 20px 28px 28px; }
+        .modal-intro {
+            font-size: 0.9rem; color: var(--text-secondary);
+            margin-bottom: 24px; line-height: 1.6;
+        }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-size: 0.85rem; font-weight: 600;
+            margin-bottom: 6px; color: var(--text);
+        }
+        .form-group label .required { color: #e53e3e; }
+        .form-input, .form-select, .form-textarea {
+            width: 100%; padding: 11px 14px; font-size: 0.92rem;
+            font-family: var(--font-body); color: var(--text);
+            background: var(--bg); border: 1.5px solid var(--border);
+            border-radius: 9px; transition: all 0.25s var(--ease);
+            outline: none;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .form-input.error, .form-select.error, .form-textarea.error {
+            border-color: #e53e3e; box-shadow: 0 0 0 3px rgba(229,62,62,0.1);
+        }
+        .form-error {
+            font-size: 0.78rem; color: #e53e3e; margin-top: 4px; display: none;
+        }
+        .form-error.visible { display: block; }
+        .form-select { appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a7080' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+            padding-right: 36px;
+        }
+        .form-textarea { resize: vertical; min-height: 100px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+        .btn-submit {
+            width: 100%; padding: 14px; background: var(--accent); color: #fff;
+            border: none; border-radius: 10px; font-weight: 700; font-size: 1rem;
+            cursor: pointer; font-family: var(--font-body);
+            transition: all 0.3s var(--ease);
+            box-shadow: 0 4px 16px rgba(14,154,167,0.25);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-submit:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(14,154,167,0.35); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-submit svg { width: 18px; height: 18px; }
+        .form-disclaimer {
+            font-size: 0.78rem; color: var(--text-secondary); text-align: center;
+            margin-top: 14px; opacity: 0.7;
+        }
+
+        /* Estado de éxito */
+        .form-success {
+            display: none; text-align: center; padding: 40px 20px;
+        }
+        .form-success.visible { display: block; }
+        .form-success .success-icon {
+            width: 64px; height: 64px; margin: 0 auto 20px;
+            background: var(--accent-light); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            animation: success-pop 0.4s var(--ease);
+        }
+        @keyframes success-pop { 0%{transform:scale(0)} 60%{transform:scale(1.15)} 100%{transform:scale(1)} }
+        .form-success .success-icon svg { width: 28px; height: 28px; color: var(--accent); }
+        .form-success h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+        .form-success p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
+        .btn-close-modal {
+            padding: 10px 24px; background: var(--bg); border: 1.5px solid var(--border);
+            border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+            cursor: pointer; font-family: var(--font-body); color: var(--text);
+            transition: all 0.25s var(--ease);
+        }
+        .btn-close-modal:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ═══ FOOTER ═══ */
+        .footer-wave { line-height: 0; background: var(--bg-card); transition: background 0.4s var(--ease); }
+        .footer-wave svg { width: 100%; height: 50px; display: block; }
+        footer {
+            background: var(--bg-card); border-top: none; padding: 40px 24px 36px;
+            text-align: center; transition: background 0.4s var(--ease);
+        }
+        footer p { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 6px; }
+        footer .footer-brand { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .footer-donate {
+            margin-top: 16px;
+        }
+        .footer-donate a {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 0.85rem; color: var(--warm); text-decoration: none;
+            font-weight: 600; transition: all 0.25s var(--ease);
+        }
+        .footer-donate a:hover { color: var(--warm-dark); }
+        .footer-donate a svg { width: 16px; height: 16px; }
+
+        /* ═══ ANIMATIONS ═══ */
         .reveal {
-            opacity: 0;
-            transform: translateY(28px);
+            opacity: 0; transform: translateY(28px);
             transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
         }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Stagger para grids */
+        .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal:nth-child(2) { transition-delay: 0.07s; }
         .reveal:nth-child(3) { transition-delay: 0.14s; }
         .reveal:nth-child(4) { transition-delay: 0.21s; }
@@ -822,26 +688,8 @@
         .reveal:nth-child(8) { transition-delay: 0.49s; }
         .reveal:nth-child(9) { transition-delay: 0.56s; }
 
-        /* ══════════════════════════════════════════
-           RESPONSIVE
-           ══════════════════════════════════════════ */
-        @media (max-width: 768px) {
-            .section-wrap { padding: 72px 20px; }
-            .tool-preview { height: 200px; }
-            .hero { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 90px; }
-        }
-
-        /* ══════════════════════════════════════════
-           REDUCED MOTION
-           ══════════════════════════════════════════ */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-            .reveal { opacity: 1; transform: none; }
-            #hero-canvas { display: none; }
-        }
+        @media (max-width: 768px) { .section-wrap { padding: 72px 20px; } .tool-preview { height: 200px; } .hero { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 90px; } }
+        @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } .reveal{opacity:1;transform:none;} #hero-canvas{display:none;} }
     </style>
 </head>
 <body>
@@ -861,6 +709,7 @@
                 <li><a href="#tools" data-nav>Herramientas</a></li>
                 <li><a href="#analysis" data-nav>Análisis</a></li>
                 <li><a href="#downloads" data-nav>Descargas</a></li>
+                <li><a href="#consulting" data-nav>Consultoría</a></li>
                 <li><a href="#about" data-nav>Sobre mí</a></li>
             </ul>
             <div class="nav-right">
@@ -880,6 +729,7 @@
         <a href="#tools" data-mobile-nav>Herramientas</a>
         <a href="#analysis" data-mobile-nav>Análisis</a>
         <a href="#downloads" data-mobile-nav>Descargas</a>
+        <a href="#consulting" data-mobile-nav>Consultoría</a>
         <a href="#about" data-mobile-nav>Sobre mí</a>
     </div>
 
@@ -896,7 +746,7 @@
                     Explorar herramientas
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                 </a>
-                <a href="#downloads" class="cta-ghost">Ver descargas</a>
+                <a href="#consulting" class="cta-ghost">Solicitar consultoría</a>
             </div>
         </div>
         <div class="hero-wave" aria-hidden="true">
@@ -906,25 +756,13 @@
         </div>
     </section>
 
-    <!-- STATS BAR -->
+    <!-- STATS -->
     <div class="stats-bar">
         <div class="stats-inner">
-            <div class="stat-item">
-                <div class="stat-number" data-count="30">0</div>
-                <div class="stat-label">Años de experiencia</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-count="5">0</div>
-                <div class="stat-label">Herramientas activas</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-count="9">0</div>
-                <div class="stat-label">Métodos analíticos</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-count="3">0</div>
-                <div class="stat-label">Países de actuación</div>
-            </div>
+            <div class="stat-item"><div class="stat-number" data-count="30">0</div><div class="stat-label">Años de experiencia</div></div>
+            <div class="stat-item"><div class="stat-number" data-count="5">0</div><div class="stat-label">Herramientas activas</div></div>
+            <div class="stat-item"><div class="stat-number" data-count="9">0</div><div class="stat-label">Métodos analíticos</div></div>
+            <div class="stat-item"><div class="stat-number" data-count="3">0</div><div class="stat-label">Países de actuación</div></div>
         </div>
     </div>
 
@@ -938,97 +776,57 @@
             </div>
             <div class="tools-grid">
                 <div class="tool-card reveal">
-                    <div class="tool-header">
-                        <div class="tool-icon">mA</div>
-                        <h3>EDAR mA Calculator</h3>
-                    </div>
+                    <div class="tool-header"><div class="tool-icon">mA</div><h3>EDAR mA Calculator</h3></div>
                     <iframe src="/tools/edar-ma-calculator.html" class="tool-preview" loading="lazy" title="EDAR mA Calculator"></iframe>
                     <div class="tool-footer">
                         <span class="tool-desc">Señales 4-20 mA</span>
                         <div class="tool-actions">
-                            <a href="/tools/edar-ma-calculator.html" target="_blank" class="btn btn-outline" title="Abrir en nueva pestaña">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg>
-                            </a>
-                            <a href="/tools/edar-ma-calculator.html" download class="btn btn-primary">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                                Descargar
-                            </a>
+                            <a href="/tools/edar-ma-calculator.html" target="_blank" class="btn btn-outline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg></a>
+                            <a href="/tools/edar-ma-calculator.html" download class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar</a>
                         </div>
                     </div>
                 </div>
                 <div class="tool-card reveal">
-                    <div class="tool-header">
-                        <div class="tool-icon">4-20</div>
-                        <h3>4-20 mA vs Pulso</h3>
-                    </div>
+                    <div class="tool-header"><div class="tool-icon">4-20</div><h3>4-20 mA vs Pulso</h3></div>
                     <iframe src="/tools/signal-analysis.html" class="tool-preview" loading="lazy" title="4-20 mA vs Pulso"></iframe>
                     <div class="tool-footer">
                         <span class="tool-desc">Análisis comparativo</span>
                         <div class="tool-actions">
-                            <a href="/tools/signal-analysis.html" target="_blank" class="btn btn-outline">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg>
-                            </a>
-                            <a href="/tools/signal-analysis.html" download class="btn btn-primary">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                                Descargar
-                            </a>
+                            <a href="/tools/signal-analysis.html" target="_blank" class="btn btn-outline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg></a>
+                            <a href="/tools/signal-analysis.html" download class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar</a>
                         </div>
                     </div>
                 </div>
                 <div class="tool-card reveal">
-                    <div class="tool-header">
-                        <div class="tool-icon">DS</div>
-                        <h3>Sistema Desalter</h3>
-                    </div>
+                    <div class="tool-header"><div class="tool-icon">DS</div><h3>Sistema Desalter</h3></div>
                     <iframe src="/tools/desalter-guide.html" class="tool-preview" loading="lazy" title="Sistema Desalter"></iframe>
                     <div class="tool-footer">
                         <span class="tool-desc">Guía completa</span>
                         <div class="tool-actions">
-                            <a href="/tools/desalter-guide.html" target="_blank" class="btn btn-outline">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg>
-                            </a>
-                            <a href="/tools/desalter-guide.html" download class="btn btn-primary">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                                Descargar
-                            </a>
+                            <a href="/tools/desalter-guide.html" target="_blank" class="btn btn-outline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg></a>
+                            <a href="/tools/desalter-guide.html" download class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar</a>
                         </div>
                     </div>
                 </div>
                 <div class="tool-card reveal">
-                    <div class="tool-header">
-                        <div class="tool-icon">RO</div>
-                        <h3>RO Plant Advisor</h3>
-                    </div>
+                    <div class="tool-header"><div class="tool-icon">RO</div><h3>RO Plant Advisor</h3></div>
                     <iframe src="/tools/ro-plant-advisor.html" class="tool-preview" loading="lazy" title="RO Plant Advisor"></iframe>
                     <div class="tool-footer">
                         <span class="tool-desc">Diseño y optimización</span>
                         <div class="tool-actions">
-                            <a href="/tools/ro-plant-advisor.html" target="_blank" class="btn btn-outline">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg>
-                            </a>
-                            <a href="/tools/ro-plant-advisor.html" download class="btn btn-primary">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                                Descargar
-                            </a>
+                            <a href="/tools/ro-plant-advisor.html" target="_blank" class="btn btn-outline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg></a>
+                            <a href="/tools/ro-plant-advisor.html" download class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar</a>
                         </div>
                     </div>
                 </div>
                 <div class="tool-card reveal">
-                    <div class="tool-header">
-                        <div class="tool-icon">TE</div>
-                        <h3>Torres de Enfriamiento</h3>
-                    </div>
+                    <div class="tool-header"><div class="tool-icon">TE</div><h3>Torres de Enfriamiento</h3></div>
                     <iframe src="/tools/chiller-calculator.html" class="tool-preview" loading="lazy" title="Torres de Enfriamiento"></iframe>
                     <div class="tool-footer">
                         <span class="tool-desc">Sistemas industriales</span>
                         <div class="tool-actions">
-                            <a href="/tools/chiller-calculator.html" target="_blank" class="btn btn-outline">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg>
-                            </a>
-                            <a href="/tools/chiller-calculator.html" download class="btn btn-primary">
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                                Descargar
-                            </a>
+                            <a href="/tools/chiller-calculator.html" target="_blank" class="btn btn-outline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2h4v4M14 2L6 10M2 8v6h6"/></svg></a>
+                            <a href="/tools/chiller-calculator.html" download class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar</a>
                         </div>
                     </div>
                 </div>
@@ -1044,51 +842,15 @@
             <p class="section-desc">Métodos analíticos según normativa RD 140/2003 y UE</p>
         </div>
         <div class="analysis-grid">
-            <div class="method-card reveal">
-                <span class="method-icon">🧪</span>
-                <h4>Titulación</h4>
-                <p>Alcalinidad, CO₂ libre. ISO 9963-1</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">⚖️</span>
-                <h4>Gravimetría</h4>
-                <p>Sólidos disueltos (TDS). EPA 160</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">📊</span>
-                <h4>Espectrofotometría</h4>
-                <p>Nitratos, fosfatos. ISO 6777</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">🔬</span>
-                <h4>Cromatografía Iónica</h4>
-                <p>Iones mayores. ISO 10304-1</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">🥒</span>
-                <h4>ICP-MS</h4>
-                <p>Metales traza. ISO 17294-2</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">🦠</span>
-                <h4>Microbiología</h4>
-                <p>E. coli, coliformes. ISO 9308-1</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">📏</span>
-                <h4>Turbidimetría</h4>
-                <p>Turbidez en NTU. ISO 7027</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">⚡</span>
-                <h4>Conductividad</h4>
-                <p>TDS indirecta. Online</p>
-            </div>
-            <div class="method-card reveal">
-                <span class="method-icon">📋</span>
-                <h4>Normativas</h4>
-                <p>RD 140/2003, MSAN, RDPH</p>
-            </div>
+            <div class="method-card reveal"><span class="method-icon">🧪</span><h4>Titulación</h4><p>Alcalinidad, CO₂ libre. ISO 9963-1</p></div>
+            <div class="method-card reveal"><span class="method-icon">⚖️</span><h4>Gravimetría</h4><p>Sólidos disueltos (TDS). EPA 160</p></div>
+            <div class="method-card reveal"><span class="method-icon">📊</span><h4>Espectrofotometría</h4><p>Nitratos, fosfatos. ISO 6777</p></div>
+            <div class="method-card reveal"><span class="method-icon">🔬</span><h4>Cromatografía Iónica</h4><p>Iones mayores. ISO 10304-1</p></div>
+            <div class="method-card reveal"><span class="method-icon">🥒</span><h4>ICP-MS</h4><p>Metales traza. ISO 17294-2</p></div>
+            <div class="method-card reveal"><span class="method-icon">🦠</span><h4>Microbiología</h4><p>E. coli, coliformes. ISO 9308-1</p></div>
+            <div class="method-card reveal"><span class="method-icon">📏</span><h4>Turbidimetría</h4><p>Turbidez en NTU. ISO 7027</p></div>
+            <div class="method-card reveal"><span class="method-icon">⚡</span><h4>Conductividad</h4><p>TDS indirecta. Online</p></div>
+            <div class="method-card reveal"><span class="method-icon">📋</span><h4>Normativas</h4><p>RD 140/2003, MSAN, RDPH</p></div>
         </div>
     </section>
 
@@ -1102,44 +864,118 @@
             </div>
             <div class="download-grid">
                 <div class="download-card reveal">
-                    <div class="download-icon-wrap"><span>📘</span></div>
-                    <h3>Guía Desalter</h3>
+                    <div class="download-icon-wrap"><span>📘</span></div><h3>Guía Desalter</h3>
                     <p>31 páginas: Principios, operación, troubleshooting y especificaciones de crudo.</p>
-                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">
-                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                        Descargar PDF
-                    </a>
+                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar PDF</a>
                 </div>
                 <div class="download-card reveal">
-                    <div class="download-icon-wrap"><span>📗</span></div>
-                    <h3>Curso RO Completo</h3>
+                    <div class="download-icon-wrap"><span>📗</span></div><h3>Curso RO Completo</h3>
                     <p>Guía completa de diseño y operación de plantas de ósmosis inversa.</p>
-                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">
-                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                        Descargar PDF
-                    </a>
+                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar PDF</a>
                 </div>
                 <div class="download-card reveal">
-                    <div class="download-icon-wrap"><span>📕</span></div>
-                    <h3>Métodos de Análisis</h3>
+                    <div class="download-icon-wrap"><span>📕</span></div><h3>Métodos de Análisis</h3>
                     <p>Procedimientos, métodos ASTM e ISO, y técnicas de laboratorio certificadas.</p>
-                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">
-                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg>
-                        Descargar PDF
-                    </a>
+                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v10M4 8l4 4 4-4M2 14h12"/></svg> Descargar PDF</a>
                 </div>
                 <div class="download-card reveal">
-                    <div class="download-icon-wrap"><span>📦</span></div>
-                    <h3>Todos los Recursos</h3>
+                    <div class="download-icon-wrap"><span>📦</span></div><h3>Todos los Recursos</h3>
                     <p>Accede a GitHub Releases para descargar todos los documentos y actualizaciones.</p>
-                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary">
-                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10v4h12v-4M8 2v10M4 8l4 4 4-4"/></svg>
-                        Ver Releases
-                    </a>
+                    <a href="https://github.com/gjosebwes-sketch/gjosebwes-sketch.github.io/releases" target="_blank" class="btn btn-primary"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10v4h12v-4M8 2v10M4 8l4 4 4-4"/></svg> Ver Releases</a>
                 </div>
             </div>
-            <div class="release-note reveal">
-                📅 <strong>Nuevas descargas cada domingo</strong> — Guías técnicas, procedimientos y actualizaciones regulares
+            <div class="release-note reveal">📅 <strong>Nuevas descargas cada domingo</strong> — Guías técnicas, procedimientos y actualizaciones regulares</div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         DONATION SECTION
+         ═══════════════════════════════════════════ -->
+    <section class="support-section reveal">
+        <div class="support-card">
+            <div class="support-content">
+                <div class="support-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z"/>
+                    </svg>
+                </div>
+                <h3>Apoya este proyecto</h3>
+                <p>Todas las herramientas y guías son gratuitas y siempre lo serán. Si te son útiles en tu trabajo diario, una contribución ayuda a mantener el servidor, crear nuevas herramientas y seguir publicando contenido.</p>
+                <div class="support-buttons">
+                    <!--
+                        ╔══════════════════════════════════════════╗
+                        ║  SUSTITUYE estos href por tus URLs     ║
+                        ║  reales de Ko-fi, BuyMeACoffee, etc.   ║
+                        ╚══════════════════════════════════════════╝
+                    -->
+                    <a href="https://ko-fi.com/gustavo90204" target="_blank" class="btn-support btn-support-primary">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.72 5.23c.47-.46 1.1-.73 1.76-.73h13.04c.66 0 1.29.27 1.76.73.47.47.73 1.1.73 1.76v2.68c0 .34-.06.68-.19 1l-.13.27c-.11.23-.04.5.17.64l.49.33c.36.24.57.64.57 1.08v4.01c0 .7-.57 1.27-1.27 1.27H7.58c-.7 0-1.27-.57-1.27-1.27v-4.01c0-.44.21-.84.57-1.08l.49-.33c.21-.14.28-.41.17-.64l-.13-.27c-.12-.32-.19-.66-.19-1V6.99c0-.66.27-1.29.73-1.76h.77z"/></svg>
+                        Invítame un café
+                    </a>
+                    <a href="https://www.paypal.com/donate/?hosted_button_id=TU_BOTON_ID" target="_blank" class="btn-support btn-support-secondary">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 00-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 00.554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 01.923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
+                        Donar con PayPal
+                    </a>
+                </div>
+                <p class="support-note">Contribución voluntaria — sin compromiso, sin registro.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         CONSULTANCY SECTION
+         ═══════════════════════════════════════════ -->
+    <section id="consulting" class="consult-section">
+        <div class="consult-inner">
+            <div class="consult-grid">
+                <div class="consult-info reveal">
+                    <h2>Necesitas ayuda con <em>tu planta</em>?</h2>
+                    <p>Si tienes un problema operativo, necesitas optimizar un proceso de tratamiento, o quieres un análisis técnico de tu instalación, puedo ayudarte.</p>
+                    <ul class="consult-features">
+                        <li>
+                            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5L13 5"/></svg></span>
+                            <span><strong>Diagnóstico remoto</strong> — Envías datos, devuelvo un informe técnico detallado</span>
+                        </li>
+                        <li>
+                            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5L13 5"/></svg></span>
+                            <span><strong>Optimización de procesos</strong> — RO, EDAR, ETAP, desaladores, torres de enfriamiento</span>
+                        </li>
+                        <li>
+                            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5L13 5"/></svg></span>
+                            <span><strong>Instrumentación</strong> — Selección, configuración 4-20 mA/HART, troubleshooting de fieldbus</span>
+                        </li>
+                        <li>
+                            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5L13 5"/></svg></span>
+                            <span><strong>Presupuesto sin compromiso</strong> — Te respondo en 24-48h con alcance y precio</span>
+                        </li>
+                    </ul>
+                    <button class="btn-consult" onclick="openModal()">
+                        Solicitar consultoría
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                    </button>
+                </div>
+                <div class="consult-visual reveal">
+                    <div class="consult-card-preview">
+                        <div class="preview-header">
+                            <div class="preview-avatar">GBW</div>
+                            <div>
+                                <div class="preview-name">Informe Técnico</div>
+                                <div class="preview-role">Entregable profesional — PDF firmado</div>
+                            </div>
+                        </div>
+                        <div class="preview-lines">
+                            <div class="preview-line"></div>
+                            <div class="preview-line"></div>
+                            <div class="preview-line"></div>
+                            <div class="preview-line"></div>
+                        </div>
+                        <div class="preview-badge-row">
+                            <span class="preview-badge">RO / OI</span>
+                            <span class="preview-badge">EDAR</span>
+                            <span class="preview-badge warm">Oil & Gas</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1186,45 +1022,116 @@
 
     <!-- FOOTER -->
     <div class="footer-wave" aria-hidden="true">
-        <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
-            <path fill="var(--bg-card)" d="M0,20 C480,50 960,0 1440,30 L1440,50 L0,50Z"/>
-        </svg>
+        <svg viewBox="0 0 1440 50" preserveAspectRatio="none"><path fill="var(--bg-card)" d="M0,20 C480,50 960,0 1440,30 L1440,50 L0,50Z"/></svg>
     </div>
     <footer>
         <p class="footer-brand">WaterTools.es</p>
         <p>&copy; 2026 — Herramientas profesionales para ingeniería de agua</p>
         <p style="margin-top:8px;font-size:0.82rem;opacity:0.7;">Desarrollado por Gustavo Blanco Walter — Senior Water & Process Engineer</p>
+        <div class="footer-donate">
+            <a href="https://ko-fi.com/TU_USUARIO" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z"/></svg>
+                Apoya este proyecto
+            </a>
+        </div>
     </footer>
 
+    <!-- ═══════════════════════════════════════════
+         MODAL DE CONSULTORÍA
+         ═══════════════════════════════════════════ -->
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal">
+            <!-- Formulario -->
+            <div id="formView">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Solicitar consultoría</h3>
+                    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-intro">Describe tu necesidad y te responderé con un presupuesto sin compromiso en 24-48 horas laborables.</p>
+                    <form id="consultForm" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nombre <span class="required">*</span></label>
+                                <input type="text" class="form-input" id="fname" name="nombre" placeholder="Tu nombre" required>
+                                <div class="form-error" id="fname-error">Campo obligatorio</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email <span class="required">*</span></label>
+                                <input type="email" class="form-input" id="femail" name="email" placeholder="tu@empresa.com" required>
+                                <div class="form-error" id="femail-error">Email no válido</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Empresa</label>
+                                <input type="text" class="form-input" id="fcompany" name="empresa" placeholder="Nombre de la empresa">
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de instalación <span class="required">*</span></label>
+                                <select class="form-select" id="fplant" name="tipo" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="edar">EDAR</option>
+                                    <option value="etap">ETAP</option>
+                                    <option value="oi">Ósmosis Inversa</option>
+                                    <option value="desalador">Desalador</option>
+                                    <option value="torres">Torres de enfriamiento</option>
+                                    <option value="instrumentacion">Instrumentación</option>
+                                    <option value="oilgas">Oil & Gas</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                                <div class="form-error" id="fplant-error">Selecciona una opción</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Describe tu problema o necesidad <span class="required">*</span></label>
+                            <textarea class="form-textarea" id="fmessage" name="mensaje" placeholder="Ej: Necesito optimizar la recuperación de mi planta RO de 50 m³/h, actualmente al 68%. El agua de alimentación es de pozo con TDS 2.800 ppm..." required></textarea>
+                            <div class="form-error" id="fmessage-error">Describe tu necesidad (mínimo 20 caracteres)</div>
+                        </div>
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 10v4h12v-4M8 2v10M4 8l4 4 4-4"/></svg>
+                            Enviar solicitud
+                        </button>
+                        <p class="form-disclaimer">Tu información se usa solo para responder a esta solicitud. No se comparte con terceros.</p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Estado de éxito -->
+            <div class="form-success" id="formSuccess">
+                <div class="success-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5L13 5"/></svg>
+                </div>
+                <h4>Solicitud enviada</h4>
+                <p>Recibirás una respuesta con el presupuesto y alcance en <strong>24-48 horas laborables</strong> en el email que indicaste.</p>
+                <button class="btn-close-modal" onclick="closeModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        /* ══════════════════════════════════════════
-           TEMA CLARO/OSCURO
-           ══════════════════════════════════════════ */
+        /* ═══ TEMA ═══ */
         function toggleTheme() {
             const isDark = document.body.getAttribute('data-theme') === 'dark';
             document.body.setAttribute('data-theme', isDark ? '' : 'dark');
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
         }
-        // Cargar preferencia guardada
         if (localStorage.getItem('theme') === 'dark' ||
             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.setAttribute('data-theme', 'dark');
         }
 
-        /* ══════════════════════════════════════════
-           HAMBURGUESA MÓVIL
-           ══════════════════════════════════════════ */
+        /* ═══ HAMBURGUESA ═══ */
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
-
         hamburger.addEventListener('click', () => {
             const isOpen = hamburger.classList.toggle('open');
             mobileMenu.classList.toggle('show', isOpen);
             hamburger.setAttribute('aria-expanded', isOpen);
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
-
-        // Cerrar menú móvil al hacer clic en un enlace
         document.querySelectorAll('[data-mobile-nav]').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('open');
@@ -1234,51 +1141,30 @@
             });
         });
 
-        /* ══════════════════════════════════════════
-           NAVBAR SCROLL (sombra + enlace activo)
-           ══════════════════════════════════════════ */
+        /* ═══ NAVBAR SCROLL ═══ */
         const navbar = document.getElementById('navbar');
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('[data-nav]');
-
         function updateNav() {
-            // Sombra al hacer scroll
             navbar.classList.toggle('scrolled', window.scrollY > 20);
-
-            // Enlace activo según la sección visible
             let current = '';
-            sections.forEach(sec => {
-                const top = sec.offsetTop - 120;
-                if (window.scrollY >= top) current = sec.getAttribute('id');
-            });
-            navLinks.forEach(a => {
-                a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-            });
+            sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id'); });
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
         }
         window.addEventListener('scroll', updateNav, { passive: true });
         updateNav();
 
-        /* ══════════════════════════════════════════
-           REVEAL ON SCROLL (con stagger)
-           ══════════════════════════════════════════ */
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
+        /* ═══ REVEAL ═══ */
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
         }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-        /* ══════════════════════════════════════════
-           CONTADORES ANIMADOS
-           ══════════════════════════════════════════ */
+        /* ═══ CONTADORES ═══ */
         let countersDone = false;
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !countersDone) {
+        const counterObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting && !countersDone) {
                     countersDone = true;
                     document.querySelectorAll('[data-count]').forEach(el => {
                         const target = parseInt(el.dataset.count);
@@ -1287,115 +1173,177 @@
                         const step = Math.max(1, Math.floor(target / 40));
                         const interval = setInterval(() => {
                             current += step;
-                            if (current >= target) {
-                                current = target;
-                                clearInterval(interval);
-                            }
+                            if (current >= target) { current = target; clearInterval(interval); }
                             el.textContent = current + suffix;
                         }, 35);
                     });
                 }
             });
         }, { threshold: 0.5 });
-        counterObserver.observe(document.querySelector('.stats-bar'));
+        counterObs.observe(document.querySelector('.stats-bar'));
 
-        /* ══════════════════════════════════════════
-           PARTÍCULAS DE AGUA EN HERO (Canvas)
-           ══════════════════════════════════════════ */
+        /* ═══ PARTÍCULAS HERO ═══ */
         (function() {
             const canvas = document.getElementById('hero-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let w, h, particles = [];
-            const PARTICLE_COUNT = 60;
-
-            // Colores según tema
+            const COUNT = 60;
             function getColors() {
                 const isDark = document.body.getAttribute('data-theme') === 'dark';
-                return {
-                    particle: isDark ? 'rgba(38,208,217,' : 'rgba(14,154,167,',
-                    bg: isDark ? '#0b1923' : '#f5f8fa'
-                };
+                return { p: isDark ? 'rgba(38,208,217,' : 'rgba(14,154,167,' };
             }
-
-            function resize() {
-                w = canvas.width = canvas.offsetWidth;
-                h = canvas.height = canvas.offsetHeight;
-            }
-
-            function createParticle() {
+            function resize() { w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight; }
+            function createParticle(randomY) {
                 const isBubble = Math.random() > 0.5;
                 return {
-                    x: Math.random() * w,
-                    y: h + Math.random() * 100,
+                    x: Math.random() * w, y: randomY ? Math.random() * h : h + Math.random() * 100,
                     r: isBubble ? Math.random() * 3 + 1.5 : Math.random() * 2 + 0.5,
-                    speed: Math.random() * 0.6 + 0.2,
-                    drift: (Math.random() - 0.5) * 0.3,
-                    opacity: Math.random() * 0.4 + 0.1,
-                    isBubble: isBubble,
-                    wobble: Math.random() * Math.PI * 2,
-                    wobbleSpeed: Math.random() * 0.02 + 0.005
+                    speed: Math.random() * 0.6 + 0.2, drift: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random() * 0.4 + 0.1, isBubble,
+                    wobble: Math.random() * Math.PI * 2, wobbleSpeed: Math.random() * 0.02 + 0.005
                 };
             }
-
-            function init() {
-                resize();
-                particles = [];
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    const p = createParticle();
-                    p.y = Math.random() * h; // Distribuir inicialmente
-                    particles.push(p);
-                }
-            }
-
+            function init() { resize(); particles = []; for (let i = 0; i < COUNT; i++) particles.push(createParticle(true)); }
             function draw() {
-                const colors = getColors();
+                const c = getColors();
                 ctx.clearRect(0, 0, w, h);
-
                 particles.forEach(p => {
-                    p.y -= p.speed;
-                    p.wobble += p.wobbleSpeed;
-                    p.x += Math.sin(p.wobble) * p.drift;
-
-                    // Reiniciar partícula si sale por arriba
-                    if (p.y < -20) {
-                        p.y = h + 10;
-                        p.x = Math.random() * w;
-                    }
-
-                    ctx.beginPath();
+                    p.y -= p.speed; p.wobble += p.wobbleSpeed; p.x += Math.sin(p.wobble) * p.drift;
+                    if (p.y < -20) { p.y = h + 10; p.x = Math.random() * w; }
                     if (p.isBubble) {
-                        // Burbuja con brillo
                         const r = Math.max(0.5, p.r);
-                        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-                        ctx.strokeStyle = colors.particle + (p.opacity * 0.7) + ')';
-                        ctx.lineWidth = 0.8;
-                        ctx.stroke();
-                        // Punto de brillo
-                        ctx.beginPath();
-                        ctx.arc(p.x - r * 0.3, p.y - r * 0.3, Math.max(0.3, r * 0.25), 0, Math.PI * 2);
-                        ctx.fillStyle = colors.particle + (p.opacity * 0.9) + ')';
-                        ctx.fill();
+                        ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+                        ctx.strokeStyle = c.p + (p.opacity * 0.7) + ')'; ctx.lineWidth = 0.8; ctx.stroke();
+                        ctx.beginPath(); ctx.arc(p.x - r * 0.3, p.y - r * 0.3, Math.max(0.3, r * 0.25), 0, Math.PI * 2);
+                        ctx.fillStyle = c.p + (p.opacity * 0.9) + ')'; ctx.fill();
                     } else {
-                        // Punto luminoso
-                        const r = Math.max(0.3, p.r);
-                        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-                        ctx.fillStyle = colors.particle + p.opacity + ')';
-                        ctx.fill();
+                        ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(0.3, p.r), 0, Math.PI * 2);
+                        ctx.fillStyle = c.p + p.opacity + ')'; ctx.fill();
                     }
                 });
-
                 requestAnimationFrame(draw);
             }
-
-            // Observar cambios de tema para actualizar colores
-            const themeObserver = new MutationObserver(() => { /* draw() usa getColors() en cada frame */ });
-            themeObserver.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
-
             window.addEventListener('resize', resize);
-            init();
-            draw();
+            init(); draw();
         })();
+
+        /* ══════════════════════════════════════════
+           MODAL DE CONSULTORÍA
+           ══════════════════════════════════════════ */
+        const overlay = document.getElementById('modalOverlay');
+        const formView = document.getElementById('formView');
+        const formSuccess = document.getElementById('formSuccess');
+        const form = document.getElementById('consultForm');
+
+        function openModal() {
+            formView.style.display = '';
+            formSuccess.classList.remove('visible');
+            form.reset();
+            // Limpiar errores previos
+            form.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.classList.remove('error'));
+            form.querySelectorAll('.form-error').forEach(el => el.classList.remove('visible'));
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            // Focus al primer campo
+            setTimeout(() => document.getElementById('fname').focus(), 350);
+        }
+
+        function closeModal() {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Cerrar al clicar fuera
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+        });
+
+        // Validación y envío
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let valid = true;
+
+            // Nombre
+            const name = document.getElementById('fname');
+            if (!name.value.trim()) {
+                name.classList.add('error'); document.getElementById('fname-error').classList.add('visible'); valid = false;
+            } else {
+                name.classList.remove('error'); document.getElementById('fname-error').classList.remove('visible');
+            }
+
+            // Email
+            const email = document.getElementById('femail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value.trim())) {
+                email.classList.add('error'); document.getElementById('femail-error').classList.add('visible'); valid = false;
+            } else {
+                email.classList.remove('error'); document.getElementById('femail-error').classList.remove('visible');
+            }
+
+            // Tipo de planta
+            const plant = document.getElementById('fplant');
+            if (!plant.value) {
+                plant.classList.add('error'); document.getElementById('fplant-error').classList.add('visible'); valid = false;
+            } else {
+                plant.classList.remove('error'); document.getElementById('fplant-error').classList.remove('visible');
+            }
+
+            // Mensaje
+            const msg = document.getElementById('fmessage');
+            if (msg.value.trim().length < 20) {
+                msg.classList.add('error'); document.getElementById('fmessage-error').classList.add('visible'); valid = false;
+            } else {
+                msg.classList.remove('error'); document.getElementById('fmessage-error').classList.remove('visible');
+            }
+
+            if (!valid) return;
+
+            // Simular envío
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px;animation:spin 1s linear infinite"><path d="M8 2a6 6 0 016 6 6 6 0 01-6 6 6 6 0 01-6-6 6 6 0 016-6z"/></svg> Enviando...';
+
+            // Añadir animación spin temporalmente
+            if (!document.getElementById('spinStyle')) {
+                const s = document.createElement('style');
+                s.id = 'spinStyle'; s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+                document.head.appendChild(s);
+            }
+
+            setTimeout(() => {
+                /*
+                 * ╔══════════════════════════════════════════════╗
+                 * ║  AQUÍ CONECTAS TU BACKEND REAL              ║
+                 * ║  Ejemplo con Formspree, Netlify Forms, etc:  ║
+                 * ║                                              ║
+                 * ║  fetch('https://formspree.io/f/TU_ID', {     ║
+                 * ║    method: 'POST',                           ║
+                 * ║    body: new FormData(form)                  ║
+                 * ║  }).then(() => showSuccess())                ║
+                 * ║    .catch(() => showError())                 ║
+                 * ╚══════════════════════════════════════════════╝
+                 */
+                formView.style.display = 'none';
+                formSuccess.classList.add('visible');
+                btn.disabled = false;
+                btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 10v4h12v-4M8 2v10M4 8l4 4 4-4"/></svg> Enviar solicitud';
+            }, 1500);
+        });
+
+        // Quitar error al escribir
+        form.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => {
+            el.addEventListener('input', () => {
+                el.classList.remove('error');
+                const errEl = el.parentElement.querySelector('.form-error');
+                if (errEl) errEl.classList.remove('visible');
+            });
+        });
     </script>
 </body>
 </html>

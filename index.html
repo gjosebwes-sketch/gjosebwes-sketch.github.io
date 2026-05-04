@@ -1351,12 +1351,9 @@
             if (!valid) return;
 
             // ════════════════════════════════════════════════════════
-            // AQUÍ ESTÁ LA CONFIGURACIÓN DEL ENVÍO REAL (FORMSPREE)
+            // AQUÍ ESTÁ TU URL DE FORMSPREE CONFIGURADA
             // ════════════════════════════════════════════════════════
-            
-            // 1. Obtén tu URL en Formspree.io (es gratis)
-            // 2. Reemplaza 'TU_FORM_ID_AQUI' con el código que te den (ej: xvndrzqz)
-            const FORMSPREE_URL = 'https://formspree.io/f/TU_FORM_ID_AQUI'; 
+            const FORMSPREE_URL = 'https://formspree.io/f/xpqbpkyj'; 
 
             const btn = document.getElementById('submitBtn');
             const originalBtnText = btn.innerHTML;
@@ -1373,7 +1370,7 @@
 
             const formData = new FormData(form);
 
-            // 3. Enviamos los datos a Formspree
+            // Enviamos los datos a Formspree
             fetch(FORMSPREE_URL, {
                 method: 'POST',
                 body: formData,
